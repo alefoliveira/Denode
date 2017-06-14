@@ -4,7 +4,7 @@ require 'config.php';
 $conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
 mysql_select_db($banco);
 
-$sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `DURACAO_ATIPLA` FROM `ATIVIDADES_PLAT` ORDER BY `ID_ATIPLA` DESC";
+$sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `DURACAO_ATIPLA`, `ID_EMP` FROM `ATIVIDADES_PLAT` ORDER BY `ID_ATIPLA` DESC";
 
 $query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 $registros = mysql_num_rows($query); //CONTADOR DE RESULTADOS TRAZIDOS DO BANCO DE DADOS
@@ -23,7 +23,7 @@ $registros = mysql_num_rows($query); //CONTADOR DE RESULTADOS TRAZIDOS DO BANCO 
 
 		<meta charset="utf-8">
 
-		<title>ADMIN - MINIMAMENTE </title>
+		<title>ADMIN - MINIMAMENTE</title>
 
 		<!-- ESTILOS -->
 		<link rel="stylesheet" href="CSS/estilo.css">
