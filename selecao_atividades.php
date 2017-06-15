@@ -9,8 +9,6 @@ $sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `
 $query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 $registros = mysql_num_rows($query); //CONTADOR DE RESULTADOS TRAZIDOS DO BANCO DE DADOS
 
-
-
 $sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
 
 $queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
@@ -43,53 +41,53 @@ $contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERAN
 
 		<h1>ATIVIDADES DISPONÍVEIS</h1>
 
-			<form name="selecao_atividades" action="apoio\insere_atividades_selecionadas.php" method="post" enctype="multipart/form-data">
+		<form name="selecao_atividades" action="apoio\insere_atividades_selecionadas.php" method="post" enctype="multipart/form-data">
 
-				<input type="hidden" name="cadastrar" value="1" />
-				
-				<table>
-					<?php
-					if ($registros) {
+			<input type="hidden" name="cadastrar" value="1" />
+			
+			<table>
+				<?php
+				if ($registros) {
 
-						$i = 0;
+					$i = 0;
 
-						while ($result = mysql_fetch_array($query)) {
+					while ($result = mysql_fetch_array($query)) {
 
-							echo '<tr>
-								<!--td>  ' . $result['ID_ATIPLA'] . ' </td --> 
-								<td>  ' . $result['TITULO_ATIPLA'] . ' </td> 
-								<td>' . $result['DESCRICAO_ATIPLA'] . '</td>
-								<td>  ' . $result['DURACAO_ATIPLA'] . ' </td>
-								<td>';
-							
-							if ($i <= $contElementos) {
-								if ($result['ID_ATIPLA'] == $atividadesEmpresa[$i]) {
-									
-									echo ' <input type="checkbox" name="atividades[]" checked value="' . $result['ID_ATIPLA'] . '">
-										</td>
-									</tr>';
-									$i++;
+						echo '<tr>
+							<!--td>  ' . $result['ID_ATIPLA'] . ' </td --> 
+							<td>  ' . $result['TITULO_ATIPLA'] . ' </td> 
+							<td>' . $result['DESCRICAO_ATIPLA'] . '</td>
+							<td>  ' . $result['DURACAO_ATIPLA'] . ' </td>
+							<td>';
+						
+						if ($i <= $contElementos) {
+							if ($result['ID_ATIPLA'] == $atividadesEmpresa[$i]) {
+								
+								echo ' <input type="checkbox" name="atividades[]" checked value="' . $result['ID_ATIPLA'] . '">
+									</td>
+								</tr>';
+								$i++;
 
-								} else {
-									echo ' <input type="checkbox" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
-										</td>
-									</tr>';
-								}
 							} else {
 								echo ' <input type="checkbox" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
 									</td>
 								</tr>';
-								$i++;
 							}
+						} else {
+							echo ' <input type="checkbox" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
+								</td>
+							</tr>';
+							$i++;
 						}
-					} else {
-						//ALTERAR
-						echo '<p>Nenhuma atividade disponivel no momento!</p>';
-					} ?>
-				</table>
+					}
+				} else {
+					//ALTERAR
+					echo '<p>Nenhuma atividade disponivel no momento!</p>';
+				} ?>
+			</table>
 
-				<input type="submit" value="Salvar Atividades">
-			</form>
+			<input type="submit" value="Salvar Atividades">
+		</form>
 
 	</body>
 
