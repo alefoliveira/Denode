@@ -4,15 +4,10 @@ require '../config.php';
 
 //INSERE ATIVIDADES SELECIONADAS NO BANCO
 if (isset($_POST['cadastrar'])) {
-	
-	
 
 	$conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
-
 	mysql_select_db($banco);
-
-	$atividades = "SELECT `ATIVIDADES_ATIEMPPLA`, `STATUS_ATIEMPPLA`, `ID_EMP` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
-	
+	$atividades = "SELECT `ATIVIDADES_ATIEMPPLA`, `ID_EMP` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
 	$queryAti = mysql_query($atividades, $conexao);
 	$registros = mysql_num_rows($queryAti);
 
@@ -23,18 +18,13 @@ if (isset($_POST['cadastrar'])) {
 	 	$atividadesSelecionadas = implode(",",$listaAtividades);
 	    
 	    if($registros != "0"){
-
 			$sqlAti = "UPDATE `atividades_empresa_plat` SET `ATIVIDADES_ATIEMPPLA`='" . $atividadesSelecionadas . "' WHERE `ID_EMP` = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
-			
-			
+						
 		} else {
-			
 			$sqlAti = "INSERT INTO ATIVIDADES_EMPRESA_PLAT (ATIVIDADES_ATIEMPPLA, STATUS_ATIEMPPLA, ID_EMP) VALUES ('". $atividadesSelecionadas . "','0',1)"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
-			
 		}	
 
 		$queryAti = mysql_query($sqlAti, $conexao);
-
 		header("Location: ../selecao_atividades.php"); /* REDIRECIONA USUARIO PARA MESMA PAGINA DE SELECAO */
 
 	} else {
