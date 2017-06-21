@@ -1,6 +1,6 @@
 <?php
 
 $host = "localhost";
-$usuario = "001aluno";
-$senha = "123456";
+$usuario = "root";
+$senha = "";
 $banco = "0002050";
