@@ -2,16 +2,32 @@
 require 'config.php';
 $conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
 mysql_select_db($banco);
+
+//DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
 $sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
 $queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 $resultEmp = mysql_fetch_array($queryEmp);
 $registros = mysql_num_rows($queryEmp);
-$atividadesEmpresa = explode(",",$resultEmp[0]); //SEPARA ATIVIDADES MARCADAS PELA EMPRESA EM UM ARRAY PARA MARCAR OS CHECKBOXES
+$atividadesEmpresa = explode(",",$resultEmp[0]); //SEPARA ATIVIDADES MARCADAS PELA EMPRESA EM UM ARRAY PARA EXIBIR
 $registrosAtividades =  count($atividadesEmpresa); //CONTA QUANTOS ITENS TEM NO ARRAY
 $contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERANDO QUE O ARRAY TEM O ITEM DE INDICE 0
-$sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `DURACAO_ATIPLA` FROM `ATIVIDADES_PLAT`"; 
+
+//SELECIONA ATIVIDADES PARA FAZER RELAÇÃO COM AQUELAS APROVADAS PELA EMPRESA
+$sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `DURACAO_ATIPLA`, `MEMBRO_ATIPLA` FROM `ATIVIDADES_PLAT`"; 
 $query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 $result = mysql_fetch_array($query);
+
+//DADOS SOBRE OS COLABORADORES
+$sqlColab = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFUSU` FROM `perfil_usuario` WHERE `ID_EMP` = 1";
+$queryColab = mysql_query($sqlColab, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+$resultColab = mysql_fetch_array($queryColab);
+$registrosColab = mysql_num_rows($queryColab);
+
+$atividadesColab = explode(",",$resultColab[0]); //SEPARA ATIVIDADES MARCADAS PELA EMPRESA EM UM ARRAY PARA EXIBIR
+$registrosAtiColab =  count($atividadesColab); //CONTA QUANTOS ITENS TEM NO ARRAY
+$registrosAtiColab -= $registrosAtiColab - 1; //REMOVE UM ITEM DO CONTADOR CONSIDERANDO QUE O ARRAY TEM O ITEM DE INDICE 0
+
+echo $registrosAtiColab;
 ?>
 
 <!-- _____________________ -->
@@ -58,7 +74,6 @@ $result = mysql_fetch_array($query);
 									<td>
 										<input type="checkbox" class="checkbox" id="'. $i . '" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
 									</td>
-								</tr>
 								</tr>';
 								$i++;
 							}
@@ -86,6 +101,45 @@ $result = mysql_fetch_array($query);
 						<input type="checkbox" name="ativo">
 					</td>
 				</tr>
+
+				<!-- Exibe todos os colaboradores que possuem o membro da dor relativo às atividades selecionadas -->
+				<tr>
+					<td>Colaboradores Sugeridos</td>
+				</tr>
+
+				<?php
+				if ($registrosAtiColab) {
+					$i = 0;
+					$result = mysql_fetch_array($query);
+
+					//$tempoTotal = 0;
+					while ($resultColab = mysql_fetch_array($queryColab)) {
+						$result = mysql_fetch_array($query);
+						if ($i <= $contElementos) {
+							if ($result['ID_ATIPLA'] == $atividadesColab[$i]) {
+								echo '<tr>
+										<td>  ' . $resultColab['NOME_PERFUSU'] . ' </td> 
+										<td>' . $resultColab['SOBRENOME_PERFUSU'] . '</td>
+									<td>
+										<input type="checkbox" class="checkbox" name="atividades[]" value="' . $resultColab['ID_PERFUSU'] . '">
+									</td>
+								</tr>';
+								$i++;
+							} else {
+								echo 'porra'	;
+								echo $result['ID_ATIPLA'];
+							}
+						} else {
+							$i++;
+							echo $atividadesColab[$i];
+						}
+						/*$tempoTotal += $result['DURACAO_ATIPLA'];
+						$duracao[$i] = $result['DURACAO_ATIPLA'];*/
+					}
+				} else {
+					//ALTERAR
+					echo '<p>Nenhum colaborador cadastrado!</p>';
+				} ?>
 			</table>
 
 			<input type="submit" value="Salvar Atividades">
