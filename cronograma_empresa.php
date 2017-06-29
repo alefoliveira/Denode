@@ -18,16 +18,10 @@ $query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E 
 $result = mysql_fetch_array($query);
 
 //DADOS SOBRE OS COLABORADORES
-$sqlColab = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFUSU` FROM `perfil_usuario` WHERE `ID_EMP` = 1";
+$sqlColab = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFUSU`FROM `perfil_usuario` WHERE `ID_EMP` = 1";
 $queryColab = mysql_query($sqlColab, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
-$resultColab = mysql_fetch_array($queryColab);
 $registrosColab = mysql_num_rows($queryColab);
 
-$atividadesColab = explode(",",$resultColab[0]); //SEPARA ATIVIDADES MARCADAS PELA EMPRESA EM UM ARRAY PARA EXIBIR
-$registrosAtiColab =  count($atividadesColab); //CONTA QUANTOS ITENS TEM NO ARRAY
-$registrosAtiColab -= $registrosAtiColab - 1; //REMOVE UM ITEM DO CONTADOR CONSIDERANDO QUE O ARRAY TEM O ITEM DE INDICE 0
-
-echo $registrosAtiColab;
 ?>
 
 <!-- _____________________ -->
@@ -59,10 +53,12 @@ echo $registrosAtiColab;
 			<input type="hidden" name="cadastrar" value="1" />
 			
 			<table>
+				<!-- SELEÇÃO DE ATIVIDADES -->
 				<?php
 				if ($registros) {
 					$i = 0;
 					$tempoTotal = 0;
+
 					while ($result = mysql_fetch_array($query)) {
 						if ($i <= $contElementos) {
 							if ($result['ID_ATIPLA'] == $atividadesEmpresa[$i]) {
@@ -106,35 +102,69 @@ echo $registrosAtiColab;
 				<tr>
 					<td>Colaboradores Sugeridos</td>
 				</tr>
-
+				
+				<!-- SELEÇÃO DE COLABORADORES -->
 				<?php
-				if ($registrosAtiColab) {
+
+				//DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
+				$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+				$queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+				$resultEmp = mysql_fetch_array($queryEmp);
+				$registros = mysql_num_rows($queryEmp);
+				$atividadesEmpresa = explode(",",$resultEmp[0]); //SEPARA ATIVIDADES MARCADAS PELA EMPRESA EM UM ARRAY PARA EXIBIR
+				$registrosAtividades =  count($atividadesEmpresa); //CONTA QUANTOS ITENS TEM NO ARRAY
+				$contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERANDO QUE O ARRAY TEM O ITEM DE INDICE 0
+
+				$contAtiTotais = 0;
+
+				if ($registrosColab && $registros) {//Verifica se tem colaboradores cadastrados
+					
 					$i = 0;
+
+					$sql = "SELECT `MEMBRO_ATIPLA` FROM `ATIVIDADES_PLAT`"; 
+					$query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 					$result = mysql_fetch_array($query);
 
-					//$tempoTotal = 0;
-					while ($resultColab = mysql_fetch_array($queryColab)) {
-						$result = mysql_fetch_array($query);
-						if ($i <= $contElementos) {
-							if ($result['ID_ATIPLA'] == $atividadesColab[$i]) {
-								echo '<tr>
-										<td>  ' . $resultColab['NOME_PERFUSU'] . ' </td> 
-										<td>' . $resultColab['SOBRENOME_PERFUSU'] . '</td>
-									<td>
-										<input type="checkbox" class="checkbox" name="atividades[]" value="' . $resultColab['ID_PERFUSU'] . '">
-									</td>
-								</tr>';
-								$i++;
+					while ($resultColab = mysql_fetch_array($queryColab)) {	//Enquanto tiverem colaboradores cadastrados, associe-os a um array (+/- isso)
+
+						$sqlMembro = "SELECT `MEMBRO_PERFDOR` FROM `perfil_dor` WHERE `ID_PERFUSU` = " . $resultColab['ID_PERFUSU']; 
+						$queryMembro = mysql_query($sqlMembro, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+						$resultMembro = mysql_fetch_array($queryMembro);
+
+						if ($i <= $registrosColab) {
+						
+							$membrosColab = explode(",",$resultMembro['MEMBRO_PERFDOR']); //SEPARA OS MEMBROS QUE O COLABORADOR ESPECIFICO SENTE DOR EM UM ARRAY 
+							$registrosMemColab =  count($membrosColab); //CONTA QUANTOS ITENS TEM NO ARRAY
+							
+							if($registrosMemColab != 0) {//VERIFICA SE TEM ALGUM MEMBRO SALVO NO BD
+
+									$membrosAtiPla = mysql_result($query, $i, 'MEMBRO_ATIPLA');//SUBSTITUI WHILE PARA GERAR O RESULT, ASSIM, VAI BUSCANDO NA QUERY DAS ATIVIDADES CADA UM DOS MEMBROS MARCADOS LA DE ACORDO COM O VALOR DO $i
+
+									if (in_array($membrosAtiPla,  $membrosColab)) {//VERIFICA SE O VALOR ATUAL DO RESULT ESTA ESTE OS MEMBROS SELECIONADOS PELO COLABORADOR
+										echo '<tr>
+											<td>  ' . $resultColab['NOME_PERFUSU'] . ' </td> 
+											<td>' . $resultColab['SOBRENOME_PERFUSU'] . '</td>
+											<td>
+												<input type="checkbox" class="checkbox" name="atividades[]" value="' . $resultColab['ID_PERFUSU'] . '">
+											</td>
+											<td>Sugestão</td>
+										</tr>';
+										$i++;
+									} else { 
+										echo '<tr>
+											<td>  ' . $resultColab['NOME_PERFUSU'] . ' </td> 
+											<td>' . $resultColab['SOBRENOME_PERFUSU'] . '</td>
+											<td>
+												<input type="checkbox" class="checkbox" name="atividades[]" value="' . $resultColab['ID_PERFUSU'] . '">
+											</td>
+										</tr>';
+									}
 							} else {
-								echo 'porra'	;
-								echo $result['ID_ATIPLA'];
+								echo 'o colaborador não possui dores';
 							}
 						} else {
 							$i++;
-							echo $atividadesColab[$i];
 						}
-						/*$tempoTotal += $result['DURACAO_ATIPLA'];
-						$duracao[$i] = $result['DURACAO_ATIPLA'];*/
 					}
 				} else {
 					//ALTERAR
@@ -150,8 +180,8 @@ echo $registrosAtiColab;
 		$(document).ready(function(){
 			
 			var duracaoAtividades = 0;
-			//FUNÇÃO PARA AUXILIAR A TRANSFORMAR OS MINUTOS EM HORAS
-			function pad (str, max) {
+			
+			function pad (str, max) {//FUNÇÃO PARA AUXILIAR A TRANSFORMAR OS MINUTOS EM HORAS
 			  str = str.toString();
 			  return str.length < max ? pad("0" + str, max) : str;
 			}
@@ -159,8 +189,7 @@ echo $registrosAtiColab;
 			var cont = 0;
 			var tempoInicio;
 			
-			//FUNÇÃO PARA DEIXAR O CAMPO 'TÉRMINO' COM PREENCHIMENTO AUTOMÁTICO
-			$('#inicio').focusout(function() {
+			$('#inicio').focusout(function() {//FUNÇÃO PARA DEIXAR O CAMPO 'TÉRMINO' COM PREENCHIMENTO AUTOMÁTICO
 				var horas = [];
 				
 				tempoInicio = $('#inicio').val(); 
