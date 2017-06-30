@@ -26,6 +26,14 @@ $sqlColab2 = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERF
 $queryColab2 = mysql_query($sqlColab2, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 $registrosColab2 = mysql_num_rows($queryColab2);
 
+
+//DADOS SESSOES
+$sqlSes = "SELECT `ATIVIDADES_CROEMPPLA`, `INICIO_CROEMPPLA`, `FIM_CROEMPPLA`, `PARTICIPANTES_CROEMPPLA`, `ATIVO_CROEMPPLA`, `DIAS_CROEMPPLA` FROM `cronograma_empresa_plat` WHERE `ID_EMP` = 1";
+$querySes = mysql_query($sqlSes, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+$registrosSes = mysql_num_rows($querySes);
+
+
+
 ?>
 
 <!-- _____________________ -->
@@ -225,9 +233,37 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 				} else { echo '<p>Nenhum colaborador cadastrado!</p>'; }//ALTERAR
 
 				 ?>
+
 			</table>
 			<input type="submit" value="Salvar Atividades">
 		</form>
+
+		<table>
+
+			<tr>
+
+				<?php 
+				if ($registrosSes) {
+					echo '<td><h2>Outras Sessoes Cadastradas</h2></td>';
+					$i = 0;
+
+					while ($resultSes = mysql_fetch_array($querySes)) {
+
+						echo '<tr>
+							<!--td>  ' . $resultSes['ATIVIDADES_CROEMPPLA'] . ' </td --> 
+							<td>  ' . $resultSes['INICIO_CROEMPPLA'] . ' </td> 
+							<td>' . $resultSes['FIM_CROEMPPLA'] . '</td>
+							<td>  ' . $resultSes['PARTICIPANTES_CROEMPPLA'] . ' </td>
+							<td>' . $resultSes['ATIVO_CROEMPPLA'] . '</td>
+							<td>  ' . $resultSes['DIAS_CROEMPPLA'] . ' </td>
+							<td>';
+					}
+				} ?>
+
+
+			</tr>
+
+		
 	</body>
 
 	<script>
