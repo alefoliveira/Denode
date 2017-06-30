@@ -22,6 +22,10 @@ $sqlColab = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFU
 $queryColab = mysql_query($sqlColab, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 $registrosColab = mysql_num_rows($queryColab);
 
+$sqlColab2 = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFUSU`FROM `perfil_usuario` WHERE `ID_EMP` = 1";
+$queryColab2 = mysql_query($sqlColab2, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+$registrosColab2 = mysql_num_rows($queryColab2);
+
 ?>
 
 <!-- _____________________ -->
@@ -56,9 +60,7 @@ $registrosColab = mysql_num_rows($queryColab);
 				<!-- SELEÇÃO DE ATIVIDADES -->
 				<?php
 				if ($registros) {
-					$i = 0;
-					$tempoTotal = 0;
-
+					$i = 0;	
 					while ($result = mysql_fetch_array($query)) {
 						if ($i <= $contElementos) {
 							if ($result['ID_ATIPLA'] == $atividadesEmpresa[$i]) {
@@ -73,16 +75,11 @@ $registrosColab = mysql_num_rows($queryColab);
 								</tr>';
 								$i++;
 							}
-						} else {
-							$i++;
-						}
-						$tempoTotal += $result['DURACAO_ATIPLA'];
+						} else { $i++; }
 						$duracao[$i] = $result['DURACAO_ATIPLA'];
 					}
-				} else {
-					//ALTERAR
-					echo '<p>Nenhuma atividade disponivel no momento!</p>';
-				} ?>
+				} else {echo '<p>Nenhuma atividade disponivel no momento!</p>'; } //ALTERAR
+			?>
 				<tr>
 					<td>
 						<label>Hora de Início</label>
@@ -94,16 +91,39 @@ $registrosColab = mysql_num_rows($queryColab);
 					</td>
 					<td>
 						<label>Ativo?</label>
-						<input type="checkbox" name="ativo">
+						<input type="checkbox" name="ativo[]" value="1">
+					</td>
+					
+				</tr>
+				<tr>
+					<td>
+						<label>Segunda</label>
+						<input type="checkbox" name="dias[]" value = "1">
+					</td>
+					<td>
+						<label>Terca</label>
+						<input type="checkbox" name="dias[]" value = "2">
+					</td>
+					<td>
+						<label>Quarta</label>
+						<input type="checkbox" name="dias[]" value = "3">
+					</td>
+					<td>
+						<label>Quinta</label>
+						<input type="checkbox" name="dias[]" value = "4">
+					</td>
+					<td>
+						<label>Sexta</label>
+						<input type="checkbox" name="dias[]" value = "5">
 					</td>
 				</tr>
 
 				<!-- Exibe todos os colaboradores que possuem o membro da dor relativo às atividades selecionadas -->
 				<tr>
-					<td>Colaboradores Sugeridos</td>
+					<td><h3>Colaboradores Sugeridos<h3></td>
 				</tr>
 				
-				<!-- SELEÇÃO DE COLABORADORES -->
+				<!-- COLABORADORES SUGERIDOS-->
 				<?php
 
 				//DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
@@ -114,8 +134,6 @@ $registrosColab = mysql_num_rows($queryColab);
 				$atividadesEmpresa = explode(",",$resultEmp[0]); //SEPARA ATIVIDADES MARCADAS PELA EMPRESA EM UM ARRAY PARA EXIBIR
 				$registrosAtividades =  count($atividadesEmpresa); //CONTA QUANTOS ITENS TEM NO ARRAY
 				$contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERANDO QUE O ARRAY TEM O ITEM DE INDICE 0
-
-				$contAtiTotais = 0;
 
 				if ($registrosColab && $registros) {//Verifica se tem colaboradores cadastrados
 					
@@ -145,33 +163,69 @@ $registrosColab = mysql_num_rows($queryColab);
 											<td>  ' . $resultColab['NOME_PERFUSU'] . ' </td> 
 											<td>' . $resultColab['SOBRENOME_PERFUSU'] . '</td>
 											<td>
-												<input type="checkbox" class="checkbox" name="atividades[]" value="' . $resultColab['ID_PERFUSU'] . '">
+												<input type="checkbox" class="checkbox" name="colaboradores[]" value="' . $resultColab['ID_PERFUSU'] . '">
 											</td>
 											<td>Sugestão</td>
 										</tr>';
 										$i++;
-									} else { 
+									}
+							} else { echo 'o colaborador não possui dores'; }//ALTERAR
+						} else { $i++; }
+					}
+				} else { echo '<p>Nenhum colaborador cadastrado!</p>';}//ALTERAR
+
+
+				//DEMAIS COLABORADORES
+
+				//DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
+				$sqlEmp2 = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+				$queryEmp2 = mysql_query($sqlEmp2, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+				$resultEmp2 = mysql_fetch_array($queryEmp2);
+				$registros2 = mysql_num_rows($queryEmp2);
+				$atividadesEmpresa2 = explode(",",$resultEmp2[0]); //SEPARA ATIVIDADES MARCADAS PELA EMPRESA EM UM ARRAY PARA EXIBIR
+				$registrosAtividades2 =  count($atividadesEmpresa2); //CONTA QUANTOS ITENS TEM NO ARRAY
+				$contElementos2 = $registrosAtividades2-1; //REMOVE UM ITEM DO CONTADOR CONSIDERANDO QUE O ARRAY TEM O ITEM DE INDICE 0
+
+				if ($registrosColab2 && $registros2) {//Verifica se tem colaboradores cadastrados
+					
+					$i2 = 0;
+
+					$sql2 = "SELECT `MEMBRO_ATIPLA` FROM `ATIVIDADES_PLAT`"; 
+					$query2 = mysql_query($sql2, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+					$result2 = mysql_fetch_array($query2);
+
+					while ($resultColab2 = mysql_fetch_array($queryColab2)) {	//Enquanto tiverem colaboradores cadastrados, associe-os a um array (+/- isso)
+
+						$sqlMembro2 = "SELECT `MEMBRO_PERFDOR` FROM `perfil_dor` WHERE `ID_PERFUSU` = " . $resultColab2['ID_PERFUSU']; 
+						$queryMembro2= mysql_query($sqlMembro2, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+						$resultMembro2 = mysql_fetch_array($queryMembro2);
+
+						if ($i2 <= $registrosColab2) {
+						
+							$membrosColab2 = explode(",",$resultMembro2['MEMBRO_PERFDOR']); //SEPARA OS MEMBROS QUE O COLABORADOR ESPECIFICO SENTE DOR EM UM ARRAY 
+							$registrosMemColab2 =  count($membrosColab2); //CONTA QUANTOS ITENS TEM NO ARRAY
+							
+							if($registrosMemColab2 != 0) {//VERIFICA SE TEM ALGUM MEMBRO SALVO NO BD
+
+									$membrosAtiPla2 = mysql_result($query2, $i2, 'MEMBRO_ATIPLA');//SUBSTITUI WHILE PARA GERAR O RESULT, ASSIM, VAI BUSCANDO NA QUERY DAS ATIVIDADES CADA UM DOS MEMBROS MARCADOS LA DE ACORDO COM O VALOR DO $i
+
+									if (!in_array($membrosAtiPla2,  $membrosColab2)) {//VERIFICA SE O VALOR ATUAL DO RESULT ESTA ESTE OS MEMBROS SELECIONADOS PELO COLABORADOR
 										echo '<tr>
-											<td>  ' . $resultColab['NOME_PERFUSU'] . ' </td> 
-											<td>' . $resultColab['SOBRENOME_PERFUSU'] . '</td>
+											<td>  ' . $resultColab2['NOME_PERFUSU'] . ' </td> 
+											<td>' . $resultColab2['SOBRENOME_PERFUSU'] . '</td>
 											<td>
-												<input type="checkbox" class="checkbox" name="atividades[]" value="' . $resultColab['ID_PERFUSU'] . '">
+												<input type="checkbox" class="checkbox" name="colaboradores[]" value="' . $resultColab2['ID_PERFUSU'] . '">
 											</td>
 										</tr>';
+										$i2++;
 									}
-							} else {
-								echo 'o colaborador não possui dores';
-							}
-						} else {
-							$i++;
-						}
+							} else { echo 'o colaborador não possui dores';	}//ALTERAR
+						} else { $i2++; }
 					}
-				} else {
-					//ALTERAR
-					echo '<p>Nenhum colaborador cadastrado!</p>';
-				} ?>
-			</table>
+				} else { echo '<p>Nenhum colaborador cadastrado!</p>'; }//ALTERAR
 
+				 ?>
+			</table>
 			<input type="submit" value="Salvar Atividades">
 		</form>
 	</body>
@@ -194,25 +248,17 @@ $registrosColab = mysql_num_rows($queryColab);
 				
 				tempoInicio = $('#inicio').val(); 
 				if (cont == 0){
-					console.log('if 1');
-					
 					horas[cont] = $('#inicio').val();
 					defineTermino();
 					cont++;
 				} else {
 					
-					console.log('if 2');
 					horas[cont] = $('#inicio').val();
 					
-					console.log(horas[cont-1]);
-					console.log(horas[cont]);
 					if (horas[cont-1] != horas[cont]){
-						console.log('if 3');
 						defineTermino();
 						cont++;
-					} else {
-						console.log('masquecaralha');
-					}
+					} else { console.log('masquecaralha'); }
 				}
 				
 			});
@@ -241,15 +287,10 @@ $registrosColab = mysql_num_rows($queryColab);
 				var duracao = parseInt(thePacket[idCheckbox]);  //ATRIBUI A DURAÇÃO (THEPACKET) DO ITEM CLICADO (IDCHECKBOX) A UMA VARIAVEL
 				if($(this).is(":checked")){ 
 					duracaoAtividades += duracao; //ADICIONA A DURAÇÃO DO ITEM CLICADO
-				} else {
-					duracaoAtividades -= duracao; //REMOVE A DURAÇÃO DO ITEM CLICADO
-				}
+				} else { duracaoAtividades -= duracao; } //REMOVE A DURAÇÃO DO ITEM CLICADO
+				
 				return duracaoAtividades;
 				defineTermino();
-				//TESTES
-				console.log(idCheckbox);
-				console.log(duracao);
-				console.log(minutos);
 			});
 		});
 	</script>
