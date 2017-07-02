@@ -41,12 +41,10 @@ if (isset($_POST['cadastrar'])) {
 */
 			$sqlAtiCro = "UPDATE `cronograma_empresa_plat` SET `ATIVIDADES_CROEMPPLA`= '". $atividadesSelecionadas . "',`INICIO_CROEMPPLA`='" . $_POST['inicio'] . "',`FIM_CROEMPPLA`='" . $_POST['termino'] . "',`PARTICIPANTES_CROEMPPLA`='". $colabSelecionados . "', `ATIVO_CROEMPPLA`= " . $ativo . ",`DIAS_CROEMPPLA`='" . $diasSelecionados . "' WHERE `ID_CROEMPPLA` =" . $ID_CROEMPPLA;
 
-						echo $sqlAtiCro;
-
 		/*}*/	
 
 		$queryAtiCro = mysql_query($sqlAtiCro, $conexao);
-		//header("Location: ../cronograma_empresa.php"); /* REDIRECIONA USUARIO PARA MESMA PAGINA DE SELECAO */
+		header("Location: ../cronograma_empresa.php"); /* REDIRECIONA USUARIO PARA MESMA PAGINA DE SELECAO */
 
 	} else {
 		echo 'Voce nao selecionou nenhuma atividade ';

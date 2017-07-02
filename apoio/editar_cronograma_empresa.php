@@ -91,18 +91,27 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 					$i = 0;	
 					while ($result = mysql_fetch_array($query)) {
 						if ($i <= $contElementos) {
+
 							echo '<tr>
 									<!--td>  ' . $result['ID_ATIPLA'] . ' </td --> 
 									<td>  ' . $result['TITULO_ATIPLA'] . ' </td> 
 									<td>' . $result['DESCRICAO_ATIPLA'] . '</td>
 									<td>  ' . $result['DURACAO_ATIPLA'] . ' </td>';
-							if ($result['ID_ATIPLA'] == $atividadesCroEspec[$i]) {
-								echo '<td>
-										<input type="checkbox" checked class="checkbox" id="'. $i . '" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
-									</td>
-								</tr>';
-								$i++;
-							} else {
+
+							if (isset($atividadesCroEspec[$i])){
+								if ($result['ID_ATIPLA'] == $atividadesCroEspec[$i]) {
+									echo '<td>
+											<input type="checkbox" checked class="checkbox" id="'. $i . '" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
+										</td>
+									</tr>';
+									$i++;
+								} else {
+									echo '<td>
+											<input type="checkbox" class="checkbox" id="'. $i . '" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
+										</td>
+									</tr>';
+								} 
+							}	else {
 								echo '<td>
 										<input type="checkbox" class="checkbox" id="'. $i . '" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
 									</td>
