@@ -101,18 +101,19 @@ $registrosSes = mysql_num_rows($querySes);
 						}
 						//}
 
-						echo '<td>  ' . $resultSes['INICIO_CROEMPPLA'] . ' </td> 
+						echo '<td>  ' . $resultSes['ID_CROEMPPLA'] . ' </td> 
+						<td>  ' . $resultSes['INICIO_CROEMPPLA'] . ' </td> 
 						<td>' . $resultSes['FIM_CROEMPPLA'] . '</td>
 						<td>  ' . $resultSes['PARTICIPANTES_CROEMPPLA'] . ' </td>
 						<td>' . $resultSes['ATIVO_CROEMPPLA'] . '</td>
 						<td>  ' . $resultSes['DIAS_CROEMPPLA'] . ' </td>
 						<td> 
-							<a href="denode/Denode/apoio/excluir_cronograma_empresa.php?ID_CROEMPPLA='.$resultSes['ID_CROEMPPLA'].'" target="blank">
+							<a href="apoio/editar_cronograma_empresa.php?ID_CROEMPPLA='.$resultSes['ID_CROEMPPLA'].'" target="blank">
 								Editar
 							</a>
 						</td>
 						<td id="icon-center"> 
-							<a href="Denode/apoio/excluir_cronograma_empresa.php?ID_CROEMPPLA='.$result['ID_CROEMPPLA'].'">
+							<a href="apoio/excluir_cronograma_empresa.php?ID_CROEMPPLA='.$resultSes['ID_CROEMPPLA'].'">
 								Excluir
 							</a>
 						</td>

@@ -1,5 +1,31 @@
 <?php
-require 'config.php';
+require '../config.php';
+
+if (!isset($_GET['ID_CROEMPPLA'])) {
+    echo('Postagem não existente ( <a href="../cronograma_empresa.php">TESTE</a> )');
+}
+$conexaoCroEspec = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
+mysql_select_db($banco);
+
+$ID_CROEMPPLA = (int) $_GET['ID_CROEMPPLA'];
+
+$sqlCroEspec = 'select * from `cronograma_empresa_plat` where ID_CROEMPPLA = ' . $ID_CROEMPPLA;
+$queryCroEspec = mysql_query($sqlCroEspec, $conexaoCroEspec);
+$resultCroEspec = mysql_fetch_array($queryCroEspec);
+
+$atividadesCroEspec = explode(",",$resultCroEspec['ATIVIDADES_CROEMPPLA']); //SEPARA ATIVIDADES MARCADAS PELA EMPRESA EM UM ARRAY PARA MARCAR OS CHECKBOXES
+$registrosAtiCroEspec =  count($atividadesCroEspec); //CONTA QUANTOS ITENS TEM NO ARRAY
+$contElementosCroEspec = $registrosAtiCroEspec-1; //REMOVE UM ITEM DO CONTADOR CONSIDERANDO QUE O ARRAY TEM O ITEM DE INDICE 0
+
+
+$diasCroEspec = explode(",",$resultCroEspec['DIAS_CROEMPPLA']);
+$participantesCroEspec = explode(",",$resultCroEspec['PARTICIPANTES_CROEMPPLA']);
+
+$registrosCroEspec = mysql_num_rows($queryCroEspec);
+
+mysql_close($conexaoCroEspec);
+
+
 $conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
 mysql_select_db($banco);
 
@@ -16,6 +42,8 @@ $contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERAN
 $sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `DURACAO_ATIPLA`, `MEMBRO_ATIPLA` FROM `ATIVIDADES_PLAT`"; 
 $query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 $result = mysql_fetch_array($query);
+
+
 
 //DADOS SOBRE OS COLABORADORES
 $sqlColab = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFUSU`FROM `perfil_usuario` WHERE `ID_EMP` = 1";
@@ -52,72 +80,95 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 
 		<h1>CRONOGRAMA EMPRESA</h1>
 
-		<form name="selecao_atividades" action="apoio\insere_cronograma_empresa.php" method="post" enctype="multipart/form-data">
+		<form name="selecao_atividades" action="atualizar_cronograma_empresa.php?ID_CROEMPPLA=<?php echo $ID_CROEMPPLA; ?>" method="post" enctype="multipart/form-data">
 
 			<input type="hidden" name="cadastrar" value="1" />
 			
 			<table>
 				<!-- SELEÇÃO DE ATIVIDADES -->
 				<?php
-				if ($registros) {
+				if ($registrosCroEspec) {
 					$i = 0;	
 					while ($result = mysql_fetch_array($query)) {
 						if ($i <= $contElementos) {
-							if ($result['ID_ATIPLA'] == $atividadesEmpresa[$i]) {
-								echo '<tr>
+							echo '<tr>
 									<!--td>  ' . $result['ID_ATIPLA'] . ' </td --> 
 									<td>  ' . $result['TITULO_ATIPLA'] . ' </td> 
 									<td>' . $result['DESCRICAO_ATIPLA'] . '</td>
-									<td>  ' . $result['DURACAO_ATIPLA'] . ' </td>
-									<td>
-										<input type="checkbox" class="checkbox" id="'. $i . '" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
+									<td>  ' . $result['DURACAO_ATIPLA'] . ' </td>';
+							if ($result['ID_ATIPLA'] == $atividadesCroEspec[$i]) {
+								echo '<td>
+										<input type="checkbox" checked class="checkbox" id="'. $i . '" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
 									</td>
 								</tr>';
 								$i++;
+							} else {
+								echo '<td>
+										<input type="checkbox" class="checkbox" id="'. $i . '" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
+									</td>
+								</tr>';
 							}
 						} else { $i++; }
 						$duracao[$i] = $result['DURACAO_ATIPLA'];
 					}
 				} else {echo '<p>Nenhuma atividade disponivel no momento!</p>'; } //ALTERAR
-				?>
-				<tr>
+			?>
+
+			<tr>
 					<td>
 						<label>Hora de Início</label>
-						<input type="time" name="inicio" id="inicio">
+						<input type="time" name="inicio" id="inicio" value="<?php echo $resultCroEspec['INICIO_CROEMPPLA']?>">
 					</td>
 					<td>
 						<label>Hora de Fim</label>
-						<input type="time" name="termino" id="termino">
+						<input type="time" name="termino" id="termino" value="<?php echo $resultCroEspec['FIM_CROEMPPLA']?>">
 					</td>
 					<td>
 						<label>Ativo?</label>
-						<input type="checkbox" name="ativo[]" value="1">
+						<?php
+							if ($resultCroEspec['ATIVO_CROEMPPLA'] == 1) { echo '<input type="checkbox" checked name="ativo[]" value="1">';}
+							else {echo '<input type="checkbox" name="ativo[]" value="1">';}
+						?>
 					</td>
 					
 				</tr>
 				<tr>
 					<td>
 						<label>Segunda</label>
-						<input type="checkbox" name="dias[]" value = "1">
+						<?php 
+							if (in_array(1,  $diasCroEspec)) { echo '<input type="checkbox" checked name="dias[]" value = "1">'; } 
+							else { echo '<input type="checkbox" name="dias[]" value = "1">'; }
+						?>
 					</td>
 					<td>
 						<label>Terca</label>
-						<input type="checkbox" name="dias[]" value = "2">
+						<?php 
+							if (in_array(2,  $diasCroEspec)) { echo '<input type="checkbox" checked name="dias[]" value = "2">'; } 
+							else { echo '<input type="checkbox" name="dias[]" value = "2">'; }
+						?>
 					</td>
 					<td>
 						<label>Quarta</label>
-						<input type="checkbox" name="dias[]" value = "3">
+						<?php 
+							if (in_array(3,  $diasCroEspec)) { echo '<input type="checkbox" checked name="dias[]" value = "3">'; } 
+							else { echo '<input type="checkbox" name="dias[]" value = "3">'; }
+						?>
 					</td>
 					<td>
 						<label>Quinta</label>
-						<input type="checkbox" name="dias[]" value = "4">
+						<?php 
+							if (in_array(4,  $diasCroEspec)) { echo '<input type="checkbox" checked name="dias[]" value = "4">'; } 
+							else { echo '<input type="checkbox" name="dias[]" value = "4">'; }
+						?>
 					</td>
 					<td>
 						<label>Sexta</label>
-						<input type="checkbox" name="dias[]" value = "5">
+						<?php 
+							if (in_array(5,  $diasCroEspec)) { echo '<input type="checkbox" checked name="dias[]" value = "5">'; } 
+							else { echo '<input type="checkbox" name="dias[]" value = "5">'; }
+						?>
 					</td>
 				</tr>
-
 				<!-- Exibe todos os colaboradores que possuem o membro da dor relativo às atividades selecionadas -->
 				<tr>
 					<td><h3>Colaboradores Sugeridos<h3></td>
@@ -161,19 +212,27 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 									if (in_array($membrosAtiPla,  $membrosColab)) {//VERIFICA SE O VALOR ATUAL DO RESULT ESTA ESTE OS MEMBROS SELECIONADOS PELO COLABORADOR
 										echo '<tr>
 											<td>  ' . $resultColab['NOME_PERFUSU'] . ' </td> 
-											<td>' . $resultColab['SOBRENOME_PERFUSU'] . '</td>
-											<td>
-												<input type="checkbox" class="checkbox" name="colaboradores[]" value="' . $resultColab['ID_PERFUSU'] . '">
-											</td>
-											<td>Sugestão</td>
-										</tr>';
+											<td>' . $resultColab['SOBRENOME_PERFUSU'] . '</td>';
+
+										if (in_array($resultColab['ID_PERFUSU'], $participantesCroEspec)) { 
+											echo '<td>
+													<input type="checkbox" class="checkbox" checked name="colaboradores[]" value="' . $resultColab['ID_PERFUSU'] . '">
+												</td>';
+										} else {
+											echo '<td>
+													<input type="checkbox" class="checkbox" name="colaboradores[]" value="' . $resultColab['ID_PERFUSU'] . '">
+												</td>';
+										}
+
+										echo '
+												<td>Sugestão</td>
+											</tr>';
 										$i++;
 									}
 							} else { echo 'o colaborador não possui dores'; }//ALTERAR
 						} else { $i++; }
 					}
 				} else { echo '<p>Nenhum colaborador cadastrado!</p>';}//ALTERAR
-
 
 				//DEMAIS COLABORADORES
 
@@ -212,90 +271,30 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 									if (!in_array($membrosAtiPla2,  $membrosColab2)) {//VERIFICA SE O VALOR ATUAL DO RESULT ESTA ESTE OS MEMBROS SELECIONADOS PELO COLABORADOR
 										echo '<tr>
 											<td>  ' . $resultColab2['NOME_PERFUSU'] . ' </td> 
-											<td>' . $resultColab2['SOBRENOME_PERFUSU'] . '</td>
-											<td>
-												<input type="checkbox" class="checkbox" name="colaboradores[]" value="' . $resultColab2['ID_PERFUSU'] . '">
-											</td>
-										</tr>';
+											<td>' . $resultColab2['SOBRENOME_PERFUSU'] . '</td>';
+										
+										if (in_array($resultColab2['ID_PERFUSU'], $participantesCroEspec)) { 
+											echo '<td>
+													<input type="checkbox" class="checkbox" checked name="colaboradores[]" value="' . $resultColab['ID_PERFUSU'] . '">
+												</td>';
+										} else {
+											echo '<td>
+													<input type="checkbox" class="checkbox" name="colaboradores[]" value="' . $resultColab['ID_PERFUSU'] . '">
+												</td>';
+										}
+
+										echo '</tr>';
 										$i2++;
 									}
 							} else { echo 'o colaborador não possui dores';	}//ALTERAR
 						} else { $i2++; }
 					}
 				} else { echo '<p>Nenhum colaborador cadastrado!</p>'; }//ALTERAR
-
-				 ?>
-
+			?>
 			</table>
 			<input type="submit" value="Salvar Atividades">
 		</form>
 
 		
 	</body>
-
-	<script>
-		$(document).ready(function(){
-			
-			var duracaoAtividades = 0;
-			
-			function pad (str, max) {//FUNÇÃO PARA AUXILIAR A TRANSFORMAR OS MINUTOS EM HORAS
-			  str = str.toString();
-			  return str.length < max ? pad("0" + str, max) : str;
-			}
-			//VARIÁVEIS
-			var cont = 0;
-			var tempoInicio;
-			
-			$('#inicio').focusout(function() {//FUNÇÃO PARA DEIXAR O CAMPO 'TÉRMINO' COM PREENCHIMENTO AUTOMÁTICO
-				var horas = [];
-				
-				tempoInicio = $('#inicio').val(); 
-				if (cont == 0){
-					horas[cont] = $('#inicio').val();
-					defineTermino();
-					cont++;
-				} else {
-					
-					horas[cont] = $('#inicio').val();
-					
-					if (horas[cont-1] != horas[cont]){
-						defineTermino();
-						cont++;
-					} else { console.log('masquecaralha'); }
-				}
-				
-			});
-			function defineTermino(){
-				var horas  = 0;
-				var tmpMin = 0;
-			    var timeParts = tempoInicio.split(":");
-			    horas = horas + parseInt(timeParts[0]);
-			    var minutos =  parseInt(timeParts[1]);
-			    minutos += duracaoAtividades;
-				if (minutos >= 60){
-				    tmpMin = Math.round(minutos / 60);
-				    minutos = minutos % 60;
-		   			minutos = pad(minutos, 2);
-				}
-				tmpMins = horas + parseInt(tmpMin);
-		   		tmpMins = pad(tmpMins, 2);
-				tempoTotal = tmpMins + ":" + minutos;
-				$('#termino').val(tempoTotal);
-			}
-			$('.checkbox').click(function(){
-				var idCheckbox = parseInt($(this).attr('id')); //PEGA O ID DO CHECKBOX CLICADO E TRANSFORMA EM NÚMERO (INT)
- 
-				idCheckbox += 1; //SOMA 1 POIS OS ID DO JSON (abaixo) INICIAM EM 1
-				var thePacket = <?php echo json_encode($duracao) ?>; //Transforma a variável $duracao do PHP em arquivo JSON
-				var duracao = parseInt(thePacket[idCheckbox]);  //ATRIBUI A DURAÇÃO (THEPACKET) DO ITEM CLICADO (IDCHECKBOX) A UMA VARIAVEL
-				if($(this).is(":checked")){ 
-					duracaoAtividades += duracao; //ADICIONA A DURAÇÃO DO ITEM CLICADO
-				} else { duracaoAtividades -= duracao; } //REMOVE A DURAÇÃO DO ITEM CLICADO
-				
-				return duracaoAtividades;
-				defineTermino();
-			});
-		});
-	</script>
-
 </html>
