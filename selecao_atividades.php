@@ -9,7 +9,7 @@ $sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `
 $query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 $registros = mysql_num_rows($query); //CONTADOR DE RESULTADOS TRAZIDOS DO BANCO DE DADOS
 
-$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA`, `PONTOS_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
 
 $queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 $resultEmp = mysql_fetch_array($queryEmp);
@@ -34,6 +34,7 @@ $contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERAN
 
 		<!-- ESTILOS -->
 		<link rel="stylesheet" href="CSS/estilo.css">
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 	</head>
 
@@ -63,22 +64,26 @@ $contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERAN
 						if ($i <= $contElementos) {
 							if ($result['ID_ATIPLA'] == $atividadesEmpresa[$i]) {
 								
-								echo ' <input type="checkbox" name="atividades[]" checked value="' . $result['ID_ATIPLA'] . '">
+								echo ' <input type="checkbox" class="checkbox" name="atividades[]" checked id="' . $result['ID_ATIPLA'] . '" value="' . $result['ID_ATIPLA'] . '">
 									</td>
+									<td><input type="text" class="pontosAti" name="pontos[]" id="input' . $result['ID_ATIPLA'] . '" placeholder="Pontos" /></td>
 								</tr>';
 								$i++;
 
 							} else {
-								echo ' <input type="checkbox" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
+								echo ' <input type="checkbox" class="checkbox" name="atividades[]" id="' . $result['ID_ATIPLA'] . '" value="' . $result['ID_ATIPLA'] . '">
 									</td>
+									<td><input type="text" class="pontosAti" name="pontos[]" id="input' . $result['ID_ATIPLA'] . '" placeholder="Pontos" disabled /></td>
 								</tr>';
 							}
 						} else {
-							echo ' <input type="checkbox" name="atividades[]" value="' . $result['ID_ATIPLA'] . '">
+							echo ' <input type="checkbox" class="checkbox" name="atividades[]" id="' . $result['ID_ATIPLA'] . '" value="' . $result['ID_ATIPLA'] . '">
 								</td>
+								<td><input type="text" class="pontosAti" name="pontos[]" id="input' . $result['ID_ATIPLA'] . '" placeholder="Pontos" disabled /></td>
 							</tr>';
 							$i++;
 						}
+
 					}
 				} else {
 					//ALTERAR
@@ -90,5 +95,19 @@ $contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERAN
 		</form>
 
 	</body>
+
+
+	<script>
+		$(document).ready(function(){
+			$('.checkbox').click(function(){
+				var idCheckbox = parseInt($(this).attr('id')); //PEGA O ID DO CHECKBOX CLICADO E TRANSFORMA EM NÚMERO (INT)
+				if ($(this).is(':checked')){
+					$('#input' + idCheckbox).removeAttr("disabled");
+				} else {
+					$('#input' + idCheckbox).attr("disabled","disabled");
+				}
+			});
+		});
+	</script>
 
 </html>
