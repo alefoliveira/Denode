@@ -212,7 +212,7 @@ $registrosSes = mysql_num_rows($querySes);
 						
 							$membrosColab2 = explode(",",$resultMembro2['MEMBRO_PERFDOR']); //SEPARA OS MEMBROS QUE O COLABORADOR ESPECIFICO SENTE DOR EM UM ARRAY 
 							$registrosMemColab2 =  count($membrosColab2); //CONTA QUANTOS ITENS TEM NO ARRAY
-							
+
 							if($registrosMemColab2 != 0) {//VERIFICA SE TEM ALGUM MEMBRO SALVO NO BD
 
 									$membrosAtiPla2 = mysql_result($query2, $i2, 'MEMBRO_ATIPLA');//SUBSTITUI WHILE PARA GERAR O RESULT, ASSIM, VAI BUSCANDO NA QUERY DAS ATIVIDADES CADA UM DOS MEMBROS MARCADOS LA DE ACORDO COM O VALOR DO $i
@@ -244,19 +244,44 @@ $registrosSes = mysql_num_rows($querySes);
 
 				<?php 
 				if ($registrosSes) {
+					
 					echo '<td><h2>Outras Sessoes Cadastradas</h2></td>';
-					$i = 0;
 
+					$i = 0;
+					$arraySes = '';
+						
+						$resultSes = mysql_fetch_array($querySes);
+						$atividadesSes = explode(",",$resultSes['ATIVIDADES_CROEMPPLA']); //SEPARA OS MEMBROS QUE O COLABORADOR ESPECIFICO SENTE DOR EM UM ARRAY 
+						$registrosAtiSes =  count($atividadesSes); //CONTA QUANTOS ITENS TEM NO ARRAY
+						echo '<tr>';
+
+						echo $registrosAtiSes;
+
+						while ($i < $registrosAtiSes) {
+							
+							$sqlAtiSes = 'SELECT `TITULO_ATIPLA` FROM `atividades_plat` WHERE `ID_ATIPLA` =' . $atividadesSes[$i];
+							$queryAtiSes = mysql_query($sqlAtiSes, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+							$registrosAtiSes = mysql_num_rows($queryAtiSes);
+
+							$totalAtiSes = mysql_result($queryAtiSes, 0, 'TITULO_ATIPLA');
+
+							//$arraySes = $arraySes . ',' . $totalAtiSes;
+
+							//echo $registrosAtiSes;
+							echo '<tr>
+							<td>  ' . $totalAtiSes . ' </td> 
+							</tr>';
+							$i++;
+						}
 					while ($resultSes = mysql_fetch_array($querySes)) {
 
-						echo '<tr>
-							<!--td>  ' . $resultSes['ATIVIDADES_CROEMPPLA'] . ' </td --> 
-							<td>  ' . $resultSes['INICIO_CROEMPPLA'] . ' </td> 
-							<td>' . $resultSes['FIM_CROEMPPLA'] . '</td>
-							<td>  ' . $resultSes['PARTICIPANTES_CROEMPPLA'] . ' </td>
-							<td>' . $resultSes['ATIVO_CROEMPPLA'] . '</td>
-							<td>  ' . $resultSes['DIAS_CROEMPPLA'] . ' </td>
-							<td>';
+						
+						echo '<td>  ' . $resultSes['INICIO_CROEMPPLA'] . ' </td> 
+						<td>' . $resultSes['FIM_CROEMPPLA'] . '</td>
+						<td>  ' . $resultSes['PARTICIPANTES_CROEMPPLA'] . ' </td>
+						<td>' . $resultSes['ATIVO_CROEMPPLA'] . '</td>
+						<td>  ' . $resultSes['DIAS_CROEMPPLA'] . ' </td>
+						</tr>';
 					}
 				} ?>
 
