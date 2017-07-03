@@ -66,47 +66,55 @@ $registrosSes = mysql_num_rows($querySes);
 
 				<?php 
 				if ($registrosSes) {
-					
-					echo '<td><h2>Outras Sessoes Cadastradas</h2></td>';
 
 					$i = 0;
 
 					while ($resultSes = mysql_fetch_array($querySes)) {
 
-						$atividadesSes = explode(",",$resultSes['ATIVIDADES_CROEMPPLA']); //SEPARA OS MEMBROS QUE O COLABORADOR ESPECIFICO SENTE DOR EM UM ARRAY 
+						$atividadesSes = explode(",",$resultSes['ATIVIDADES_CROEMPPLA']); //SEPARA AS ATIVIDADES SELECIONADAS PARA A SESSAO
 						$registrosAtiSes =  count($atividadesSes); //CONTA QUANTOS ITENS TEM NO ARRAY
+
 						echo '<tr>';
 
-						echo 'atividadesSes=' . $resultSes['ATIVIDADES_CROEMPPLA'];
-						//if ($registrosAtiSes > 1) {
-
-						$arraySes = '';
-
-						while ($i < $registrosAtiSes) {
-							
+						for ($i=0; $i < $registrosAtiSes; $i++) { //EXIBE NOME DAS ATIVIDADES AO INVES DE ID
+						
 							$sqlAtiSes = 'SELECT `TITULO_ATIPLA` FROM `atividades_plat` WHERE `ID_ATIPLA` =' . $atividadesSes[$i];
 							$queryAtiSes = mysql_query($sqlAtiSes, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
-							$registrosAtiSes = mysql_num_rows($queryAtiSes);
 
 							$totalAtiSes = mysql_result($queryAtiSes, 0, 'TITULO_ATIPLA');
-
-							$arraySes = $totalAtiSes . ',' . $arraySes;
-							//echo $registrosAtiSes;
-							echo '<tr>
-							<td>  ' . $totalAtiSes . ' </td> 
-							<td>  ' . $arraySes . ' </td> 
-							</tr>';
-							$i++;
-
+							
+							if ($i > 0 && $i < $registrosAtiSes) { echo '<td>, ' . $totalAtiSes . ' </td>';} else { echo '<td>' . $totalAtiSes . ' </td>';}
 						}
-						//}
 
-						echo '<td>  ' . $resultSes['ID_CROEMPPLA'] . ' </td> 
+						$participantesSes = explode(",",$resultSes['PARTICIPANTES_CROEMPPLA']); //SEPARA OS PARTICIPANTES SELECIONADOS PARA A SESSAO 
+						$registrosPartSes =  count($participantesSes); 
+
+						for ($iPart=0; $iPart < $registrosPartSes; $iPart++) { //EXIBE NOME DOS PARTICIPANTES AO INVES DO ID
+
+
+							$sqlPartSes = 'SELECT `NOME_PERFUSU`, `SOBRENOME_PERFUSU` FROM `perfil_usuario` WHERE `ID_PERFUSU` =' . $participantesSes[$iPart];
+							$queryPartSes = mysql_query($sqlPartSes, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+
+							$nomePartSes = mysql_result($queryPartSes, 0, 'NOME_PERFUSU');
+							
+							if ($iPart> 0 && $iPart < $registrosPartSes) {
+								echo '<td>, ' . $nomePartSes . '</td>';
+							} else {
+								echo '<td>' . $nomePartSes . '</td>';
+							}
+						}
+
+						$diasSes = explode(",",$resultSes['DIAS_CROEMPPLA']); //SEPARA OS DIAS SELECIONADOS PARA A SESSAO 
+						if (in_array(1, $diasSes)){ echo '<td>Segunda </td>'; }
+						if (in_array(2, $diasSes)){ echo '<td>Terça </td>'; }
+						if (in_array(3, $diasSes)){ echo '<td>Quarta </td>'; }
+						if (in_array(4, $diasSes)){ echo '<td>Quinta </td>'; }
+						if (in_array(5, $diasSes)){ echo '<td>Sexta</td>'; }
+
+						echo '
 						<td>  ' . $resultSes['INICIO_CROEMPPLA'] . ' </td> 
 						<td>' . $resultSes['FIM_CROEMPPLA'] . '</td>
-						<td>  ' . $resultSes['PARTICIPANTES_CROEMPPLA'] . ' </td>
 						<td>' . $resultSes['ATIVO_CROEMPPLA'] . '</td>
-						<td>  ' . $resultSes['DIAS_CROEMPPLA'] . ' </td>
 						<td> 
 							<a href="apoio/editar_cronograma_empresa.php?ID_CROEMPPLA='.$resultSes['ID_CROEMPPLA'].'" target="blank">
 								Editar
