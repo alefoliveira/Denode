@@ -126,6 +126,22 @@ $registrosSes = mysql_num_rows($querySes);
 							</a>
 						</td>
 						</tr>';
+
+						if (in_array($localtime[6], $diasSes)){ 
+
+							$inicioSes = explode(":",$resultSes['INICIO_CROEMPPLA']);
+
+							if ($localtime[2] <= $inicioSes[0]){
+								if ($localtime[1]-1 <= $inicioSes[1]) {
+									echo '<a href="sessao_cronograma_empresa.php?ID_SESSAO=' . $resultSes['ID_CROEMPPLA'] . '" target="blank">Acessar Sessao</a>'; 
+								}
+
+							} else {
+								echo '<td>LOCALTIME PORRAAA </td>';
+							}
+						}
+							
+
 					}
 				} ?>
 	</body>
