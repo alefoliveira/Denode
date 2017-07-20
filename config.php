@@ -7,3 +7,4 @@ $banco = "0002050";
 
 $localtime = localtime();
 $localtime_assoc = localtime(time(), true);
+
