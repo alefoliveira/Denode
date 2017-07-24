@@ -111,21 +111,24 @@ $registrosSes = mysql_num_rows($querySes);
 						if (in_array(4, $diasSes)){ echo '<td>Quinta </td>'; }
 						if (in_array(5, $diasSes)){ echo '<td>Sexta</td>'; }
 
-
 						if (in_array($localtime[6], $diasSes)){ //VERIFICA SE A SESSAO ACONTECERA NO DIA DE HOJE
 
 							$inicioSes = explode(":",$resultSes['INICIO_CROEMPPLA']); //SEPARA A HORA DOS MINUTOS DO INICIO DA SESSAO
 							
-							echo "\n sessao = " . $inicioSes[0];
-							echo "\n localtime = " . $localtime[2];
+							
 
-							if ($localtime[2] <= $inicioSes[0]){ //VERIFICA SE O HORARIO ATUAL EH MENOR OU IGUAL AO HORARIO DA SESSAO
-								
-								if ($localtime[1]-1 <= $inicioSes[1]) {	
 
-									
+							if ($localtime[2] == $inicioSes[0] || $localtime[2] == $inicioSes[0]-1){ //VERIFICA SE O HORARIO ATUAL EH IGUAL AO HORARIO DA SESSAO OU SE EH 1H ANTES
+								echo "\n sessao = " . ($inicioSes[0]);
+								echo "\n localtime = " . $localtime[2];
 
-								}
+								if ($localtime[1] == 45 || $inicioSes[1]-15 == $localtime[1]) {	
+
+									echo '<a href="confirma_sessao.php?ID_USU=1&ID_SESSAO='. $resultSes['ID_CROEMPPLA'] .'" target="blank">
+										CONFIRMAR PARTICIPACAO
+									</a>';
+
+								} else { echo 'nao falta 15';}
 
 							} else {
 								echo '<td>LOCALTIME PORRAAA </td>';
