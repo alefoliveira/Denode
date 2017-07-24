@@ -122,13 +122,12 @@ $registrosSes = mysql_num_rows($querySes);
 								echo "\n sessao = " . ($inicioSes[0]);
 								echo "\n localtime = " . $localtime[2];
 
-								if ($localtime[1] == 45 || $inicioSes[1]-15 == $localtime[1]) {	
+								if ($localtime[1] == 45 || $inicioSes[1]-15 == $localtime[1]) {	//VERIFICA SE FALTAM 15 MINUTOS PARA A SESSAO COMECAR
 
 									echo '<a href="confirma_sessao.php?ID_USU=1&ID_SESSAO='. $resultSes['ID_CROEMPPLA'] .'" target="blank">
 										CONFIRMAR PARTICIPACAO
 									</a>';
-
-								} else { echo 'nao falta 15';}
+								}  else { echo 'nao falta 15';}
 
 							} else {
 								echo '<td>LOCALTIME PORRAAA </td>';
