@@ -111,6 +111,27 @@ $registrosSes = mysql_num_rows($querySes);
 						if (in_array(4, $diasSes)){ echo '<td>Quinta </td>'; }
 						if (in_array(5, $diasSes)){ echo '<td>Sexta</td>'; }
 
+
+						if (in_array($localtime[6], $diasSes)){ //VERIFICA SE A SESSAO ACONTECERA NO DIA DE HOJE
+
+							$inicioSes = explode(":",$resultSes['INICIO_CROEMPPLA']); //SEPARA A HORA DOS MINUTOS DO INICIO DA SESSAO
+							
+							echo "\n sessao = " . $inicioSes[0];
+							echo "\n localtime = " . $localtime[2];
+
+							if ($localtime[2] <= $inicioSes[0]){ //VERIFICA SE O HORARIO ATUAL EH MENOR OU IGUAL AO HORARIO DA SESSAO
+								
+								if ($localtime[1]-1 <= $inicioSes[1]) {	
+
+									
+
+								}
+
+							} else {
+								echo '<td>LOCALTIME PORRAAA </td>';
+							}
+						}
+
 						echo '
 						<td>  ' . $resultSes['INICIO_CROEMPPLA'] . ' </td> 
 						<td>' . $resultSes['FIM_CROEMPPLA'] . '</td>
@@ -127,53 +148,6 @@ $registrosSes = mysql_num_rows($querySes);
 						</td>
 						</tr>';
 
-						if (in_array($localtime[6], $diasSes)){ 
-
-							$inicioSes = explode(":",$resultSes['INICIO_CROEMPPLA']);
-
-							if ($localtime[2] <= $inicioSes[0]){
-								if ($localtime[1]-1 <= $inicioSes[1]) {
-
-
-
-									//PAREI AQUI
-
-									require_once('phpMailer/class.phpmailer.php'); //chama a classe de onde você a colocou.
-
-									$mail = new PHPMailer(); // instancia a classe PHPMailer
-
-									$mail->IsSMTP();
-
-									//configuração do gmail
-									$mail->Port = '465'; //porta usada pelo gmail.
-									$mail->Host = 'smtp.gmail.com'; 
-									$mail->IsHTML(true); 
-									$mail->Mailer = 'smtp'; 
-									$mail->SMTPSecure = 'ssl';
-
-									//configuração do usuário do gmail
-									$mail->SMTPAuth = true; 
-									$mail->Username = 'erika.cs30@gmail.com'; // usuario gmail.   
-									$mail->Password = '152436kinha'; // senha do email.
-
-									$mail->SingleTo = true; 
-									//echo '<a href="sessao_cronograma_empresa.php?ID_SESSAO=' . $resultSes['ID_CROEMPPLA'] . '" target="blank">Acessar Sessao</a>'; 
-									$mail->From = "Mensagem de email, pode vim por uma variavel."; 
-									$mail->FromName = "Nome do remetente."; 
-
-									$mail->addAddress("scarvalho.erika@outlook.com"); // email do destinatario.
-
-									$mail->Subject = "Aqui vai o assunto do email, pode vim atraves de variavel."; 
-									$mail->Body = "Aqui vai a mensagem, que tambem pode vim por variavel.";
-
-									if(!$mail->Send())
-									    echo "Erro ao enviar Email:" . $mail->ErrorInfo;
-								}
-
-							} else {
-								echo '<td>LOCALTIME PORRAAA </td>';
-							}
-						}
 							
 
 					}

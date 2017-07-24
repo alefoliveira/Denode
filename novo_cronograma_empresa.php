@@ -15,7 +15,7 @@ $contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERAN
 //SELECIONA ATIVIDADES PARA FAZER RELAÇÃO COM AQUELAS APROVADAS PELA EMPRESA
 $sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `DURACAO_ATIPLA`, `MEMBRO_ATIPLA` FROM `ATIVIDADES_PLAT`"; 
 $query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
-$result = mysql_fetch_array($query);
+
 
 //DADOS SOBRE OS COLABORADORES
 $sqlColab = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFUSU`FROM `perfil_usuario` WHERE `ID_EMP` = 1";
@@ -61,6 +61,7 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 				<?php
 				if ($registros) {
 					$i = 0;	
+
 					while ($result = mysql_fetch_array($query)) {
 						if ($i <= $contElementos) {
 							if ($result['ID_ATIPLA'] == $atividadesEmpresa[$i]) {
