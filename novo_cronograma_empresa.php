@@ -1,30 +1,30 @@
 <?php
-require 'config.php';
-$conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
-mysql_select_db($banco);
+	require 'config.php';
+	$conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
+	mysql_select_db($banco);
 
-//DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
-$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
-$queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
-$resultEmp = mysql_fetch_array($queryEmp);
-$registros = mysql_num_rows($queryEmp);
-$atividadesEmpresa = explode(",",$resultEmp[0]); //SEPARA ATIVIDADES MARCADAS PELA EMPRESA EM UM ARRAY PARA EXIBIR
-$registrosAtividades =  count($atividadesEmpresa); //CONTA QUANTOS ITENS TEM NO ARRAY
-$contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERANDO QUE O ARRAY TEM O ITEM DE INDICE 0
+	//DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
+	$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+	$queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+	$resultEmp = mysql_fetch_array($queryEmp);
+	$registros = mysql_num_rows($queryEmp);
+	$atividadesEmpresa = explode(",",$resultEmp[0]); //SEPARA ATIVIDADES MARCADAS PELA EMPRESA EM UM ARRAY PARA EXIBIR
+	$registrosAtividades =  count($atividadesEmpresa); //CONTA QUANTOS ITENS TEM NO ARRAY
+	$contElementos = $registrosAtividades-1; //REMOVE UM ITEM DO CONTADOR CONSIDERANDO QUE O ARRAY TEM O ITEM DE INDICE 0
 
-//SELECIONA ATIVIDADES PARA FAZER RELAÇÃO COM AQUELAS APROVADAS PELA EMPRESA
-$sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `DURACAO_ATIPLA`, `MEMBRO_ATIPLA` FROM `ATIVIDADES_PLAT`"; 
-$query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+	//SELECIONA ATIVIDADES PARA FAZER RELAÇÃO COM AQUELAS APROVADAS PELA EMPRESA
+	$sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `DURACAO_ATIPLA`, `MEMBRO_ATIPLA` FROM `ATIVIDADES_PLAT`"; 
+	$query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 
 
-//DADOS SOBRE OS COLABORADORES
-$sqlColab = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFUSU`FROM `perfil_usuario` WHERE `ID_EMP` = 1";
-$queryColab = mysql_query($sqlColab, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
-$registrosColab = mysql_num_rows($queryColab);
+	//DADOS SOBRE OS COLABORADORES
+	$sqlColab = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFUSU`FROM `perfil_usuario` WHERE `ID_EMP` = 1";
+	$queryColab = mysql_query($sqlColab, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+	$registrosColab = mysql_num_rows($queryColab);
 
-$sqlColab2 = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFUSU`FROM `perfil_usuario` WHERE `ID_EMP` = 1";
-$queryColab2 = mysql_query($sqlColab2, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
-$registrosColab2 = mysql_num_rows($queryColab2);
+	$sqlColab2 = "SELECT `ID_PERFUSU`,`CPF_PERFUSU`, `NOME_PERFUSU`, `SOBRENOME_PERFUSU`FROM `perfil_usuario` WHERE `ID_EMP` = 1";
+	$queryColab2 = mysql_query($sqlColab2, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+	$registrosColab2 = mysql_num_rows($queryColab2);
 
 ?>
 
@@ -44,6 +44,7 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 		<link rel="stylesheet" href="CSS/estilo.css">
 
 		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="js/validacao_form.js"></script>
 
 		<!-- <script> window.jQuery || document.write('<script src="js/jquery.js"></script>') </script> <!-- Chamada de fallback caso o servidor do jQuery nao carregue -->
 	</head>
@@ -84,7 +85,7 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 				<tr>
 					<td>
 						<label>Hora de Início</label>
-						<input type="time" name="inicio" id="inicio">
+						<input class="obrigatorio" type="time" name="inicio" id="inicio">
 					</td>
 					<td>
 						<label>Hora de Fim</label>
@@ -99,23 +100,23 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 				<tr>
 					<td>
 						<label>Segunda</label>
-						<input type="checkbox" name="dias[]" value = "1">
+						<input class="obrigatorio" type="checkbox" name="dias[]" value = "1">
 					</td>
 					<td>
 						<label>Terca</label>
-						<input type="checkbox" name="dias[]" value = "2">
+						<input class="obrigatorio" type="checkbox" name="dias[]" value = "2">
 					</td>
 					<td>
 						<label>Quarta</label>
-						<input type="checkbox" name="dias[]" value = "3">
+						<input class="obrigatorio" type="checkbox" name="dias[]" value = "3">
 					</td>
 					<td>
 						<label>Quinta</label>
-						<input type="checkbox" name="dias[]" value = "4">
+						<input class="obrigatorio" type="checkbox" name="dias[]" value = "4">
 					</td>
 					<td>
 						<label>Sexta</label>
-						<input type="checkbox" name="dias[]" value = "5">
+						<input class="obrigatorio" type="checkbox" name="dias[]" value = "5">
 					</td>
 				</tr>
 
@@ -164,7 +165,7 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 											<td>  ' . $resultColab['NOME_PERFUSU'] . ' </td> 
 											<td>' . $resultColab['SOBRENOME_PERFUSU'] . '</td>
 											<td>
-												<input type="checkbox" class="checkbox" name="colaboradores[]" value="' . $resultColab['ID_PERFUSU'] . '">
+												<input type="checkbox" class="checkbox obrigatorio" name="colaboradores[]" value="' . $resultColab['ID_PERFUSU'] . '">
 											</td>
 											<td>Sugestão</td>
 										</tr>';

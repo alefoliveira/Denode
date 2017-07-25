@@ -141,9 +141,7 @@ $registrosSes = mysql_num_rows($querySes);
 
 									echo '<a href="sessao.php?ID_SESSAO='. $resultSes['ID_CROEMPPLA'] .'" target="blank">
 										ACESSAR SESSAO
-									</a>';
-
-
+									</a>'; //ENVIA LINK DA SESSAO PARA ADMIN
 								}
 
 							} else {
