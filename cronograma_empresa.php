@@ -127,7 +127,24 @@ $registrosSes = mysql_num_rows($querySes);
 									echo '<a href="confirma_sessao.php?ID_USU=1&ID_SESSAO='. $resultSes['ID_CROEMPPLA'] .'" target="blank">
 										CONFIRMAR PARTICIPACAO
 									</a>';
-								}  else { echo 'nao falta 15';}
+								}  else if ($localtime[1] == 55 || $inicioSes[1]-5 == $localtime[1]) { 
+
+									$sqlConfSes = "SELECT `CONFIRMADOS_SESPLA` FROM `sessao_plat` WHERE `ID_CROEMPPLA` = ". $resultSes['ID_CROEMPPLA']; //SELECIONA TODOS OS COLABORADORES QUE CONFIRMARAM PRESENCA NA SESSAO
+									$queryConfSes = mysql_query($sqlConfSes, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
+									$resultConfSes = mysql_fetch_array($queryConfSes);
+
+									$confirmadosSes = explode(",",$resultConfSes['CONFIRMADOS_SESPLA']); //COLOCA OS CONFIRMADOS EM UM ARRAY
+									
+									$adminSes = array_rand($confirmadosSes, 1); //SORTEIA UM INDICE ENTRE OS POSSIVEIS NO ARRAY DE CONFIRMADOS
+
+									echo ' admin =' . $confirmadosSes[$adminSes]; //SELECIONA O CONFIRMADO SORTEADO NA VARIAVEL $adminSes
+
+									echo '<a href="sessao.php?ID_SESSAO='. $resultSes['ID_CROEMPPLA'] .'" target="blank">
+										ACESSAR SESSAO
+									</a>';
+
+
+								}
 
 							} else {
 								echo '<td>LOCALTIME PORRAAA </td>';
