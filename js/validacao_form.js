@@ -3,13 +3,19 @@ $(document).ready(function(){
 		
 		$nomeElemento = $(this).attr('name');
 
-		$elementoAnterior = $(this).prev();
+		$elementoAnterior = $(this).prev().attr("[type='checkbox[name='" + $nomeElemento + "']");
 
 		console.log($elementoAnterior);
 
-		if ($elementoAnterior.is(':checkbox')) {console.log($nomeElemento);
-			if (!$('input[name="' + $nomeElemento + '"]').is(':checked')){
-				console.log($nomeElemento);
+		if (!$("[type='checkbox[name='" + $nomeElemento + "']").is(":checked")){
+
+			$(".obrigatorio").css('border', '#f0f 1px solid')
+		}
+
+		if ($(this).prev().attr("[type='checkbox[name='" + $nomeElemento + "']")) {
+			console.log($nomeElemento);
+			if ($('input[name="' + $nomeElemento + '"]').is(':checked')){
+				
 			}
 		}
 	});
