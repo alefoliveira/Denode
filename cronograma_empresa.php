@@ -6,15 +6,14 @@ mysql_select_db($banco);
 session_start();//INICIO SESSAO
 $nome = $_SESSION['NOME_PERFUSU'];
 $idUsu = $_SESSION["ID_PERFUSU"];
-$tipoUsu = $_SESSION["TIPO_PERFUSU"];
 
 echo "bem vindo ". $nome; //ALTERAR
 
-$sqlUsu = "SELECT `TIPO_PERFUSU` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
+$sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
 $queryUsu = mysql_query($sqlUsu, $conexao);
 $resultUsu = mysql_fetch_array($queryUsu);
 
-if ($resultUsu["TIPO_PERFUSU"] = 2) {
+if ($resultUsu["TIPO_PERFUSU"] == 2) {
 	echo 'Página não liberada';
 } else {
 

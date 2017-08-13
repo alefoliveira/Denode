@@ -3,6 +3,12 @@
 
 require '../config.php';
 
+session_start();//INICIO SESSAO
+$idUsu = $_SESSION["ID_PERFUSU"];
+$sqlUsu = "SELECT `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
+$queryUsu = mysql_query($sqlUsu, $conexao);
+$resultUsu = mysql_fetch_array($queryUsu);
+
 $ID_CROEMPPLA = (int) $_GET['ID_CROEMPPLA'];
 
 //INSERE ATIVIDADES SELECIONADAS NO BANCO

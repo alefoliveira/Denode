@@ -1,6 +1,12 @@
 <?php
 require '../config.php';
 
+session_start();//INICIO SESSAO
+$idUsu = $_SESSION["ID_PERFUSU"];
+$sqlUsu = "SELECT `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
+$queryUsu = mysql_query($sqlUsu, $conexao);
+$resultUsu = mysql_fetch_array($queryUsu);
+
 if (!isset($_GET['ID_CROEMPPLA'])) {
     echo('Postagem não existente ( <a href="../cronograma_empresa.php">TESTE</a> )');
 }

@@ -3,17 +3,17 @@
 
 require '../config.php';
 
+session_start();//INICIO SESSAO
+$idUsu = $_SESSION["ID_PERFUSU"];
+$sqlUsu = "SELECT `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
+$queryUsu = mysql_query($sqlUsu, $conexao);
+$resultUsu = mysql_fetch_array($queryUsu);
+
 //INSERE ATIVIDADES SELECIONADAS NO BANCO
 if (isset($_POST['cadastrar'])) {
 
 	$conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
 	mysql_select_db($banco);
-	/*
-	$inicioCro = "SELECT `INICIO_CROEMPPLA` from CRONOGRAMA_EMPRESA_PLAT WHERE ID_EMP = 1"; //SELECIONA AS HORAS DE INICIO PARA VER SE ESTA REPETIDO
-	$queryInicioCro = mysql_query($inicioCro, $conexao);
-	$registrosInicioCro = mysql_num_rows($queryInicioCro);
-*/
-
 	
 	if(isset($_POST['atividades'])){
 		 		 
