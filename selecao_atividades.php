@@ -18,8 +18,7 @@ require 'config.php';
 		echo 'Página não liberada';
 	} else {
 
-
-		$sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `DURACAO_ATIPLA` FROM `ATIVIDADES_PLAT` ORDER BY `ID_ATIPLA`"; 
+		$sql = "SELECT `ID_ATIPLA`, `TITULO_ATIPLA`, `COR_ATIPLA`, `DESCRICAO_ATIPLA`, `DURACAO_ATIPLA`, `IMAGEM_ATIPLA` FROM `ATIVIDADES_PLAT` ORDER BY `ID_ATIPLA`"; 
 		$query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 		$registros = mysql_num_rows($query); //CONTADOR DE RESULTADOS TRAZIDOS DO BANCO DE DADOS
 
@@ -47,66 +46,76 @@ require 'config.php';
 				<title>ADMIN - MINIMAMENTE</title>
 
 				<!-- ESTILOS -->
-				<link rel="stylesheet" href="CSS/estilo.css">
+				<link rel="stylesheet" href="CSS/estilo_selecaoAtividades.css">
 				<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 			</head>
 
 			<body>
 
-				<h1>ATIVIDADES DISPONÍVEIS</h1>
+				<section id="conteudo">
 
-				<form name="selecao_atividades" action="apoio\insere_atividades_selecionadas.php" method="post" enctype="multipart/form-data">
+					<h1>ATIVIDADES DISPONÍVEIS</h1>
 
-					<input type="hidden" name="cadastrar" value="1" />
-					
-					<table>
-						<?php
-						if ($registros) {
+					<form name="selecao_atividades" action="apoio\insere_atividades_selecionadas.php" method="post" enctype="multipart/form-data">
 
-							$i = 0;
+						<input type="hidden" name="cadastrar" value="1" />
+						
+						<section id="sec_atividades">
+							<?php
+							if ($registros) {
 
-							while ($result = mysql_fetch_array($query)) {
+								$i = 0;
 
-								echo '<tr>
-									<!--td>  ' . $result['ID_ATIPLA'] . ' </td --> 
-									<td>  ' . $result['TITULO_ATIPLA'] . ' </td> 
-									<td>' . $result['DESCRICAO_ATIPLA'] . '</td>
-									<td>  ' . $result['DURACAO_ATIPLA'] . ' </td>
-									<td>';
-								
-								if ($i <= $contElementos) {
-									if ($result['ID_ATIPLA'] == $atividadesEmpresa[$i]) {
+								while ($result = mysql_fetch_array($query)) {
+
+									echo '<article id="art_atividade">
+										<img id="exercicio" src="' . $result['IMAGEM_ATIPLA'] . '" />
+										<section id="sec_foco">
+											<img src="img/icone_teste.png" /> <!-- ALTERAR -->
+											<p id="duracao">' . $result['DURACAO_ATIPLA'] . '</p>
+										</section>
 										
-										echo ' <input type="checkbox" class="checkbox" name="atividades[]" checked id="' . $result['ID_ATIPLA'] . '" value="' . $result['ID_ATIPLA'] . '">
-											</td>
-											<td><input type="text" class="pontosAti" name="pontos[]" id="input' . $result['ID_ATIPLA'] . '" placeholder="Pontos" /></td>
-										</tr>';
-										$i++;
+										<section id="sec_informacoes">
+											<h3>  ' . $result['TITULO_ATIPLA'] . ' </h3> 
+											<p id="desc_atividdade">' . $result['DESCRICAO_ATIPLA'] . '</p>';
+									
+										if ($i <= $contElementos) {
+											if ($result['ID_ATIPLA'] == $atividadesEmpresa[$i]) {
+												
+												echo ' <input type="checkbox" class="checkbox" name="atividades[]" checked id="' . $result['ID_ATIPLA'] . '" value="' . $result['ID_ATIPLA'] . '">
+														</td>
+														<td><input type="text" class="pontosAti" name="pontos[]" id="input' . $result['ID_ATIPLA'] . '" placeholder="Pontos" /></td>
+													</section>
+												</article>';
+												$i++;
 
-									} else {
-										echo ' <input type="checkbox" class="checkbox" name="atividades[]" id="' . $result['ID_ATIPLA'] . '" value="' . $result['ID_ATIPLA'] . '">
-											</td>
-											<td><input type="text" class="pontosAti" name="pontos[]" id="input' . $result['ID_ATIPLA'] . '" placeholder="Pontos" disabled /></td>
-										</tr>';
-									}
-								} else {
-									echo ' <input type="checkbox" class="checkbox" name="atividades[]" id="' . $result['ID_ATIPLA'] . '" value="' . $result['ID_ATIPLA'] . '">
-										</td>
-										<td><input type="text" class="pontosAti" name="pontos[]" id="input' . $result['ID_ATIPLA'] . '" placeholder="Pontos" disabled /></td>
-									</tr>';
-									$i++;
+											} else {
+												echo ' <input type="checkbox" class="checkbox" name="atividades[]" id="' . $result['ID_ATIPLA'] . '" value="' . $result['ID_ATIPLA'] . '">
+														</td>
+														<td><input type="text" class="pontosAti" name="pontos[]" id="input' . $result['ID_ATIPLA'] . '" placeholder="Pontos" disabled /></td>
+													</section>
+												</article>';
+											}
+										} else {
+											echo ' <input type="checkbox" class="checkbox" name="atividades[]" id="' . $result['ID_ATIPLA'] . '" value="' . $result['ID_ATIPLA'] . '">
+													</td>
+													<td><input type="text" class="pontosAti" name="pontos[]" id="input' . $result['ID_ATIPLA'] . '" placeholder="Pontos" disabled /></td>
+												</section>
+											</article>';
+											$i++;
+										}
+
 								}
+							} else {
+								//ALTERAR
+								echo '<p>Nenhuma atividade disponivel no momento!</p>';
+							} ?>
+						</section>
 
-							}
-						} else {
-							//ALTERAR
-							echo '<p>Nenhuma atividade disponivel no momento!</p>';
-						} ?>
-					</table>
-
-					<input type="submit" value="Salvar Atividades">
-				</form>
+						<input type="submit" value="Salvar Atividades">
+					</form>
+				</section>
 
 			</body>
 

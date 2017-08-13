@@ -1,0 +1,47 @@
+#conteudo {
+	margin: 7.5%;
+}
+
+#sec_atividades {
+	padding: 7.5%;
+}
+
+	#sec_atividades #art_atividade{
+		width:30%;
+		background-color: #eee;
+		margin-right:5%;
+		float: left;
+		text-align: center;
+	}
+
+		#sec_atividades #art_atividade:nth-child(3){
+			margin-right:0%;
+		}
+
+
+		#sec_atividades #art_atividade #exercicio{
+			width:80%;
+			float: left;
+		}
+		
+		#sec_atividades #art_atividade #sec_foco{
+			width: 10%;
+		    padding: 0 5%;
+		    float: right;
+		}
+		
+			#art_atividade #sec_foco img{
+				width:100%;
+			}
+
+		#sec_atividades #art_atividade #sec_informacoes{
+		    padding: 5%;
+		    width:90%;
+		    height: 150px;	
+		    overflow: scroll;
+		}
+
+		#art_atividade #sec_informacoes h3,
+		#art_atividade #sec_informacoes p{
+		    margin: 0px;
+		}
