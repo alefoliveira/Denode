@@ -19,7 +19,7 @@ if ($resultUsu["TIPO_PERFUSU"] = 2) {
 } else {
 
 	//DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
-	$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+	$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = " . $resultUsu["ID_EMP"];
 	$queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 	$resultEmp = mysql_fetch_array($queryEmp);
 	$registros = mysql_num_rows($queryEmp);

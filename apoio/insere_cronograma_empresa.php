@@ -29,7 +29,7 @@ if (isset($_POST['cadastrar'])) {
 		 	$ativo = implode(",",$listaAtivos);
 	 	}
 		
-		$sqlAtiCro = "INSERT INTO `cronograma_empresa_plat`(`ID_EMP`, `ATIVIDADES_CROEMPPLA`, `INICIO_CROEMPPLA`, `FIM_CROEMPPLA`, `PARTICIPANTES_CROEMPPLA`, `ATIVO_CROEMPPLA`, `DIAS_CROEMPPLA`) VALUES (1,'". $atividadesSelecionadas . "','" . $_POST['inicio'] . "','" . $_POST['termino'] . "','". $colabSelecionados . "', " . $ativo . ",'" . $diasSelecionados . "')";//ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+		$sqlAtiCro = "INSERT INTO `cronograma_empresa_plat`(`ID_EMP`, `ATIVIDADES_CROEMPPLA`, `INICIO_CROEMPPLA`, `FIM_CROEMPPLA`, `PARTICIPANTES_CROEMPPLA`, `ATIVO_CROEMPPLA`, `DIAS_CROEMPPLA`) VALUES (" . $resultUsu["ID_EMP"] . ",'". $atividadesSelecionadas . "','" . $_POST['inicio'] . "','" . $_POST['termino'] . "','". $colabSelecionados . "', " . $ativo . ",'" . $diasSelecionados . "')";
 
 		echo $sqlAtiCro; //ALTERAR
 

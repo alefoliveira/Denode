@@ -30,7 +30,7 @@ $conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
 mysql_select_db($banco);
 
 //DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
-$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = " . $resultUsu["ID_EMP"];
 $queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 $resultEmp = mysql_fetch_array($queryEmp);
 $registros = mysql_num_rows($queryEmp);
@@ -187,7 +187,7 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 				<?php
 
 				//DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
-				$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+				$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = " . $resultUsu["ID_EMP"]; 
 				$queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 				$resultEmp = mysql_fetch_array($queryEmp);
 				$registros = mysql_num_rows($queryEmp);
@@ -246,7 +246,7 @@ $registrosColab2 = mysql_num_rows($queryColab2);
 				//DEMAIS COLABORADORES
 
 				//DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
-				$sqlEmp2 = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+				$sqlEmp2 = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = " . $resultUsu["ID_EMP"]; 
 				$queryEmp2 = mysql_query($sqlEmp2, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 				$resultEmp2 = mysql_fetch_array($queryEmp2);
 				$registros2 = mysql_num_rows($queryEmp2);

@@ -10,7 +10,7 @@ if (isset($_POST['cadastrar'])) {
 
 	$conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
 	mysql_select_db($banco);
-	$atividadesCro = "SELECT `ID_EMP` from CRONOGRAMA_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+	$atividadesCro = "SELECT `ID_EMP` from CRONOGRAMA_EMPRESA_PLAT WHERE ID_EMP = " . $resultUsu["ID_EMP"];
 	$queryAtiCro = mysql_query($atividadesCro, $conexao);
 	$registros = mysql_num_rows($queryAtiCro);
 

@@ -11,7 +11,7 @@ require 'config.php';
 	
 	echo "bem vindo ". $nome; //ALTERAR
 
-	$sqlUsu = "SELECT `TIPO_PERFUSU` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
+	$sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
 	$queryUsu = mysql_query($sqlUsu, $conexao);
 	$resultUsu = mysql_fetch_array($queryUsu);
 
@@ -24,7 +24,7 @@ require 'config.php';
 		$query = mysql_query($sql, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 		$registros = mysql_num_rows($query); //CONTADOR DE RESULTADOS TRAZIDOS DO BANCO DE DADOS
 
-		$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA`, `PONTOS_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
+		$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA`, `PONTOS_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = " . $resultUsu["ID_EMP"];
 
 		$queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
 		$resultEmp = mysql_fetch_array($queryEmp);
