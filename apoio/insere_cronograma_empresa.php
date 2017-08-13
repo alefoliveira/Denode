@@ -31,18 +31,29 @@ if (isset($_POST['cadastrar'])) {
 		
 		$sqlAtiCro = "INSERT INTO `cronograma_empresa_plat`(`ID_EMP`, `ATIVIDADES_CROEMPPLA`, `INICIO_CROEMPPLA`, `FIM_CROEMPPLA`, `PARTICIPANTES_CROEMPPLA`, `ATIVO_CROEMPPLA`, `DIAS_CROEMPPLA`) VALUES (1,'". $atividadesSelecionadas . "','" . $_POST['inicio'] . "','" . $_POST['termino'] . "','". $colabSelecionados . "', " . $ativo . ",'" . $diasSelecionados . "')";//ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
 
-		echo $sqlAtiCro;
+		echo $sqlAtiCro; //ALTERAR
 
 		$queryAtiCro = mysql_query($sqlAtiCro, $conexao);
 		//header("Location: ../cronograma_empresa.php"); /* REDIRECIONA USUARIO PARA MESMA PAGINA DE SELECAO */
 
-	} else {
+		$descNot = "Você foi adicionado na sessão TITULO DA SESSAO"; //ALTERAR PARA VARIAVEL TITULO
+
+		$qtdColab = count($colabSelecionados);
+
+		$dataAtual =  date_create('now')->format('Y-m-d H:i:s');	
+		echo $dataAtual;
+		$i = 0;
+			
+			while ($i < $qtdColab){
+				$sqlAtiNot = "INSERT INTO `notificacoes_plat`(`DESCRICAO_NOTPLA`, `REMETENTE_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA`) VALUES ('Você foi adicionado na sessão TITULO DA SESSAO','Administrador', '" . $listaColabCro[$i] . "', '" . $dataAtual . "' , 'img/icone_teste.png' , '#f0f', 0)";
+
+				$queryAtiNot = mysql_query($sqlAtiNot, $conexao);
+
+				$i++;
+			}
+ 
+		} else {
 		echo 'Voce nao selecionou nenhuma atividade ';
 	}
 	
-
-}
-
-
-
-?>
+} ?>
