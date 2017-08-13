@@ -38,18 +38,20 @@ if (isset($_POST['cadastrar'])) {
 
 		$descNot = "Você foi adicionado na sessão TITULO DA SESSAO"; //ALTERAR PARA VARIAVEL TITULO
 
-		$qtdColab = count($colabSelecionados);
+		$qtdColab = count($listaColabCro);
 
 		$dataAtual =  date_create('now')->format('Y-m-d H:i:s');	
-		echo $dataAtual;
+		var_dump($listaColabCro);
 		$i = 0;
 			
 			while ($i < $qtdColab){
+				echo $qtdColab;
 				$sqlAtiNot = "INSERT INTO `notificacoes_plat`(`DESCRICAO_NOTPLA`, `REMETENTE_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA`) VALUES ('Você foi adicionado na sessão TITULO DA SESSAO','Administrador', '" . $listaColabCro[$i] . "', '" . $dataAtual . "' , 'img/icone_teste.png' , '#f0f', 0)";
 
 				$queryAtiNot = mysql_query($sqlAtiNot, $conexao);
 
 				$i++;
+				echo $i;
 			}
  
 		} else {
