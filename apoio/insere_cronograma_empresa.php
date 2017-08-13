@@ -36,23 +36,24 @@ if (isset($_POST['cadastrar'])) {
 		$queryAtiCro = mysql_query($sqlAtiCro, $conexao);
 		//header("Location: ../cronograma_empresa.php"); /* REDIRECIONA USUARIO PARA MESMA PAGINA DE SELECAO */
 
-		$descNot = "Você foi adicionado na sessão 'TITULO DA SESSAO'"; //ALTERAR PARA VARIAVEL TITULO
+		$descNot = "Você foi adicionado na sessão TITULO DA SESSAO"; //ALTERAR PARA VARIAVEL TITULO
 
-		$qtdColab = count ($colabSelecionados);
+		$qtdColab = count($colabSelecionados);
 
-		for ($i = 0, $i < $qtdColab; $i++){
-			$sqlAtiNot = "INSERT INTO `notificacoes_plat`(`DESCRICAO_NOTPLA`, `REMETENTE_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`) VALUES (" . $descNot . ",'Administrador'," . $listaColabCro[$i] . ", " . now() . ", 'img/icone_teste.png' , '#f0f')";
+		$dataAtual =  date_create('now')->format('Y-m-d H:i:s');	
+		echo $dataAtual;
+		$i = 0;
+			
+			while ($i < $qtdColab){
+				$sqlAtiNot = "INSERT INTO `notificacoes_plat`(`DESCRICAO_NOTPLA`, `REMETENTE_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA`) VALUES ('Você foi adicionado na sessão TITULO DA SESSAO','Administrador', '" . $listaColabCro[$i] . "', '" . $dataAtual . "' , 'img/icone_teste.png' , '#f0f', 0)";
 
-			$queryAtiCro = mysql_query($sqlAtiCro, $conexao);
-		}
+				$queryAtiNot = mysql_query($sqlAtiNot, $conexao);
+
+				$i++;
+			}
  
 		} else {
 		echo 'Voce nao selecionou nenhuma atividade ';
 	}
 	
-
-}
-
-
-
-?>
+} ?>
