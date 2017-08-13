@@ -3,6 +3,12 @@
 	$conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
 	mysql_select_db($banco);
 
+	session_start();
+	$nome = $_SESSION['NOME_PERFUSU'];
+	$_SESSION["ID_PERFUSU"];
+	echo "bem vindo ".$nome;
+
+
 	//DADOS SOBRE AS ATIVIDADES LIBERADAS PELA EMPRESA
 	$sqlEmp = "SELECT `ATIVIDADES_ATIEMPPLA` from ATIVIDADES_EMPRESA_PLAT WHERE ID_EMP = 1"; //ALTERAR PARA COLOCAR ID DA EMPRESA TRAZIDO NA SESSION
 	$queryEmp = mysql_query($sqlEmp, $conexao); //ESTABELECE CONEXAO ENTRE QUERY ($sql) E O BANCO DE DADOS
