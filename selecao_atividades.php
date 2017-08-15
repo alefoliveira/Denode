@@ -53,6 +53,9 @@ require 'config.php';
 
 			<body>
 
+
+			<?php include ('home-view.php'); ?>
+
 				<section id="conteudo">
 
 					<h1>ATIVIDADES DISPONÍVEIS</h1>
