@@ -69,7 +69,7 @@ require 'config.php';
 
 								while ($result = mysql_fetch_array($query)) {
 
-									echo '<article id="art_atividade">
+									echo '<a href="#popUp_Atividade" id="art_atividade">
 										<img id="exercicio" src="' . $result['IMAGEM_ATIPLA'] . '" />
 										<section id="sec_foco">
 											<img src="img/icone_teste.png" /> <!-- ALTERAR -->
@@ -102,7 +102,7 @@ require 'config.php';
 													</td>
 													<td><input type="text" class="pontosAti" name="pontos[]" id="input' . $result['ID_ATIPLA'] . '" placeholder="Pontos" disabled /></td>
 												</section>
-											</article>';
+											</a>';
 											$i++;
 										}
 
