@@ -203,7 +203,7 @@ class Model {
 			$found = true;
 		}
 		return $found;
-
+	}
 	public static function getFullpath($modelname){
 		return Admin::$root."admin/".$modelname.".php";
 	}
