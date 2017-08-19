@@ -87,11 +87,11 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 		} 
 
 
-		$sqlNotVis2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE  `STATUS_NOTPLA` = 1"; //SELECIONA TODAS AS NOTIFICACOES VISUALIZADAS
+		$sqlNotVis2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE  `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%' AND `STATUS_NOTPLA` = 1"; //SELECIONA TODAS AS NOTIFICACOES VISUALIZADAS
 		$queryNotVis2 = mysql_query($sqlNotVis2, $conexao);
 
 		 while ($resultNotVis2 = mysql_fetch_array($queryNotVis2)){
-			echo '<li id="'.$resultNotVis2['ID_NOTPLA'].'">'.$resultNotVis2['DESCRICAO_NOTPLA'].'<br/>'.$resultNotVis2['DATA_NOTPLA'].'</li>';
+			echo '<li id="'.$resultNotVis2['ID_NOTPLA'].'">'.$resultNotVis2['DESCRICAO_NOTPLA'].'<br/>'.$resultNotVis2['DATA_NOTPLA'].'</li>~ooioioi';
 
 		} ?>
 	</div>
