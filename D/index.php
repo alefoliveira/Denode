@@ -1,7 +1,8 @@
 <?php
 
 define("ROOT", dirname(__FILE__));
-//Pega o diretório completo do arquivo em execução no caso o index.php e tbm  remove o problema com caminhos relativos
+//Pega o diretório completo do arquivo em execução no caso o index.php e tbm  
+//remove o problema com caminhos relativos
 
 $debug= false;
 if($debug){
@@ -155,14 +156,20 @@ class Module {
 //	database está fazendo a conexão com o banco
 
 class Database {
+
 	public static $banco;
 	public static $conexao;
 	function Database(){
-		$this->user="root";$this->pass="";$this->host="localhost";$this->dbancob="0002050";
+
+	include 'config.php';
+	$this->usuario="$usuario";
+	$this->senha="$senha";
+	$this->host="$host";
+	$this->dbanco="$banco";
 	}
 
 	function connect(){
-		$conexao = new mysqli($this->host,$this->user,$this->pass,$this->dbancob);
+		$conexao = new mysqli($this->host,$this->usuario,$this->senha,$this->dbanco);
 		$conexao->query("set sql_mode=''");
 		return $conexao;
 	}
@@ -203,7 +210,7 @@ class Model {
 			$found = true;
 		}
 		return $found;
-	}
+}
 	public static function getFullpath($modelname){
 		return Admin::$root."admin/".$modelname.".php";
 	}
