@@ -69,20 +69,6 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 		while ($resultNot2 = mysql_fetch_array($queryNot2)){
 			
 			echo '<li style="color:'.$resultNot2['COR_NOTPLA'].'" class="novaNot" id="'.$resultNot2['ID_NOTPLA'].'">'.$resultNot2['DESCRICAO_NOTPLA'].'<br/>'.$resultNot2['DATA_NOTPLA'].'</li>';
-		echo'
-			<script>
-				$(".novaNot").click(function(e){';
-	 				$sqlNotUpd = "UPDATE `notificacoes_plat` SET `STATUS_NOTPLA`= 1 WHERE `ID_NOTPLA` =" . $resultNot2['ID_NOTPLA']; //SELECIONA TODAS AS NOTIFICACOES VISUALIZADAS
-					$queryNotUpd = mysql_query($sqlNotUpd, $conexao);
-					$qtdNot -= 1;
-
-				echo ' console.log("atualizou");
-				
-				$("#popUp_Not").css("display", "block");
-
-				});
-			</script>
-		';
 
 		} 
 
@@ -123,6 +109,17 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 			$("#contadorNot").click(function(e){
 				e.stopPropagation();
  				$("#notificacoes").css('display', 'block');
+			});
+
+			$(".novaNot").click(function(){
+				
+				$idNotPla = $(".novaNot").attr("id");
+				$.ajax("apoio/consulta_notificacoes.php?idNotPla=" + $idNotPla), {
+					success: function(response) {
+						alert(response);
+						reload();
+					}
+				}
 			});
 
 		});
