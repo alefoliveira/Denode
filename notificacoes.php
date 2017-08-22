@@ -56,7 +56,7 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 	<a href="historicoNotificacoes.php?idUsu=">Ver Mais</a>
 	<?php echo $idUsu ?>
 
-	<div id="contadorNot">Qtd Notif.: <?php echo $qtdNot ?></div>
+	<div id="contadorNot">Qtd Notif.: <p><?php echo $qtdNot ?></p></div>
 
 	<div id="notificacoes">
 	oi
@@ -113,10 +113,13 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 
 			$(".novaNot").click(function(){
 				
+				$qtdNot = <?php echo json_encode($qtdNot) ?>;
 				$idNotPla = $(".novaNot").attr("id");
 				$.ajax("apoio/consulta_notificacoes.php?idNotPla=" + $idNotPla , {
 					success: function(response) {
-						window.setTimeout('location.reload()', 50);
+						$qtdNot -= 1;
+						$('#contadorNot p').text($qtdNot);
+						$('#' + $idNotPla).css('color', '#000');
 					}
 				});
 			});
