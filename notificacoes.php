@@ -114,12 +114,11 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 			$(".novaNot").click(function(){
 				
 				$idNotPla = $(".novaNot").attr("id");
-				$.ajax("apoio/consulta_notificacoes.php?idNotPla=" + $idNotPla), {
+				$.ajax("apoio/consulta_notificacoes.php?idNotPla=" + $idNotPla , {
 					success: function(response) {
-						alert(response);
-						reload();
+						window.setTimeout('location.reload()', 50);
 					}
-				}
+				});
 			});
 
 		});
