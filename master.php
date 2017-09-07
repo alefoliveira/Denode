@@ -4,7 +4,7 @@
 	</head>
 	<body>
 		<section id="menu_lateral">
-			<img src="img/logo_denode.svg" />
+			<img src="img/logo_denode.svg" id="logo" />
 			<ul id="menu_colab">
 				<li>
 					<a href="">
@@ -14,25 +14,25 @@
 				</li>
 				<li>
 					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 25, 23, 23))" alt="Agenda">
+						<img src="img/iconset.svg#svgView(viewBox(0, 30, 23, 23))" alt="Agenda">
 						<p>Agenda</p>
 					</a>
 				</li>
 				<li>
 					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 51, 23, 23))" alt="Agenda">
+						<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
 						<p>Pontos</p>
 					</a>
 				</li>
 				<li>
 					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 25, 23, 23))" alt="Agenda">
+						<img src="img/iconset.svg#svgView(viewBox(0, 30, 23, 23))" alt="Agenda">
 						<p>Conquistas</p>
 					</a>
 				</li>
 				<li>
 					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 25, 23, 23))" alt="Agenda">
+						<img src="img/iconset.svg#svgView(viewBox(0, 30, 23, 23))" alt="Agenda">
 						<p>Relatório</p>
 					</a>
 				</li>
