@@ -73,10 +73,11 @@ ul {
 
 #menu_superior {
 	box-sizing: border-box;
-	height: 80px;
-	padding: 29px 32px 0 32px;
+	height: 100px;
+	padding: 38px 32px 0 32px;
 	background-color: #fff;
 	color: #988cc2;
+	box-shadow: 3px 4px 25px 0px #eee;
 }
 	#menu_superior ul {
 		float: right;
@@ -124,9 +125,21 @@ ul {
 			font-weight: 500;
 		}
 
-
 		#menu_superior #menu_subitens img{
 			width: 20px;
 			padding-left: 6px;
 		}
 		
+		#menu_superior #notificacoes #not_cont {
+			position: absolute;
+		    width: 22px;
+		    height: 21px;
+		    margin: -13px 14px;
+		    background-color: #988cc2;
+		    border: 3px solid #fff;
+		    border-radius: 100%;
+		    text-align: center;
+		    color: #fff;
+		    font-size: 11pt;
+    		line-height: 17pt;
+		}

@@ -87,8 +87,9 @@
 					<li id="botao">
 						<a href="">Ergonomia</a>
 					</li>
-					<li>
+					<li id="notificacoes">
 						<img src="img/iconset.svg#svgView(viewBox(4, 115, 18, 23))" alt="Agenda">
+						<p id="not_cont">12</p>
 					</li>
 					<li id="menu_subitens">
 						<p>Ajuda</p>
