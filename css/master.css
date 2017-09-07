@@ -29,13 +29,14 @@ ul {
 #navegacao {
 	position: fixed;	
     width: 100%;
+	height: 100%;
 }
 
 #menu_lateral {
-	position: absolute;
 	box-sizing: border-box;
 	width: 10%;
 	min-width: 210px;
+	height: 100%;
 	padding: 32px;
 	background-color: #6453a2;
 	overflow: hidden;
@@ -77,7 +78,8 @@ ul {
 	padding: 38px 32px 0 32px;
 	background-color: #fff;
 	color: #988cc2;
-	box-shadow: 3px 4px 25px 0px #eee;
+	box-shadow: 3px 4px 25px 0px #eee;	
+    text-align: center;
 }
 	#menu_superior ul {
 		float: right;
@@ -111,21 +113,31 @@ ul {
 		    margin-top: -5px;
 		}
 
-		#menu_superior #menu_subitens {
+		#menu_superior .menu_ajuda,
+		#menu_superior .menu_usuario,
+		#menu_superior #notificacoes {
 			cursor: pointer;
 		}
 
-		#menu_superior #menu_subitens p{
+		#menu_superior .menu_ajuda p,
+		#menu_superior .menu_usuario p
+		{
 			float:left;
 			-webkit-transition: font-weight 0.5s ease;
-			width: 53px;
 		}
 
-		#menu_subitens:hover {
+		#menu_superior .menu_ajuda p { width: 53px; }
+		#menu_superior .menu_usuario p { min-width: 90px; }
+
+
+
+		#menu_superior .menu_ajuda:hover,
+		#menu_superior .menu_usuario:hover {
 			font-weight: 500;
 		}
 
-		#menu_superior #menu_subitens img{
+		#menu_superior .menu_ajuda img,
+		#menu_superior .menu_usuario img{
 			width: 20px;
 			padding-left: 6px;
 		}
