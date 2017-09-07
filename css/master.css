@@ -1,0 +1,47 @@
+body{
+	font-family:'Montserrat';
+	margin: 0;
+	padding: 0;
+	border: none;
+	box-sizing: border-box;
+}
+
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: #f0f;
+}
+
+p {
+	padding: none;
+}
+
+#menu_lateral {
+	font-weight: 100;
+	width: 17%;
+	min-width: 320px;
+	padding: 80px;
+	background-color: #6453a2;
+	overflow: hidden;
+	font-size: 24px;
+}
+	#menu_lateral ul li {
+		padding: 20px 0;
+	}
+
+		#menu_lateral ul li a {
+			color: #FFF;
+		}
+
+		#menu_lateral ul li p {
+		}
+
+#menu_colab img {
+	width: 22px;
+	height: 24px;
+	float: left;
+	vertical-align: center;
+}
