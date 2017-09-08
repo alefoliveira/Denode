@@ -53,7 +53,11 @@ ul {
 			-webkit-transition: font-weight 0.5s ease;
 		}
 
-		#menu_lateral ul li a:hover {
+		#menu_lateral ul li a:hover,
+		#menu_superior .menu_ajuda:hover,
+		#menu_superior .menu_usuario:hover,
+		#submenu_ajuda a:hover,
+		#submenu_usuario a:hover {
 			font-weight: 500;
 		}
 
@@ -129,18 +133,13 @@ ul {
 		#menu_superior .menu_ajuda p { width: 53px; }
 		#menu_superior .menu_usuario p { min-width: 90px; }
 
-
-
-		#menu_superior .menu_ajuda:hover,
-		#menu_superior .menu_usuario:hover {
-			font-weight: 500;
-		}
-
 		#menu_superior .menu_ajuda img,
 		#menu_superior .menu_usuario img{
 			width: 20px;
 			padding-left: 6px;
 		}
+
+
 		
 		#menu_superior #notificacoes #not_cont {
 			position: absolute;
@@ -155,3 +154,72 @@ ul {
 		    font-size: 11pt;
     		line-height: 17pt;
 		}
+
+		#submenu_notificacoes,
+		#submenu_ajuda,
+		#submenu_usuario {
+			display: none;
+		    position: absolute;
+		    box-sizing: border-box;
+		    width: 135px;
+		    padding: 20px 20px 20px 20px;
+		    background-color: #f0f0f7;
+		    font-size: 12pt;
+		}
+
+			#submenu_notificacoes {
+			    right: 20px;
+			    top: 75px;
+			    width: 285px;
+			}
+
+			#submenu_ajuda {
+			    right: 95px;
+			    top: 75px;
+			}
+
+			#submenu_usuario {
+			    right: 95px;
+			    top: 75px;
+			}
+				
+		#submenu_notificacoes .item_notificacoes img{
+			width: 32px;
+		    height: 40px;
+		}
+
+
+	
+	#submenu_ajuda a,
+	#submenu_usuario a {
+    	color: #4d4c4c;
+		-webkit-transition: font-weight 0.5s ease;
+	}
+	
+	#submenu_ajuda #linha,
+	#submenu_usuario #linha,
+	#submenu_notificacoes #linha {
+	    position: absolute;
+	    top: -3%;
+	    left: 3%;
+	    height: 108%;
+	    width: 3px;
+	    background-color: #988cc2;
+	    color: #988cc2;
+	}
+
+
+	#submenu_notificacoes #linha {
+	    top: -1%;
+	    height: 102%;
+	}
+
+	#submenu_ajuda li,
+	#submenu_usuario li{
+		margin-bottom: 10px;
+	}
+
+	#submenu_ajuda li:last-child,
+	#submenu_usuario li:last-child{
+		margin-bottom: 0px;
+	}

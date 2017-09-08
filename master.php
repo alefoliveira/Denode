@@ -10,7 +10,7 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 }
 
 ?>
-
+<script src="js/master.js"></script>
 <section id="navegacao">
 	<section id="menu_lateral">
 		<img src="img/logo_denode.svg" id="logo" />
@@ -124,4 +124,65 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 			</li>
 		</ul>
 	</section>	
+
+	<ul id="submenu_ajuda">
+		<span id="linha"> </span>
+		<li class="menu_introducao">
+			<a href="">
+				<p>Introdução</p>
+			</a>
+		</li>
+		<li class="menu_manual">
+			<a href="">
+				<p>Manual</p>
+			</a>
+		</li>
+		<li class="menu_faq">
+			<a href="">
+				<p>FAQ</p>
+			</a>
+		</li>
+	</ul>
+
+	<ul id="submenu_usuario">
+		<span id="linha"> </span>
+		<li class="menu_introducao">
+			<a href="">
+				<p>Introdução</p>
+			</a>
+		</li>
+		<li class="menu_manual">
+			<a href="">
+				<p>Manual</p>
+			</a>
+		</li>
+		<li class="menu_faq">
+			<a href="">
+				<p>FAQ</p>
+			</a>
+		</li>
+	</ul>
+
+
+	<ul id="submenu_notificacoes">
+		<span id="linha"> </span>
+			<?php
+				$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
+				$queryNot2 = mysql_query($sqlNot2, $conexao);
+				while ($resultNot2 = mysql_fetch_array($queryNot2)){
+					if ($resultNot2['STATUS_NOTPLA'] == 0) {
+						echo '<li style="color: #988cc2" class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
+							<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
+						<p style="font-weight: 500;">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
+						<p>'.$resultNot2['DATA_NOTPLA'].'</p>
+						</li>';
+					} else {
+						echo '<li class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
+						<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda"><img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
+						<p style="font-weight: 500;">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
+						<p>'.$resultNot2['DATA_NOTPLA'].'</p>
+						</li>';
+					}
+				} 
+			?>
 </section>
