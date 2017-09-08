@@ -21,6 +21,7 @@
 		while($linha = mysql_fetch_array($sql)){
 				$senha_db = $linha["SENHA_PERFUSU"];	
 				$nomeusu = $linha["NOME_PERFUSU"];
+				$sobrenomeusu = $linha["SOBRENOME_PERFUSU"];
 				$IDusu = $linha["ID_PERFUSU"];
 				$Tipo = $linha["TIPO_PERFUSU"];
 				//echo $ativo;
@@ -39,6 +40,7 @@
 					session_start();
 					$_SESSION["NOME_PERFUSU"]= $nomeusu; //aqui é pra deixar o email oupuxar o nome?
 					$_SESSION["ID_PERFUSU"] = $IDusu;
+					$_SESSION["SOBRENOME_PERFUSU"] = $sobrenomeusu;
 
 					if($Tipo = 1){
 						header("location:usudash.php");	

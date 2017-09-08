@@ -5,7 +5,9 @@ mysql_select_db($banco);
 
 session_start();//INICIO SESSAO
 $nome = $_SESSION['NOME_PERFUSU'];
+$sobrenome = $_SESSION['SOBRENOME_PERFUSU'];
 $idUsu = $_SESSION["ID_PERFUSU"];
+
 
 
 $sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
@@ -50,7 +52,6 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 	<h1>Notificacoes</h1>
 
 
-	<section  id="container">
 		<a href="historicoNotificacoes.php?idUsu=">Ver Mais</a>
 		<?php echo $idUsu ?>
 
@@ -60,9 +61,8 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 		oi
 			<?php 
 
-			echo 'boi';
 
-			$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%' AND `STATUS_NOTPLA` = 0"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
+			$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
 			$queryNot2 = mysql_query($sqlNot2, $conexao);
 			while ($resultNot2 = mysql_fetch_array($queryNot2)){
 				
@@ -126,7 +126,6 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 
 
 		</script-->
-</section>
 </body>
 
 </html>

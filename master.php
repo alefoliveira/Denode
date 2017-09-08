@@ -106,6 +106,15 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 		<?php } ?>
 	</section>
 	<section id="menu_superior">
+
+		<?php 
+		if ($resultUsu["TIPO_PERFUSU"] == 1) {
+		?>
+			<section id="area_empresa">
+				<span>NOME DA EMPRESA</span> <!-- ALTERAR PARA PEGAR NOME DO BD -->
+				<p>VOCÊ ESTÁ NA ÁREA DE ADMINISTRAÇÃO</p>
+			</section>
+		<?php } ?>
 		<ul>
 			<li id="botao" class="menu_ergonomia">
 				<a href="">Ergonomia</a>
@@ -119,8 +128,7 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 				<img src="img/iconset.svg#svgView(viewBox(7, 134, 11, 29))" alt="Agenda">
 			</li>
 			<li class="menu_usuario">
-				<p>Olá, <?php echo $nome; ?></p>
-				<img src="img/iconset.svg#svgView(viewBox(7, 134, 11, 29))" alt="Agenda">
+				<p>Olá, <?php echo $nome . ' ' . $sobrenome; ?></p>
 			</li>
 		</ul>
 	</section>	
@@ -148,7 +156,7 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 		<span id="linha"> </span>
 		<li class="menu_introducao">
 			<a href="">
-				<p>Introdução</p>
+				<p>Editar Perfil</p>
 			</a>
 		</li>
 		<li class="menu_manual">
@@ -157,8 +165,8 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 			</a>
 		</li>
 		<li class="menu_faq">
-			<a href="">
-				<p>FAQ</p>
+			<a href="denodelogout.php">
+				<p>Sair</p>
 			</a>
 		</li>
 	</ul>
@@ -177,10 +185,13 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 						<p>'.$resultNot2['DATA_NOTPLA'].'</p>
 						</li>';
 					} else {
+
+						$data = strtotime($resultNot2['DATA_NOTPLA']);
+						$dataFormatada = date("d/m/y", $data);
 						echo '<li class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
 						<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda"><img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
 						<p style="font-weight: 500;">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
-						<p>'.$resultNot2['DATA_NOTPLA'].'</p>
+						<p>'. $dataFormatada.'</p>
 						</li>';
 					}
 				} 

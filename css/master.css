@@ -35,7 +35,7 @@ ul {
 #menu_lateral {
 	box-sizing: border-box;
 	width: 10%;
-	min-width: 210px;
+	min-width: 230px;
 	height: 100%;
 	padding: 32px;
 	background-color: #6453a2;
@@ -98,6 +98,23 @@ ul {
 			padding: 0;
 
 		}
+
+		#menu_superior #area_empresa {
+			float:left;
+			margin-left: 32px;
+			text-align: left;
+			color: #4d4c4c;
+		}
+
+		#menu_superior #area_empresa span {
+			font-size: 9pt;
+		}
+
+		#menu_superior #area_empresa p {
+			font-size: 12pt;
+			font-weight: 500;
+		}
+
 		#menu_superior ul #botao a {
 			margin-top: 10px;
 			background-color: #988cc2;
@@ -131,7 +148,7 @@ ul {
 		}
 
 		#menu_superior .menu_ajuda p { width: 53px; }
-		#menu_superior .menu_usuario p { min-width: 90px; }
+		#menu_superior .menu_usuario p { min-width: 200px; }
 
 		#menu_superior .menu_ajuda img,
 		#menu_superior .menu_usuario img{
@@ -161,7 +178,6 @@ ul {
 			display: none;
 		    position: absolute;
 		    box-sizing: border-box;
-		    width: 135px;
 		    padding: 20px 20px 20px 20px;
 		    background-color: #f0f0f7;
 		    font-size: 12pt;
@@ -176,11 +192,13 @@ ul {
 			#submenu_ajuda {
 			    right: 95px;
 			    top: 75px;
+		    	width: 135px;
 			}
 
 			#submenu_usuario {
 			    right: 95px;
 			    top: 75px;
+		    	width: 150px;
 			}
 				
 		#submenu_notificacoes .item_notificacoes img{
