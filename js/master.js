@@ -73,8 +73,7 @@ $(document).ready(function(){
 		}
 	}
 
-	$(".menu_notificacoes").click(menuNotificacoes);
-	$("#submenu_notificacoes").click(menuNotificacoes);
+	$(".menu_notificacoes img").click(menuNotificacoes);
 
 	function menuNotificacoes(){
 		if( $('#submenu_notificacoes').css('display') == 'none') {

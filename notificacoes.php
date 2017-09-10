@@ -45,7 +45,7 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 	<?php include 'master.php'; ?>
 	<script>
 		$(document).ready(function(){
-			$(".menu_inicio").css('font-weight', '500'); //INCLUIR SCRIPT E ALTERAR EM CADA PAGINA
+			$(".menu_inicio").css('font-weight', '700'); //INCLUIR SCRIPT E ALTERAR EM CADA PAGINA
 		});
 	</script>
 	

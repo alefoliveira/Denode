@@ -129,16 +129,18 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 					<ul id="submenu_notificacoes">
 						<?php
 
-						$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
+						$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `PENDENTES_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
 						$queryNot2 = mysql_query($sqlNot2, $conexao);
 
 						while ($resultNot2 = mysql_fetch_array($queryNot2)){
 							
 							$data = strtotime($resultNot2['DATA_NOTPLA']);
 							$dataFormatada = date("d/m/y", $data);
+
+							$pendentes = explode(',', $resultNot2['PENDENTES_NOTPLA']);
 						 	?>
 							<span id="linha"> </span>
-							<?php if ($resultNot2['STATUS_NOTPLA'] == 0) {
+							<?php if (in_array($idUsu, $pendentes)) {
 								echo '<li style="font-weight: 700;" class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
 									<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
 								<p style="color: #988cc2">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
@@ -157,6 +159,22 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 				} else {
 					echo '<script>$("#notificacoes").css("cursor", "auto");</script>';
 				} ?>
+
+				<script>
+					$(".item_notificacoes").click(function(){
+									
+						$qtdNot = <?php echo json_encode($qtdNot) ?>;
+						$idNotPla = $(".item_notificacoes").attr("id");
+						$.ajax("apoio/consulta_notificacoes.php?idNotPla=" + $idNotPla, {
+							success: function(response) {
+								$qtdNot -= 1;
+								$('#not_cont').text($qtdNot);
+								$('#' + $idNotPla + ' p').css('color', '#000');
+							}
+						});
+					});
+
+				</script>
 
 			</li>
 			<li class="menu_ajuda">
