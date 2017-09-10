@@ -7,8 +7,8 @@ $valorEmail = $_POST["email"];
 $valorSenha = $_POST["senha"];
 
 if($valorEmail && $valorSenha != '') {
-			$sql = mysql_query("SELECT * FROM perfil_usuario WHERE EMAIL_PERFUSU ='$valorEmail'");//seleciona o banco dados login do email
-			$cont = mysql_num_rows($sql);//cont recebe a a linha selecionada
+			$sql = mysqli_query("SELECT * FROM perfil_usuario WHERE EMAIL_PERFUSU ='$valorEmail'");//seleciona o banco dados login do email
+			$cont = mysqli_num_rows($sql);//cont recebe a a linha selecionada
 				while($linha = mysql_fetch_array($sql)){
 					$senha_db = $linha["SENHA_PERFUSU"];	
 					$nomeusu = $linha["NOME_PERFUSU"];
