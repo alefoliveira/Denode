@@ -54,8 +54,8 @@ ul {
 		}
 
 		#menu_lateral ul li a:hover,
-		#menu_superior .menu_ajuda:hover,
-		#menu_superior .menu_usuario:hover,
+		#menu_superior .menu_ajuda .label:hover,
+		#menu_superior .menu_usuario .label:hover,
 		#submenu_ajuda a:hover,
 		#submenu_usuario a:hover {
 			font-weight: 500;
@@ -140,15 +140,15 @@ ul {
 			cursor: pointer;
 		}
 
-		#menu_superior .menu_ajuda p,
-		#menu_superior .menu_usuario p
+		#menu_superior .menu_ajuda  .label,
+		#menu_superior .menu_usuario  .label
 		{
 			float:left;
 			-webkit-transition: font-weight 0.5s ease;
 		}
 
-		#menu_superior .menu_ajuda p { width: 53px; }
-		#menu_superior .menu_usuario p { min-width: 200px; }
+		#menu_superior .menu_ajuda .label { width: 53px; }
+		/*#menu_superior .menu_usuario p { min-width: 200px; } */
 
 		#menu_superior .menu_ajuda img,
 		#menu_superior .menu_usuario img{
@@ -181,25 +181,13 @@ ul {
 		    padding: 20px 20px 20px 20px;
 		    background-color: #f0f0f7;
 		    font-size: 12pt;
+			margin-left: 10px;
+		    top: 75px;
 		}
 
-			#submenu_notificacoes {
-			    right: 20px;
-			    top: 75px;
-			    width: 285px;
-			}
-
-			#submenu_ajuda {
-			    right: 95px;
-			    top: 75px;
-		    	width: 135px;
-			}
-
-			#submenu_usuario {
-			    right: 40px;
-			    top: 75px;
-		    	width: 150px;
-			}
+			#submenu_notificacoes { width: 285px; }
+			#submenu_ajuda { width: 135px; }
+			#submenu_usuario { width: 150px; }
 				
 		#submenu_notificacoes .item_notificacoes img{
 			width: 32px;
@@ -240,4 +228,14 @@ ul {
 	#submenu_ajuda li:last-child,
 	#submenu_usuario li:last-child{
 		margin-bottom: 0px;
+	}
+
+
+	#menu_superior #submenu_notificacoes li,
+	#menu_superior #submenu_ajuda li,
+	#menu_superior #submenu_usuario li {
+		padding: 0px 0px;
+		text-align: left;
+		display: list-item;
+		clear: both;
 	}

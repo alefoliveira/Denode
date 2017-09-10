@@ -1,30 +1,37 @@
 $(document).ready(function(){
 
+	
+	var width = $('.menu_usuario').width();
+	width += (0.055 * width);
+	$('.menu_usuario').width(width);
+	alert(width)
+
+
 	$(".menu_ajuda").click(menuAjuda);
 	$("#submenu_ajuda").click(menuAjuda);
 
 	$('#container').click(function(){
 		if( $('#submenu_ajuda').css('display') == 'block') {
 			$("#submenu_ajuda").fadeToggle('display');
-			$(".menu_ajuda").css('font-weight', '100');
+			$(".menu_ajuda .label").css('font-weight', '100');
 		}
 	});
 	function menuAjuda(){
 		if( $('#submenu_ajuda').css('display') == 'none') {
-			$(".menu_ajuda").css('font-weight', '500');
+			$(".menu_ajuda .label").css('font-weight', '500');
 		} else {
-			$(".menu_ajuda").css('font-weight', '100');
+			$(".menu_ajuda .label").css('font-weight', '100');
 		}
 		$("#submenu_ajuda").fadeToggle('display');
 		
 		if( $('#submenu_notificacoes').css('display') == 'block') {
 			$("#submenu_notificacoes").fadeToggle('display');
-			$('#not_cont').css('background-color', '#988cc2');
+			$(".menu_notificacoes .label").css('font-weight', '100');
 		}
 
 		if( $('#submenu_usuario').css('display') == 'block') {
 			$("#submenu_usuario").fadeToggle('display');
-			$(".menu_usuario").css('font-weight', '100');
+			$(".menu_usuario .label").css('font-weight', '100');
 		}
 	}
 
@@ -33,20 +40,20 @@ $(document).ready(function(){
 
 	function menuUsuario(){
 		if( $('#submenu_usuario').css('display') == 'none') {
-			$(".menu_usuario").css('font-weight', '500');
+			$(".menu_usuario .label").css('font-weight', '500');
 		} else {
-			$(".menu_usuario").css('font-weight', '100');
+			$(".menu_usuario .label").css('font-weight', '100');
 		}
 		$("#submenu_usuario").fadeToggle('display');
 
 		if( $('#submenu_notificacoes').css('display') == 'block') {
 			$("#submenu_notificacoes").fadeToggle('display');
-			$('#not_cont').css('background-color', '#988cc2');
+			$(".menu_notificacoes .label").css('font-weight', '100');
 		}
 
 		if( $('#submenu_ajuda').css('display') == 'block') {
 			$("#submenu_ajuda").fadeToggle('display');
-			$(".menu_ajuda").css('font-weight', '100');
+			$(".menu_ajuda .label").css('font-weight', '100');
 		}
 	}
 
@@ -63,12 +70,12 @@ $(document).ready(function(){
 
 		if( $('#submenu_usuario').css('display') == 'block') {
 			$("#submenu_usuario").fadeToggle('display');
-			$(".menu_usuario").css('font-weight', '100');
+			$(".menu_usuario .label").css('font-weight', '100');
 		}
 
 		if( $('#submenu_ajuda').css('display') == 'block') {
 			$("#submenu_ajuda").fadeToggle('display');
-			$(".menu_ajuda").css('font-weight', '100');
+			$(".menu_ajuda .label").css('font-weight', '100');
 		}
 	}
 

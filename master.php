@@ -122,78 +122,82 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 			<li id="notificacoes"  class="menu_notificacoes">
 				<img src="img/iconset.svg#svgView(viewBox(4, 115, 18, 23))" alt="Agenda">
 				<p id="not_cont"><?php echo $qtdNot ?></p>
+
+				<ul id="submenu_notificacoes">
+					<span id="linha"> </span>
+					<?php
+						$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
+						$queryNot2 = mysql_query($sqlNot2, $conexao);
+						while ($resultNot2 = mysql_fetch_array($queryNot2)){
+							if ($resultNot2['STATUS_NOTPLA'] == 0) {
+								echo '<li style="color: #988cc2" class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
+									<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
+								<p style="font-weight: 500;">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
+								<p>'.$resultNot2['DATA_NOTPLA'].'</p>
+								</li>';
+							} else {
+
+								$data = strtotime($resultNot2['DATA_NOTPLA']);
+								$dataFormatada = date("d/m/y", $data);
+								echo '<li class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
+								<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda"><img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
+								<p style="font-weight: 500;">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
+								<p>'. $dataFormatada.'</p>
+								</li>';
+							}
+						} 
+					?>
+				</ul>
+
 			</li>
 			<li class="menu_ajuda">
-				<p>Ajuda</p>
+				<p class="label" >Ajuda</p>
 				<img src="img/iconset.svg#svgView(viewBox(7, 134, 11, 29))" alt="Agenda">
+
+				<ul id="submenu_ajuda">
+					<span id="linha"> </span>
+					<li class="menu_introducao">
+						<a href="">
+							<p>Introdução</p>
+						</a>
+					</li>
+					<li class="menu_manual">
+						<a href="">
+							<p>Manual</p>
+						</a>
+					</li>
+					<li class="menu_faq">
+						<a href="">
+							<p>FAQ</p>
+						</a>
+					</li>
+				</ul>
+
 			</li>
 			<li class="menu_usuario">
-				<p>Olá, <?php echo $nome . ' ' . $sobrenome; ?></p>
+				<p class="label" >Olá, <?php echo $nome . ' ' . $sobrenome; ?></p>
+
+
+				<ul id="submenu_usuario">
+					<span id="linha"> </span>
+					<li class="menu_editar">
+						<a href="">
+							<p>Editar Perfil</p>
+						</a>
+					</li>
+					<li class="menu_manual">
+						<a href="">
+							<p>Manual</p>
+						</a>
+					</li>
+					<li class="menu_faq">
+						<a href="denodelogout.php">
+							<p>Sair</p>
+						</a>
+					</li>
+				</ul>
+
 			</li>
 		</ul>
 	</section>	
-
-	<ul id="submenu_ajuda">
-		<span id="linha"> </span>
-		<li class="menu_introducao">
-			<a href="">
-				<p>Introdução</p>
-			</a>
-		</li>
-		<li class="menu_manual">
-			<a href="">
-				<p>Manual</p>
-			</a>
-		</li>
-		<li class="menu_faq">
-			<a href="">
-				<p>FAQ</p>
-			</a>
-		</li>
-	</ul>
-
-	<ul id="submenu_usuario">
-		<span id="linha"> </span>
-		<li class="menu_introducao">
-			<a href="">
-				<p>Editar Perfil</p>
-			</a>
-		</li>
-		<li class="menu_manual">
-			<a href="">
-				<p>Manual</p>
-			</a>
-		</li>
-		<li class="menu_faq">
-			<a href="denodelogout.php">
-				<p>Sair</p>
-			</a>
-		</li>
-	</ul>
-
-
-	<ul id="submenu_notificacoes">
-		<span id="linha"> </span>
-			<?php
-				$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
-				$queryNot2 = mysql_query($sqlNot2, $conexao);
-				while ($resultNot2 = mysql_fetch_array($queryNot2)){
-					if ($resultNot2['STATUS_NOTPLA'] == 0) {
-						echo '<li style="color: #988cc2" class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
-							<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-						<p style="font-weight: 500;">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
-						<p>'.$resultNot2['DATA_NOTPLA'].'</p>
-						</li>';
-					} else {
-
-						$data = strtotime($resultNot2['DATA_NOTPLA']);
-						$dataFormatada = date("d/m/y", $data);
-						echo '<li class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
-						<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda"><img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-						<p style="font-weight: 500;">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
-						<p>'. $dataFormatada.'</p>
-						</li>';
-					}
-				} 
-			?>
 </section>
