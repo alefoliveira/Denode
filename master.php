@@ -10,6 +10,7 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 }
 
 ?>
+
 <script src="js/master.js"></script>
 <section id="navegacao">
 	<section id="menu_lateral">
@@ -131,7 +132,11 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 
 				$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
 				$queryNot2 = mysql_query($sqlNot2, $conexao);
-				while ($resultNot2 = mysql_fetch_array($queryNot2)){ ?>
+				while ($resultNot2 = mysql_fetch_array($queryNot2)){
+					
+					$data = strtotime($resultNot2['DATA_NOTPLA']);
+					$dataFormatada = date("d/m/y", $data);
+				 ?>
 					<ul id="submenu_notificacoes">
 						<span id="linha"> </span>
 						<?php
@@ -139,17 +144,14 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 								echo '<li style="color: #988cc2" class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
 									<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
 								<p style="font-weight: 500;">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
-								<p>'.$resultNot2['DATA_NOTPLA'].'</p>
+								<p>'. $dataFormatada .'</p>
 								</li>';
 							} else {
-
-								$data = strtotime($resultNot2['DATA_NOTPLA']);
-								$dataFormatada = date("d/m/y", $data);
 								echo '<li class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
 								<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda"><img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
 								<p style="font-weight: 500;">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
-								<p>'. $dataFormatada.'</p>
-								</li>';
+								<p>'. $dataFormatada .'</p>
+								</li>'; 
 							}
 						?>
 					</ul>
@@ -224,5 +226,6 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 
 			</li>
 		</ul>
-	</section>	
+	</section>			
+	<div id="submenus_overlay"></div>
 </section>
