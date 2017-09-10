@@ -13,22 +13,24 @@ $idUsu = $_SESSION["ID_PERFUSU"];
 	
 	$ID_NOTPLA = (int) $_GET['idNotPla'];
 
-	$sqlNot3 = "SELECT `PENDENTES_NOTPLA` FROM `notificacoes_plat` WHERE `ID_NOTPLA` =" . $ID_NOTPLA; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
+	$sqlNot3 = "SELECT `PENDENTES_NOTPLA` FROM `notificacoes_plat` WHERE `ID_NOTPLA` =" . $ID_NOTPLA . " AND `PENDENTES_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
 	$queryNot3 = mysql_query($sqlNot3, $conexao);
-	$resultNot3 = mysql_fetch_array($queryNot3);
+	
+	if ($resultNot3 = mysql_fetch_array($queryNot3)) {
 
-	$pendentes = explode(',', $resultNot3['PENDENTES_NOTPLA']);
+		$pendentes = explode(',', $resultNot3['PENDENTES_NOTPLA']);
 
-	$posicaoUsu = array_search($idUsu, $pendentes);
+		$posicaoUsu = array_search($idUsu, $pendentes);
 
-	unset($pendentes[$posicaoUsu]);
+		unset($pendentes[$posicaoUsu]);
 
-	$pendentesConcat = implode(',', $pendentes);
+		$pendentesConcat = implode(',', $pendentes);
 
-	var_dump($pendentesConcat);
-
-	$sqlNotUpd = "UPDATE `notificacoes_plat` SET `PENDENTES_NOTPLA`='". $pendentesConcat ."' WHERE `ID_NOTPLA` =" . $ID_NOTPLA; //SELECIONA TODAS AS NOTIFICACOES VISUALIZADAS
-	$queryNotUpd = mysql_query($sqlNotUpd, $conexao);
-	//$qtdNot -= 1;
-	//header('location: ../notificacoes.php');
+		$sqlNotUpd = "UPDATE `notificacoes_plat` SET `PENDENTES_NOTPLA`='". $pendentesConcat ."' WHERE `ID_NOTPLA` =" . $ID_NOTPLA; //SELECIONA TODAS AS NOTIFICACOES VISUALIZADAS
+		$queryNotUpd = mysql_query($sqlNotUpd, $conexao);
+		//$qtdNot -= 1;
+		//header('location: ../notificacoes.php');
+	} else {
+		echo 'nao foi dessa vez';
+	}
 ?>

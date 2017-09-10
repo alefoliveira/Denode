@@ -1,6 +1,6 @@
 <?php
 
-$sqlNot = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%' AND `STATUS_NOTPLA` = 0"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
+$sqlNot = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `PENDENTES_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
 $queryNot = mysql_query($sqlNot, $conexao);
 
 $qtdNot = 0;
@@ -138,6 +138,7 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 							$dataFormatada = date("d/m/y", $data);
 
 							$pendentes = explode(',', $resultNot2['PENDENTES_NOTPLA']);
+
 						 	?>
 							<span id="linha"> </span>
 							<?php if (in_array($idUsu, $pendentes)) {
@@ -147,9 +148,9 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 								<p class="data">'. $dataFormatada .'</p>
 								</li>';
 							} else {
-								echo '<li class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
-								<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda"><img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-								<p style="font-weight: 500;">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
+								echo '<li style="color: #4d4c4c; font-weight: 200;" class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
+								<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
+								<p>'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
 								<p class="data">'. $dataFormatada .'</p>
 								</li>'; 
 							}
@@ -161,19 +162,20 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 				} ?>
 
 				<script>
+					
 					$(".item_notificacoes").click(function(){
 									
 						$qtdNot = <?php echo json_encode($qtdNot) ?>;
-						$idNotPla = $(".item_notificacoes").attr("id");
+						$idNotPla = $(this).attr("id");
 						$.ajax("apoio/consulta_notificacoes.php?idNotPla=" + $idNotPla, {
 							success: function(response) {
 								$qtdNot -= 1;
 								$('#not_cont').text($qtdNot);
-								$('#' + $idNotPla + ' p').css('color', '#000');
+								$('#' + $idNotPla + ' p').css('color', '#4d4c4c');
+								$('#' + $idNotPla + ' p').css('font-weight', '200');
 							}
 						});
 					});
-
 				</script>
 
 			</li>

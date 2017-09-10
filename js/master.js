@@ -100,4 +100,5 @@ $(document).ready(function(){
 	}, function(){
 		$('#not_cont').css('background-color', '#988cc2');
 	});*/
+
 });
