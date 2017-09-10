@@ -4,7 +4,6 @@ $(document).ready(function(){
 	var width = $('.menu_usuario').width();
 	width += (0.055 * width);
 	$('.menu_usuario').width(width);
-	alert(width)
 
 
 	$(".menu_ajuda").click(menuAjuda);

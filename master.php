@@ -121,14 +121,20 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 			</li>
 			<li id="notificacoes"  class="menu_notificacoes">
 				<img src="img/iconset.svg#svgView(viewBox(4, 115, 18, 23))" alt="Agenda">
-				<p id="not_cont"><?php echo $qtdNot ?></p>
+				
+				<?php if ($qtdNot != 0) { ?>
+					<p id="not_cont"><?php echo $qtdNot ?></p>
+				<?php
+				} else {
+					echo '<script>$("#notificacoes").css("cursor", "auto");</script>';
+				}
 
-				<ul id="submenu_notificacoes">
-					<span id="linha"> </span>
-					<?php
-						$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
-						$queryNot2 = mysql_query($sqlNot2, $conexao);
-						while ($resultNot2 = mysql_fetch_array($queryNot2)){
+				$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
+				$queryNot2 = mysql_query($sqlNot2, $conexao);
+				while ($resultNot2 = mysql_fetch_array($queryNot2)){ ?>
+					<ul id="submenu_notificacoes">
+						<span id="linha"> </span>
+						<?php
 							if ($resultNot2['STATUS_NOTPLA'] == 0) {
 								echo '<li style="color: #988cc2" class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
 									<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
@@ -145,9 +151,10 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 								<p>'. $dataFormatada.'</p>
 								</li>';
 							}
-						} 
-					?>
-				</ul>
+						?>
+					</ul>
+				<?php }
+				?>
 
 			</li>
 			<li class="menu_ajuda">
@@ -175,22 +182,40 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 
 			</li>
 			<li class="menu_usuario">
-				<p class="label" >Olá, <?php echo $nome . ' ' . $sobrenome; ?></p>
+				<aside id="informacoes_usuario">
+					<p class="label">Olá, <?php echo $nome . ' ' . $sobrenome; ?></p>
+					
+					<?php 
 
+						$sqlImg = mysql_query("SELECT IMAGEM_PERFUSU,LOCALIMG_PERFUSU from perfil_usuario WHERE ID_PERFUSU = " . $idUsu) or die(mysql_error());
+						$rowsImg = mysql_num_rows($sqlImg);
 
+						while($resultImg=mysql_fetch_array($sqlImg)){ ?>
+
+						<img id="foto" style="background-image: url('<?php echo $resultImg['LOCALIMG_PERFUSU'];?>')" />
+
+						<!--img id="foto" src=  <?php echo $resultImg['LOCALIMG_PERFUSU'];?> /-->
+
+					<?php } ?>
+				</aside>
 				<ul id="submenu_usuario">
 					<span id="linha"> </span>
+					<li class="menu_perfil">
+						<a href="">
+							<p>Perfil</p>
+						</a>
+					</li>
 					<li class="menu_editar">
 						<a href="">
 							<p>Editar Perfil</p>
 						</a>
 					</li>
-					<li class="menu_manual">
+					<li class="menu_configuracoes">
 						<a href="">
-							<p>Manual</p>
+							<p>Configurações</p>
 						</a>
 					</li>
-					<li class="menu_faq">
+					<li class="menu_sair">
 						<a href="denodelogout.php">
 							<p>Sair</p>
 						</a>
