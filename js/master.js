@@ -5,7 +5,6 @@ $(document).ready(function(){
 	var width = $('.menu_usuario').width();
 	width += (0.085 * width);
 	$('.menu_usuario').width(width);
-	alert(width);
 
 	$('#submenus_overlay').click(function(){
 		if( $('#submenu_notificacoes').css('display') == 'block') {
