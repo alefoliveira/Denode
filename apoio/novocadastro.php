@@ -2,7 +2,7 @@
 require '../config.php';
 require_once('Bcrypt.php');
 
-$conexao = @mysqli_connect($HOST, $USUARIO, $SENHA, $BANCO) or die('Não foi possivel conectar: '.mysqli_error());
+$conexao = mysqli_connect($host, $usuario, $senha, $banco) or die('Não foi possivel conectar: '.mysql_error());
 mysqli_query($conexao,"SET SESSION sql_mode = ''");
 
 if(! get_magic_quotes_gpc() ) {
@@ -150,6 +150,6 @@ $retval = mysqli_query($conexao, $sql);
  if(!$retval) {
     die('Could not enter data: ' . mysql_error());
 } else {
-  header("Location:denodelogin.php?erro=0");
+  header("Location:../denodelogin.php?erro=0");
  }
  mysql_close($conexao);
