@@ -6,10 +6,8 @@ $nome = $_SESSION['NOME_PERFUSU'];
 $sobrenome = $_SESSION['SOBRENOME_PERFUSU'];
 $idUsu = $_SESSION["ID_PERFUSU"];
 
-
-
 $sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
-$queryUsu = mysql_query($sqlUsu, $conexao);
+$queryUsu =	mysqli_query($conexao, $sqlUsu);;
 $resultUsu = mysql_fetch_array($queryUsu);
 
 

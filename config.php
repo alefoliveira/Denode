@@ -5,6 +5,11 @@ $usuario = "root";
 $senha = "";
 $banco = "0002050";
 
+
+$conexao = mysqli_connect($host, $usuario, $senha, $banco) or die('Não foi possivel conectar: '.mysql_error());
+mysqli_query($conexao,"SET SESSION sql_mode = ''");
+
+
 $localtime = localtime();
 $localtime_assoc = localtime(time(), true);
 
