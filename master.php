@@ -150,14 +150,14 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 						 	?>
 							<span id="linha"> </span>
 							<?php if (in_array($idUsu, $pendentes)) {
-								echo '<li style="font-weight: 700;" class="item_notificacoes" id="'.$resultNot3['ID_NOTPLA'].'">
+								echo '<li class="item_notificacoes pendentes" id="'.$resultNot3['ID_NOTPLA'].'">
 									<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">';
 
 									if($resultNot3['CATEGORIA_NOTPLA'] == 1) { 
-										echo '<p style="color: #988cc2">A sessão '. $resultNot3['DESCRICAO_NOTPLA'] .' irá começar em 15 minutos. Prepare-se!.</p>';
+										echo '<p class="descricao">A sessão '. $resultNot3['DESCRICAO_NOTPLA'] .' irá começar em 15 minutos. Prepare-se!.</p>';
 
 									} else if($resultNot3['CATEGORIA_NOTPLA'] == 2) { 
-										echo '<p style="color: #988cc2">'. $resultNot3['REMETENTE_NOTPLA'] .' convidou você para a sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+										echo '<p class="descricao">'. $resultNot3['REMETENTE_NOTPLA'] .' convidou você para a sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 
 									} else if($resultNot3['CATEGORIA_NOTPLA'] == 3) {
 
@@ -166,12 +166,12 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 
 										$resultRemNot = mysql_fetch_array($queryRemNot);
 
-										echo '<p style="color: #988cc2">'. $resultRemNot['NOME_PERFUSU'] . ' ' . $resultRemNot['SOBRENOME_PERFUSU'] .' solicitou deixar de participar da sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+										echo '<p class="descricao">'. $resultRemNot['NOME_PERFUSU'] . ' ' . $resultRemNot['SOBRENOME_PERFUSU'] .' solicitou deixar de participar da sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 
 									} else if($resultNot3['CATEGORIA_NOTPLA'] == 4) { 
-										echo '<p style="color: #988cc2"> Você atingiu a conquista '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+										echo '<p class="descricao"> Você atingiu a conquista '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 									} else {
-										echo '<p style="color: #988cc2"> Você conquistou '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+										echo '<p class="descricao"> Você conquistou '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 									}
 										echo '<p class="data">'. $dataFormatada .'</p>
 								</li>';
@@ -181,10 +181,10 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 								
 
 								if($resultNot3['CATEGORIA_NOTPLA'] == 1) { 
-										echo '<p>A sessão '. $resultNot3['DESCRICAO_NOTPLA'] .' irá começar em 15 minutos. Prepare-se!</p>';
+										echo '<p class="descricao">A sessão '. $resultNot3['DESCRICAO_NOTPLA'] .' irá começar em 15 minutos. Prepare-se!</p>';
 
 									} else if($resultNot3['CATEGORIA_NOTPLA'] == 2) { 
-										echo '<p>'. $resultNot3['REMETENTE_NOTPLA'] .' convidou você para a sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+										echo '<p class="descricao">'. $resultNot3['REMETENTE_NOTPLA'] .' convidou você para a sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 
 									} else if($resultNot3['CATEGORIA_NOTPLA'] == 3) {
 
@@ -193,12 +193,12 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 
 										$resultRemNot = mysql_fetch_array($queryRemNot);
 
-										echo '<p>'. $resultRemNot[`NOME_PERFUSU`] . ' ' . $resultRemNot[`SOBRENOME_PERFUSU`] .' solicitou deixar de participar da sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+										echo '<p class="descricao">'. $resultRemNot['NOME_PERFUSU'] . ' ' . $resultRemNot['SOBRENOME_PERFUSU'] .' solicitou deixar de participar da sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 
 									} else if($resultNot3['CATEGORIA_NOTPLA'] == 4) { 
-										echo '<p> Você atingiu a conquista '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+										echo '<p class="descricao"> Você atingiu a conquista '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 									} else {
-										echo '<p> Você conquistou '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+										echo '<p class="descricao"> Você conquistou '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 									}
 
 								echo '<p class="data">'. $dataFormatada .'</p>

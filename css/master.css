@@ -200,6 +200,10 @@ ul {
 			width: 85%;
 		}
 
+			#submenu_notificacoes .pendentes .descricao,
+			#submenu_notificacoes .pendentes .data { font-weight: 700; }
+			#submenu_notificacoes .pendentes .descricao { color: #988cc2; }
+
 			#submenu_notificacoes .item_notificacoes .data {
 	    		margin-bottom: 15px;
 	    		color: #a3a3a3;
