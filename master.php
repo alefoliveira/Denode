@@ -153,18 +153,56 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 								echo '<li style="font-weight: 700;" class="item_notificacoes" id="'.$resultNot3['ID_NOTPLA'].'">
 									<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">';
 
-									if($resultNot3[`CATEGORIA_NOTPLA`] == 1) { 
-										echo '<p style="color: #988cc2">'. $resultNot3['REMETENTE_NOTPLA'] .' adicionou você à sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>
-										<p class="data">'. $dataFormatada .'</p>
+									if($resultNot3['CATEGORIA_NOTPLA'] == 1) { 
+										echo '<p style="color: #988cc2">A sessão '. $resultNot3['DESCRICAO_NOTPLA'] .' irá começar em 15 minutos. Prepare-se!.</p>';
 
+									} else if($resultNot3['CATEGORIA_NOTPLA'] == 2) { 
+										echo '<p style="color: #988cc2">'. $resultNot3['REMETENTE_NOTPLA'] .' convidou você para a sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 
+									} else if($resultNot3['CATEGORIA_NOTPLA'] == 3) {
+
+										$sqlRemNot = "SELECT `NOME_PERFUSU`, `SOBRENOME_PERFUSU` FROM `perfil_usuario` WHERE `ID_PERFUSU` =" . $resultNot3['REMETENTE_NOTPLA']; //SELECIONA NOME E SOBRENOME DO REMETENTE DA NOTIFICACAO
+										$queryRemNot = mysql_query($sqlRemNot, $conexao);
+
+										$resultRemNot = mysql_fetch_array($queryRemNot);
+
+										echo '<p style="color: #988cc2">'. $resultRemNot['NOME_PERFUSU'] . ' ' . $resultRemNot['SOBRENOME_PERFUSU'] .' solicitou deixar de participar da sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+
+									} else if($resultNot3['CATEGORIA_NOTPLA'] == 4) { 
+										echo '<p style="color: #988cc2"> Você atingiu a conquista '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+									} else {
+										echo '<p style="color: #988cc2"> Você conquistou '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+									}
+										echo '<p class="data">'. $dataFormatada .'</p>
 								</li>';
 							} else {
 								echo '<li style="color: #4d4c4c; font-weight: 200;" class="item_notificacoes" id="'.$resultNot3['ID_NOTPLA'].'">
-								<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-								<p>'.$resultNot3['DESCRICAO_NOTPLA'].'</p>
-								<p class="data">'. $dataFormatada .'</p>
-								</li>'; 
+								<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">';
+								
+
+								if($resultNot3['CATEGORIA_NOTPLA'] == 1) { 
+										echo '<p>A sessão '. $resultNot3['DESCRICAO_NOTPLA'] .' irá começar em 15 minutos. Prepare-se!</p>';
+
+									} else if($resultNot3['CATEGORIA_NOTPLA'] == 2) { 
+										echo '<p>'. $resultNot3['REMETENTE_NOTPLA'] .' convidou você para a sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+
+									} else if($resultNot3['CATEGORIA_NOTPLA'] == 3) {
+
+										$sqlRemNot = "SELECT `NOME_PERFUSU`, `SOBRENOME_PERFUSU` FROM `perfil_usuario` WHERE `ID_PERFUSU` =" . $resultNot3['REMETENTE_NOTPLA']; //SELECIONA NOME E SOBRENOME DO REMETENTE DA NOTIFICACAO
+										$queryRemNot = mysql_query($sqlRemNot, $conexao);
+
+										$resultRemNot = mysql_fetch_array($queryRemNot);
+
+										echo '<p>'. $resultRemNot[`NOME_PERFUSU`] . ' ' . $resultRemNot[`SOBRENOME_PERFUSU`] .' solicitou deixar de participar da sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+
+									} else if($resultNot3['CATEGORIA_NOTPLA'] == 4) { 
+										echo '<p> Você atingiu a conquista '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+									} else {
+										echo '<p> Você conquistou '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
+									}
+
+								echo '<p class="data">'. $dataFormatada .'</p>
+								</li>';
 							}
 						} ?>
 

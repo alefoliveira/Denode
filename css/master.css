@@ -195,10 +195,15 @@ ul {
    			float: left;
 		}
 
-		#submenu_notificacoes .item_notificacoes .data {
-    		margin-bottom: 15px;
-    		color: #a3a3a3;
+		#submenu_notificacoes .item_notificacoes p {
+		    float: right;
+			width: 85%;
 		}
+
+			#submenu_notificacoes .item_notificacoes .data {
+	    		margin-bottom: 15px;
+	    		color: #a3a3a3;
+			}
 
 		#submenu_notificacoes a{
 			margin: 20px;
