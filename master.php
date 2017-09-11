@@ -9,6 +9,10 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 	$qtdNot += 1; //CONTA QUANTAS NOTIFICACOES NAO VISUALIZADAS O USUARIO TEM
 }
 
+
+$sqlNot2 = "SELECT COUNT(*) FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES PARA USUARIO LOGADO - PARA CONTAGEM
+$queryNot2 = mysql_query($sqlNot2, $conexao);
+$resultNot2 = mysql_fetch_array($queryNot2);
 ?>
 
 <script src="js/master.js"></script>
@@ -123,38 +127,48 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 			<li id="notificacoes"  class="menu_notificacoes">
 				<img src="img/iconset.svg#svgView(viewBox(4, 115, 18, 23))" alt="Agenda">
 				
-				<?php if ($qtdNot != 0) { ?>
-					<p id="not_cont"><?php echo $qtdNot ?></p>
+				<?php 
 
+				if ($resultNot2[0] != 0) {
+
+					if ($qtdNot != 0) { ?>
+						<p id="not_cont"><?php echo $qtdNot ?></p>
+					<?php } ?>
 					<ul id="submenu_notificacoes">
 						<?php
+						
+						$sqlNot3 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`,`REMETENTE_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `PENDENTES_NOTPLA`, `CATEGORIA_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
+						$queryNot3 = mysql_query($sqlNot3, $conexao);
 
-						$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `PENDENTES_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
-						$queryNot2 = mysql_query($sqlNot2, $conexao);
-
-						while ($resultNot2 = mysql_fetch_array($queryNot2)){
+						while ($resultNot3 = mysql_fetch_array($queryNot3)){
 							
-							$data = strtotime($resultNot2['DATA_NOTPLA']);
+							$data = strtotime($resultNot3['DATA_NOTPLA']);
 							$dataFormatada = date("d/m/y", $data);
 
-							$pendentes = explode(',', $resultNot2['PENDENTES_NOTPLA']);
+							$pendentes = explode(',', $resultNot3['PENDENTES_NOTPLA']);
 
 						 	?>
 							<span id="linha"> </span>
 							<?php if (in_array($idUsu, $pendentes)) {
-								echo '<li style="font-weight: 700;" class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
-									<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-								<p style="color: #988cc2">'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
-								<p class="data">'. $dataFormatada .'</p>
+								echo '<li style="font-weight: 700;" class="item_notificacoes" id="'.$resultNot3['ID_NOTPLA'].'">
+									<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">';
+
+									if($resultNot3[`CATEGORIA_NOTPLA`] == 1) { 
+										echo '<p style="color: #988cc2">'. $resultNot3['REMETENTE_NOTPLA'] .' adicionou você à sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>
+										<p class="data">'. $dataFormatada .'</p>
+
+
 								</li>';
 							} else {
-								echo '<li style="color: #4d4c4c; font-weight: 200;" class="item_notificacoes" id="'.$resultNot2['ID_NOTPLA'].'">
+								echo '<li style="color: #4d4c4c; font-weight: 200;" class="item_notificacoes" id="'.$resultNot3['ID_NOTPLA'].'">
 								<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-								<p>'.$resultNot2['DESCRICAO_NOTPLA'].'</p>
+								<p>'.$resultNot3['DESCRICAO_NOTPLA'].'</p>
 								<p class="data">'. $dataFormatada .'</p>
 								</li>'; 
 							}
 						} ?>
+
+						<a href="inbox.php">Ver Mais</a>
 					</ul>
 				<?php
 				} else {
@@ -170,7 +184,11 @@ while ($resultNot = mysql_fetch_array($queryNot)){
 						$.ajax("apoio/consulta_notificacoes.php?idNotPla=" + $idNotPla, {
 							success: function(response) {
 								$qtdNot -= 1;
-								$('#not_cont').text($qtdNot);
+								if($qtdNot == 0) {
+									$('#not_cont').css('display', 'none');
+								} else {
+									$('#not_cont').text($qtdNot);
+								}
 								$('#' + $idNotPla + ' p').css('color', '#4d4c4c');
 								$('#' + $idNotPla + ' p').css('font-weight', '200');
 							}
