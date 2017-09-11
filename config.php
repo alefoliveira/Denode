@@ -1,12 +1,13 @@
 <?php
 date_default_timezone_set('America/Sao_Paulo');
 $host = "localhost";
-$usuario = "root";
-$senha = "";
+$usuario = "001aluno";
+$senha = "123456";
 $banco = "0002050";
 
 $localtime = localtime();
 $localtime_assoc = localtime(time(), true);
+
 ?>
 
 <script src="js/timer.js"></script>

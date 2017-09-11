@@ -270,7 +270,7 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 
 						while($resultImg=mysql_fetch_array($sqlImg)){ ?>
 
-						<img id="foto" style="background-image: url('<?php echo $resultImg['LOCALIMG_PERFUSU'];?>')" />
+						<div id="foto" style="background-image: url('<?php echo $resultImg['LOCALIMG_PERFUSU'];?>')"></div>
 
 						<!--img id="foto" src=  <?php echo $resultImg['LOCALIMG_PERFUSU'];?> /-->
 

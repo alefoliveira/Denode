@@ -1,7 +1,5 @@
 <?php
 require 'config.php';
-$conexao = @mysql_connect($host, $usuario, $senha) or exit(mysql_error());
-mysql_select_db($banco);
 
 session_start();//INICIO SESSAO
 $nome = $_SESSION['NOME_PERFUSU'];
