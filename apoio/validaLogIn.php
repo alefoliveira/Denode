@@ -1,5 +1,5 @@
 <?php
-   include 'config.php';
+   include '../config.php';
 require_once('Bcrypt.php');
 
 
@@ -7,6 +7,7 @@ $valorEmail = $_POST["email"];
 $valorSenha = $_POST["senha"];
 
 if($valorEmail && $valorSenha != '') {
+	$conexao = mysqli_connect($host, $usuario, $senha, $banco) or die('Não foi possivel conectar: '.mysql_error());
 			$sql = mysqli_query($conexao, "SELECT * FROM perfil_usuario WHERE EMAIL_PERFUSU ='$valorEmail'");//seleciona o banco dados login do email
 			$cont = mysqli_num_rows($sql);//cont recebe a a linha selecionada
 				while($linha = mysqli_fetch_array($sql)){
@@ -34,9 +35,9 @@ if($valorEmail && $valorSenha != '') {
 						//SESSION SETUP END
 
 						if($Tipo == 1){
-							header("location:usudash.php");	
+							header("location:../usudash.php");	
 						} else if($Tipo == 2) {
-							header("location:admindash.php");	
+							header("location:../admindash.php");	
 						} else {
 							echo "Something went wrong";
 						}
