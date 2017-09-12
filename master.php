@@ -191,7 +191,18 @@ $resultUsu = mysqli_fetch_array($queryUsu);
 			</li>
 			<li class="menu_usuario">
 				<aside id="informacoes_usuario">
-					<p class="label">Olá, <?php echo $nome . ' ' . $sobrenome; ?></p>
+					<p class="label"> 
+
+						<?php if (isset($_GET['platArea'])){			
+							$area = $_GET['platArea'];
+							if ($area == 1) { ?>
+								Olá, 
+							<?php } 
+						} else {?> Olá, <?php } ?>
+
+						<?php echo $nome . ' ' . $sobrenome; ?>
+						
+					</p>
 					
 					<?php 
 
@@ -199,11 +210,7 @@ $resultUsu = mysqli_fetch_array($queryUsu);
 						$rowsImg = mysqli_num_rows($sqlImg);
 
 						while($resultImg=mysqli_fetch_array($sqlImg)){ ?>
-
-						<div id="foto" style="background-image: url('<?php echo $resultImg['LOCALIMG_PERFUSU'];?>')"></div>
-
-						<!--img id="foto" src=  <!--?php echo $resultImg['LOCALIMG_PERFUSU'];?> /-->
-
+							<div id="foto" style="background-image: url('<?php echo $resultImg['LOCALIMG_PERFUSU'];?>')"></div>
 					<?php } ?>
 				</aside>
 				<ul id="submenu_usuario">
