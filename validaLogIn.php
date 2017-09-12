@@ -36,9 +36,9 @@ if($valorEmail && $valorSenha != '') {
 						$_SESSION["TIPO_PERFUSU"] = $tipo;
 						//SESSION SETUP END
 
-						if($Tipo == 1){
+						if($tipo == 1){
 							header("location:../usudash.php");	
-						} else if($Tipo == 2) {
+						} else if($tipo == 2) {
 							header("location:../admindash.php");	
 						} else {
 							echo "Something went wrong";
