@@ -13,6 +13,10 @@ while ($resultNot = mysqli_fetch_array($queryNot)){
 $sqlNot2 = "SELECT COUNT(*) FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES PARA USUARIO LOGADO - PARA CONTAGEM
 $queryNot2 = mysqli_query($conexao, $sqlNot2);
 $resultNot2 = mysqli_fetch_array($queryNot2);
+
+$sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
+$queryUsu = mysqli_query($conexao, $sqlUsu);
+$resultUsu = mysqli_fetch_array($queryUsu);
 ?>
 
 <script src="js/master.js"></script>
@@ -20,106 +24,32 @@ $resultNot2 = mysqli_fetch_array($queryNot2);
 	<section id="menu_lateral">
 		<img src="img/logo_denode.svg" id="logo" />
 
-		<?php
+			<?php if (isset($_GET['platArea'])){			
+				$area =$_GET['platArea'];
+				if ($area == 2) {
+					require 'apoio/master_menu_admin.php';
+				} else {
+					require 'apoio/master_menu_colab.php';
+				}
+			} else {
+					require 'apoio/master_menu_colab.php';
+				}
 
-			$sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
-			$queryUsu = mysqli_query($conexao, $sqlUsu);
-			$resultUsu = mysqli_fetch_array($queryUsu);
+			?>
 
-			if ($resultUsu["TIPO_PERFUSU"] == 2) {
-		?>
-
-			<ul id="menu_colab">
-				<li class="menu_inicio">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 0, 23, 23))" alt="Início">					
-						<p>Início</p>
-					</a>
-				</li>
-				<li class="menu_agenda">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 30, 23, 23))" alt="Agenda">
-						<p>Agenda</p>
-					</a>
-				</li>
-				<li class="menu_pontos">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-						<p>Pontos</p>
-					</a>
-				</li>
-				<li class="menu_conquistas">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 30, 23, 23))" alt="Agenda">
-						<p>Conquistas</p>
-					</a>
-				</li>
-				<li class="menu_relatorio">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 30, 23, 23))" alt="Agenda">
-						<p>Relatório</p>
-					</a>
-				</li>
-			</ul>
-
-		<?php 
-		} else if ($resultUsu["TIPO_PERFUSU"] == 1) {
-		?>
-			<ul id="menu_admin">
-				<li class="menu_inicio">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 0, 23, 23))" alt="Início">					
-						<p>Início</p>
-					</a>
-				</li>
-				<li class="menu_agenda">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 30, 23, 23))" alt="Agenda">
-						<p>Agenda</p>
-					</a>
-				</li>
-				<li class="menu_equipe">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-						<p>Equipe</p>
-					</a>
-				</li>
-				<li class="menu_pontuacao">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-						<p>Pontuação</p>
-					</a>
-				</li>
-				<li class="menu_conquistas">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-						<p>Conquistas</p>
-					</a>
-				<li class="menu_comunicados">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-						<p>Comunicados</p>
-					</a>
-				</li>
-				<li class="menu_relatorios">
-					<a href="">
-						<img src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
-						<p>Relatórios</p>
-					</a>
-				</li>
-			</ul>
-		<?php } ?>
 	</section>
 	<section id="menu_superior">
 
-		<?php 
-		if ($resultUsu["TIPO_PERFUSU"] == 1) {
+		<?php if (isset($_GET['platArea'])){			
+			$area = $_GET['platArea'];
+			if ($area == 2 && $resultUsu["TIPO_PERFUSU"] == 2) {
 		?>
 			<section id="area_empresa">
 				<span>NOME DA EMPRESA</span> <!-- ALTERAR PARA PEGAR NOME DO BD -->
 				<p>VOCÊ ESTÁ NA ÁREA DE ADMINISTRAÇÃO</p>
 			</section>
-		<?php } ?>
+		<?php } 
+		} ?>
 		<ul>
 			<li id="botao" class="menu_ergonomia">
 				<a href="">Ergonomia</a>
@@ -278,6 +208,19 @@ $resultNot2 = mysqli_fetch_array($queryNot2);
 				</aside>
 				<ul id="submenu_usuario">
 					<span id="linha"> </span>
+
+					<?php if (isset($_GET['platArea'])){			
+						$area =$_GET['platArea'];
+						if ($area == 2 && $resultUsu["TIPO_PERFUSU"] == 2) {
+					?>
+						<li class="menu_administracao">
+							<a href="home_admin.php?platArea=2">
+								<p>Administração</p>
+							</a>
+						</li>
+					<?php }
+					} ?>
+
 					<li class="menu_perfil">
 						<a href="">
 							<p>Perfil</p>
