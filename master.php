@@ -17,15 +17,21 @@ $resultNot2 = mysqli_fetch_array($queryNot2);
 $sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
 $queryUsu = mysqli_query($conexao, $sqlUsu);
 $resultUsu = mysqli_fetch_array($queryUsu);
+
+
+if (isset($_GET['platArea'])){			
+	$area  = $_GET['platArea'];
+}
+
 ?>
 
+<link rel="stylesheet" type="text/css" href="css/master.css">
 <script src="js/master.js"></script>
 <section id="navegacao">
 	<section id="menu_lateral">
 		<img src="img/logo_denode.svg" id="logo" />
 
-			<?php if (isset($_GET['platArea'])){			
-				$area =$_GET['platArea'];
+			<?php if (isset($area)){
 				if ($area == 2) {
 					require 'apoio/master_menu_admin.php';
 				} else {
@@ -40,8 +46,7 @@ $resultUsu = mysqli_fetch_array($queryUsu);
 	</section>
 	<section id="menu_superior">
 
-		<?php if (isset($_GET['platArea'])){			
-			$area = $_GET['platArea'];
+		<?php if (isset($area)){
 			if ($area == 2 && $resultUsu["TIPO_PERFUSU"] == 2) {
 		?>
 			<section id="area_empresa">
@@ -52,10 +57,10 @@ $resultUsu = mysqli_fetch_array($queryUsu);
 		} ?>
 		<ul>
 			<li id="botao" class="menu_ergonomia">
-				<a href="">Ergonomia</a>
+				<a href="ergonomia.php?platArea=<?php echo $area?>">Ergonomia</a>
 			</li>
 			<li id="notificacoes"  class="menu_notificacoes">
-				<img src="img/iconset.svg#svgView(viewBox(4, 115, 18, 23))" alt="Agenda">
+				<img src="img/iconset.svg#svgView(viewBox(4, 115, 18, 23))" alt="Inbox">
 				
 				<?php 
 
@@ -136,7 +141,7 @@ $resultUsu = mysqli_fetch_array($queryUsu);
 							}
 						} ?>
 
-						<a href="inbox.php">Ver Mais</a>
+						<a href="inbox.php?platArea=<?php echo $area?>">Ver Mais</a>
 					</ul>
 				<?php
 				} else {
@@ -193,8 +198,7 @@ $resultUsu = mysqli_fetch_array($queryUsu);
 				<aside id="informacoes_usuario">
 					<p class="label"> 
 
-						<?php if (isset($_GET['platArea'])){			
-							$area = $_GET['platArea'];
+						<?php if (isset($area)){
 							if ($area == 1) { ?>
 								Olá, 
 							<?php } 
@@ -216,8 +220,7 @@ $resultUsu = mysqli_fetch_array($queryUsu);
 				<ul id="submenu_usuario">
 					<span id="linha"> </span>
 
-					<?php if (isset($_GET['platArea'])){			
-						$area =$_GET['platArea'];
+					<?php if (isset($area)){
 						if ($area == 2 && $resultUsu["TIPO_PERFUSU"] == 2) {
 					?>
 						<li class="menu_administracao">

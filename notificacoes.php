@@ -7,7 +7,7 @@ $sobrenome = $_SESSION['SOBRENOME_PERFUSU'];
 $idUsu = $_SESSION["ID_PERFUSU"];
 
 $sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
-$queryUsu =	mysqli_query($conexao, $sqlUsu);;
+$queryUsu =	mysqli_query($conexao, $sqlUsu);
 $resultUsu = mysqli_fetch_array($queryUsu);
 
 $sqlNotVis = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%' AND `STATUS_NOTPLA` = 1"; //SELECIONA TODAS AS NOTIFICACOES VISUALIZADAS
@@ -26,9 +26,6 @@ $queryNotVis = mysqli_query($conexao, $sqlNotVis);
 	<meta charset="utf-8">
 
 	<title>ADMIN - MINIMAMENTE</title>
-
-	<!-- ESTILOS -->
-	<link rel="stylesheet" type="text/css" href="css/master.css">
 
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
