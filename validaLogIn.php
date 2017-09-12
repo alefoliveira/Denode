@@ -24,7 +24,7 @@ if($valorEmail && $valorSenha != '') {
 				}
 				else{	
 
-					if (Bcrypt::check($valorSenha, $senha_db)) {
+					if (Bcrypt::check($valorSenha, $senhaDb)) {
 
 						//SESSION START
 						session_cache_expire(30); //expira em quanto tempo?
@@ -51,4 +51,28 @@ if($valorEmail && $valorSenha != '') {
 					}
 				}
 			} 
+
+					/*if($senha_db != $valorSenha){//se a senha não for igual a que o admim cadastrou
+					header("Location:denodelogin.php?erro=1");
+					}
+					
+					else{	
+						session_cache_expire(30); //expira em quanto tempo?
+						session_start();
+						$_SESSION["NOME_PERFUSU"]= $nomeusu; //aqui é pra deixar o email oupuxar o nome?
+						$_SESSION["ID_PERFUSU"] = $IDusu;
+
+						if($Tipo = 1){
+						header("location:usudash.php");	
+					} else {
+						header("location:admindash.php");	
+					}
+
+
+							//session_destroy();
+						}
+							
+				}
+		}*/
+
             ?>
