@@ -1,3 +1,4 @@
+
 <?php
 require '../config.php';
 require_once('Bcrypt.php');
@@ -79,7 +80,7 @@ if(!in_array($path_parts['extension'], $allowed)){
   //EXTENSAO VALIDA
   $NomeImg = $CPF.$Idade.'.'.$path_parts['extension'];
   $path_parts['filename']=$NomeImg;
-  $Local = ('../img/'.$NomeImg);
+  $Local = ('img/'.$NomeImg);
   move_uploaded_file($tmp_image, $Local);
 };
 //CHECA SE TEM PASSE DE ADMIN
