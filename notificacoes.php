@@ -8,11 +8,10 @@ $idUsu = $_SESSION["ID_PERFUSU"];
 
 $sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
 $queryUsu =	mysqli_query($conexao, $sqlUsu);;
-$resultUsu = mysql_fetch_array($queryUsu);
-
+$resultUsu = mysqli_fetch_array($queryUsu);
 
 $sqlNotVis = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%' AND `STATUS_NOTPLA` = 1"; //SELECIONA TODAS AS NOTIFICACOES VISUALIZADAS
-$queryNotVis = mysql_query($sqlNotVis, $conexao);
+$queryNotVis = mysqli_query($conexao, $sqlNotVis);
 ?>
 
 <!-- _____________________ -->
@@ -59,8 +58,8 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 
 
 			$sqlNot2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
-			$queryNot2 = mysql_query($sqlNot2, $conexao);
-			while ($resultNot2 = mysql_fetch_array($queryNot2)){
+			$queryNot2 = mysqli_query($conexao, $sqlNot2);
+			while ($resultNot2 = mysqli_fetch_array($queryNot2)){
 				
 				echo '<li style="color:'.$resultNot2['COR_NOTPLA'].'" class="novaNot" id="'.$resultNot2['ID_NOTPLA'].'">'.$resultNot2['DESCRICAO_NOTPLA'].'<br/>'.$resultNot2['DATA_NOTPLA'].'</li>';
 
@@ -68,9 +67,9 @@ $queryNotVis = mysql_query($sqlNotVis, $conexao);
 
 
 			$sqlNotVis2 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE  `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%' AND `STATUS_NOTPLA` = 1"; //SELECIONA TODAS AS NOTIFICACOES VISUALIZADAS
-			$queryNotVis2 = mysql_query($sqlNotVis2, $conexao);
+			$queryNotVis2 = mysqli_query($conexao, $sqlNotVis2);
 
-			 while ($resultNotVis2 = mysql_fetch_array($queryNotVis2)){
+			 while ($resultNotVis2 = mysqli_fetch_array($queryNotVis2)){
 				echo '<li id="'.$resultNotVis2['ID_NOTPLA'].'">'.$resultNotVis2['DESCRICAO_NOTPLA'].'<br/>'.$resultNotVis2['DATA_NOTPLA'].'</li>~ooioioi';
 
 			} ?>

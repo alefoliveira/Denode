@@ -1,18 +1,18 @@
 <?php
 
 $sqlNot = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `PENDENTES_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
-$queryNot = mysql_query($sqlNot, $conexao);
+$queryNot = mysqli_query($conexao, $sqlNot);
 
 $qtdNot = 0;
 
-while ($resultNot = mysql_fetch_array($queryNot)){
+while ($resultNot = mysqli_fetch_array($queryNot)){
 	$qtdNot += 1; //CONTA QUANTAS NOTIFICACOES NAO VISUALIZADAS O USUARIO TEM
 }
 
 
 $sqlNot2 = "SELECT COUNT(*) FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES PARA USUARIO LOGADO - PARA CONTAGEM
-$queryNot2 = mysql_query($sqlNot2, $conexao);
-$resultNot2 = mysql_fetch_array($queryNot2);
+$queryNot2 = mysqli_query($conexao, $sqlNot2);
+$resultNot2 = mysqli_fetch_array($queryNot2);
 ?>
 
 <script src="js/master.js"></script>
@@ -23,8 +23,8 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 		<?php
 
 			$sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFUSU`=" . $idUsu; 
-			$queryUsu = mysql_query($sqlUsu, $conexao);
-			$resultUsu = mysql_fetch_array($queryUsu);
+			$queryUsu = mysqli_query($conexao, $sqlUsu);
+			$resultUsu = mysqli_fetch_array($queryUsu);
 
 			if ($resultUsu["TIPO_PERFUSU"] == 2) {
 		?>
@@ -138,9 +138,9 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 						<?php
 						
 						$sqlNot3 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`,`REMETENTE_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `PENDENTES_NOTPLA`, `CATEGORIA_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
-						$queryNot3 = mysql_query($sqlNot3, $conexao);
+						$queryNot3 = mysqli_query($conexao, $sqlNot3);
 
-						while ($resultNot3 = mysql_fetch_array($queryNot3)){
+						while ($resultNot3 = mysqli_fetch_array($queryNot3)){
 							
 							$data = strtotime($resultNot3['DATA_NOTPLA']);
 							$dataFormatada = date("d/m/y", $data);
@@ -162,9 +162,9 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 									} else if($resultNot3['CATEGORIA_NOTPLA'] == 3) {
 
 										$sqlRemNot = "SELECT `NOME_PERFUSU`, `SOBRENOME_PERFUSU` FROM `perfil_usuario` WHERE `ID_PERFUSU` =" . $resultNot3['REMETENTE_NOTPLA']; //SELECIONA NOME E SOBRENOME DO REMETENTE DA NOTIFICACAO
-										$queryRemNot = mysql_query($sqlRemNot, $conexao);
+										$queryRemNot = mysqli_query($conexao, $sqlRemNot);
 
-										$resultRemNot = mysql_fetch_array($queryRemNot);
+										$resultRemNot = mysqli_fetch_array($queryRemNot);
 
 										echo '<p class="descricao">'. $resultRemNot['NOME_PERFUSU'] . ' ' . $resultRemNot['SOBRENOME_PERFUSU'] .' solicitou deixar de participar da sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 
@@ -189,9 +189,9 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 									} else if($resultNot3['CATEGORIA_NOTPLA'] == 3) {
 
 										$sqlRemNot = "SELECT `NOME_PERFUSU`, `SOBRENOME_PERFUSU` FROM `perfil_usuario` WHERE `ID_PERFUSU` =" . $resultNot3['REMETENTE_NOTPLA']; //SELECIONA NOME E SOBRENOME DO REMETENTE DA NOTIFICACAO
-										$queryRemNot = mysql_query($sqlRemNot, $conexao);
+										$queryRemNot = mysqli_query($conexao, $sqlRemNot);
 
-										$resultRemNot = mysql_fetch_array($queryRemNot);
+										$resultRemNot = mysqli_fetch_array($queryRemNot);
 
 										echo '<p class="descricao">'. $resultRemNot['NOME_PERFUSU'] . ' ' . $resultRemNot['SOBRENOME_PERFUSU'] .' solicitou deixar de participar da sessão '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 
@@ -265,14 +265,14 @@ $resultNot2 = mysql_fetch_array($queryNot2);
 					
 					<?php 
 
-						$sqlImg = mysql_query("SELECT IMAGEM_PERFUSU,LOCALIMG_PERFUSU from perfil_usuario WHERE ID_PERFUSU = " . $idUsu) or die(mysql_error());
-						$rowsImg = mysql_num_rows($sqlImg);
+						$sqlImg = mysqli_query($conexao, "SELECT IMAGEM_PERFUSU,LOCALIMG_PERFUSU from perfil_usuario WHERE ID_PERFUSU = " . $idUsu) or die(mysql_error());
+						$rowsImg = mysqli_num_rows($sqlImg);
 
-						while($resultImg=mysql_fetch_array($sqlImg)){ ?>
+						while($resultImg=mysqli_fetch_array($sqlImg)){ ?>
 
 						<div id="foto" style="background-image: url('<?php echo $resultImg['LOCALIMG_PERFUSU'];?>')"></div>
 
-						<!--img id="foto" src=  <?php echo $resultImg['LOCALIMG_PERFUSU'];?> /-->
+						<!--img id="foto" src=  <!--?php echo $resultImg['LOCALIMG_PERFUSU'];?> /-->
 
 					<?php } ?>
 				</aside>
