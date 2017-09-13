@@ -80,8 +80,10 @@ if(!in_array($path_parts['extension'], $allowed)){
   //EXTENSAO VALIDA
   $NomeImg = $CPF.$Idade.'.'.$path_parts['extension'];
   $path_parts['filename']=$NomeImg;
-  $Local = ('img/'.$NomeImg);
+  $Local = ('..img/'.$NomeImg);
   move_uploaded_file($tmp_image, $Local);
+
+  var_dump($tmp_image);
 };
 //CHECA SE TEM PASSE DE ADMIN
     if(isset($Tipo)){
@@ -144,13 +146,13 @@ $Senha = $hash;
               $CPF = validaCPF($CPF);
               $Idade = validaNumero($Idade);
 
- $sql = "INSERT INTO perfil_usuario(CPF_PERFUSU, NOME_PERFUSU, SOBRENOME_PERFUSU, IDADE_PERFUSU, EMAIL_PERFUSU, TIPO_PERFUSU, IMAGEM_PERFUSU, LOCALIMG_PERFUSU, SENHA_PERFUSU) VALUES('$CPF','$Nome','$Sobrenome', '$Idade', '$Email', '$Tipo', '$NomeImg', '$Local', '$Senha')";
+ $sql = "INSERT INTO perfil_usuario(CPF_PERFUSU, NOME_PERFUSU, SOBRENOME_PERFUSU, IDADE_PERFUSU, EMAIL_PERFUSU, TIPO_PERFUSU, IMAGEM_PERFUSU, LOCALIMG_PERFUSU, SENHA_PERFUSU) VALUES('$CPF','$Nome','$Sobrenome', '$Idade', '$Email', '$Tipo', '$NomeImg', 'img/$NomeImg', '$Senha')";
 
 $retval = mysqli_query($conexao, $sql);
 
  if(!$retval) {
     die('Could not enter data: ' . mysql_error());
 } else {
-  header("Location:../denodelogin.php?erro=0");
+  //header("Location:../denodelogin.php?erro=0");
  }
  mysql_close($conexao);

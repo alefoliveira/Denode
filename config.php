@@ -1,8 +1,8 @@
 <?php
 date_default_timezone_set('America/Sao_Paulo');
 $host = "localhost";
-$usuario = "001aluno";
-$senha = "123456";
+$usuario = "root";
+$senha = "";
 $banco = "0002050";
 
 
@@ -14,10 +14,10 @@ $localtime = localtime();
 $localtime_assoc = localtime(time(), true);
 
 ini_set('mysql.trace_mode', 0);
-mysql_query("SET NAMES 'utf8'");
-mysql_query('SET character_set_connection=utf8');
-mysql_query('SET character_set_client=utf8');
-mysql_query('SET character_set_results=utf8');
+mysqli_query($conexao, "SET NAMES 'utf8'");
+mysqli_query($conexao, 'SET character_set_connection=utf8');
+mysqli_query($conexao, 'SET character_set_client=utf8');
+mysqli_query($conexao, 'SET character_set_results=utf8');
 
 ?>
 
