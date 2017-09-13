@@ -58,7 +58,7 @@ if (isset($_GET['platArea'])){
 		} ?>
 		<ul>
 			<li id="botao" class="menu_ergonomia">
-				<a href="ergonomia.php?platArea=<?php echo $area?>">Ergonomia</a>
+				<a href="ergonomia.php?platArea=<?php if (isset($area)) { echo $area; } else { echo '1'; } ?>">Ergonomia</a>
 			</li>
 			<li id="notificacoes"  class="menu_notificacoes">
 				<img src="img/iconset.svg#svgView(viewBox(4, 115, 18, 23))" alt="Inbox">
