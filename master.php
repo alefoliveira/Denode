@@ -220,16 +220,15 @@ if (isset($_GET['platArea'])){
 				<ul id="submenu_usuario">
 					<span id="linha"> </span>
 
-					<?php if (isset($area)){
-						if ($area == 2 && $resultUsu["TIPO_PERFUSU"] == 2) {
+					<?php 
+						if ($resultUsu["TIPO_PERFUSU"] == 2) {
 					?>
 						<li class="menu_administracao">
 							<a href="home_admin.php?platArea=2">
 								<p>Administração</p>
 							</a>
 						</li>
-					<?php }
-					} ?>
+					<?php } ?>
 
 					<li class="menu_perfil">
 						<a href="">

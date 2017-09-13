@@ -1,0 +1,38 @@
+#conteudo {
+	margin: 32px 0 0 32px;
+}
+
+	#conteudo .item_notificacoes {
+	    padding: 20px 0;
+	    border-bottom: 1px solid #dddddc;
+		font-weight: 500;
+	}
+
+		#conteudo .item_notificacoes:last-child {border: none; }
+
+		#conteudo .item_notificacoes img{
+		    width: 60px;
+			height: 52px;
+			margin-right: 20px;
+			float: left;
+		}
+
+		#conteudo .item_notificacoes #icone_ver{
+		    float: right;
+		    margin-top: -55px;
+		}
+
+		#conteudo .item_notificacoes .descricao {
+   			margin-bottom: 10px;
+			font-size: 14pt;
+			color: #4d4c4c;
+		}
+
+		#conteudo .item_notificacoes .data {
+			font-size: 12pt;
+			color: #a3a3a3;
+		}
+
+	#conteudo .pendentes .descricao,
+	#conteudo .pendentes .data { font-weight: 700; }
+	#conteudo .pendentes .descricao { color: #988cc2; }
