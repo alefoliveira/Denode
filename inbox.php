@@ -1,5 +1,9 @@
-<?php
-	require 'config.php';
+<?php ini_set('mysql.trace_mode', 0);
+require 'config.php';
+mysql_query("SET NAMES 'utf8'");
+mysql_query('SET character_set_connection=utf8');
+mysql_query('SET character_set_client=utf8');
+mysql_query('SET character_set_results=utf8');
 
 	session_start();//INICIO SESSAO
 	$nome = $_SESSION['NOME_PERFUSU'];
@@ -17,7 +21,7 @@
 
 	<head>
 
-		<meta charset="utf-8">
+		<meta charset="utf-8" />
 
 		<title>DENODE - INBOX</title>
 

@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 $sqlNot = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `STATUS_NOTPLA` FROM `notificacoes_plat` WHERE `PENDENTES_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
 $queryNot = mysqli_query($conexao, $sqlNot);
@@ -27,6 +27,7 @@ if (isset($_GET['platArea'])){
 
 <link rel="stylesheet" type="text/css" href="css/master.css">
 <script src="js/master.js"></script>
+<meta charset="utf-8" />
 <section id="navegacao">
 	<section id="menu_lateral">
 		<img src="img/logo_denode.svg" id="logo" />

@@ -23,7 +23,7 @@ $queryNotVis = mysqli_query($conexao, $sqlNotVis);
 
 <head>
 
-	<meta charset="utf-8">
+	<meta charset="utf-8" />
 
 	<title>ADMIN - MINIMAMENTE</title>
 
