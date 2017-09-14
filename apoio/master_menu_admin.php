@@ -6,7 +6,7 @@
 		</a>
 	</li>
 	<li class="menu_agenda">
-		<a href=".php?platArea=2">
+		<a href="agenda.php?platArea=2">
 			<img src="img/iconset.svg#svgView(viewBox(0, 30, 23, 23))" alt="Agenda">
 			<p>Agenda</p>
 		</a>
@@ -19,7 +19,7 @@
 	</li>
 	<li class="menu_pontuacao">
 		<a href=".php?platArea=2">
-			<img src="img/iconset.svg#svgView(viewBox(4, 83, 18, 27))" alt="Pontuação">
+			<img src="img/iconset.svg#svgView(viewBox(4,166, 18, 27))" alt="Pontuação">
 			<p>Pontuação</p>
 		</a>
 	</li>

@@ -83,9 +83,10 @@ ul {
 
 	#menu_colab img,
 	#menu_admin img {
-		width: 23px;
-		height: 23px;
-		padding: 0 15px 0 0;
+		width: 30px;
+	    height: 35px;
+	    padding: 0px 15px 0 0;
+	    margin-top: -6px;
 	}
 
 #menu_superior {

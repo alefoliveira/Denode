@@ -13,7 +13,7 @@ $sqlUsu = "SELECT `TIPO_PERFUSU`, `ID_EMP` FROM `perfil_usuario` WHERE `ID_PERFU
 $queryUsu = mysql_query($sqlUsu, $conexao);
 $resultUsu = mysql_fetch_array($queryUsu);
 
-if ($resultUsu["TIPO_PERFUSU"] == 2) {
+if ($resultUsu["TIPO_PERFUSU"] == 1) {
 	echo 'Página não liberada';
 } else {
 
