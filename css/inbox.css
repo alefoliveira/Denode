@@ -17,11 +17,6 @@
 			float: left;
 		}
 
-		#conteudo .item_notificacoes #icone_ver{
-		    float: right;
-		    margin-top: -55px;
-		}
-
 		#conteudo .item_notificacoes .descricao {
    			margin-bottom: 10px;
 			font-size: 14pt;

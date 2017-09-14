@@ -73,7 +73,7 @@ if (isset($_GET['platArea'])){
 					<ul id="submenu_notificacoes">
 						<?php
 						
-						$sqlNot3 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`,`REMETENTE_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `PENDENTES_NOTPLA`, `CATEGORIA_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
+						$sqlNot3 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`,`REMETENTE_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `PENDENTES_NOTPLA`, `CATEGORIA_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%' ORDER BY `DATA_NOTPLA` DESC"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
 						$queryNot3 = mysqli_query($conexao, $sqlNot3);
 
 						while ($resultNot3 = mysqli_fetch_array($queryNot3)){
@@ -142,7 +142,7 @@ if (isset($_GET['platArea'])){
 							}
 						} ?>
 
-						<a href="inbox.php?platArea=<?php echo $area?>">Ver Mais</a>
+						<a href="inbox.php?platArea=<?php if (isset($area)) { echo $area; } else { echo '1'; } ?>">Ver Mais</a>
 					</ul>
 				<?php
 				} else {
@@ -258,3 +258,8 @@ if (isset($_GET['platArea'])){
 	</section>			
 	<div id="submenus_overlay"></div>
 </section>
+
+
+<article id="popup_notificacao">
+Teste
+</article>

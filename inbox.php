@@ -49,7 +49,7 @@ require 'config.php';
 
 				<?php
 						
-						$sqlNot3 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`,`REMETENTE_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `PENDENTES_NOTPLA`, `CATEGORIA_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%'"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
+						$sqlNot3 = "SELECT `ID_NOTPLA`,`DESCRICAO_NOTPLA`,`REMETENTE_NOTPLA`, `DESTINATARIOS_NOTPLA`, `DATA_NOTPLA`, `ICONE_NOTPLA`, `COR_NOTPLA`, `PENDENTES_NOTPLA`, `CATEGORIA_NOTPLA` FROM `notificacoes_plat` WHERE `DESTINATARIOS_NOTPLA` LIKE '%" . $idUsu . "%' ORDER BY `DATA_NOTPLA` DESC"; //SELECIONA TODAS AS NOTIFICACOES NAO VISUALIZADAS
 						$queryNot3 = mysqli_query($conexao, $sqlNot3);
 
 						while ($resultNot3 = mysqli_fetch_array($queryNot3)){
@@ -84,7 +84,6 @@ require 'config.php';
 										echo '<p class="descricao"> Você conquistou '. $resultNot3['DESCRICAO_NOTPLA'] .'.</p>';
 									}
 										echo '<p class="data">'. $dataFormatada .'</p></article>
-								<img id="icone_ver" src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
 								</li>';
 							} else {
 								echo '<li class="item_notificacoes" id="'.$resultNot3['ID_NOTPLA'].'"><article>
@@ -113,11 +112,9 @@ require 'config.php';
 									}
 
 								echo '<p class="data">'. $dataFormatada .'</p></article>
-								<img id="icone_ver" src="img/iconset.svg#svgView(viewBox(0, 56, 23, 23))" alt="Agenda">
 								</li>';
 							}
 						} ?>
-
 			</aside>
 
 		</section>
