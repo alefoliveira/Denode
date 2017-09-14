@@ -101,4 +101,8 @@ $(document).ready(function(){
 		$('#not_cont').css('background-color', '#988cc2');
 	});*/
 
+	$(".item_notificacoes").click(function() {
+		
+	});
+
 });

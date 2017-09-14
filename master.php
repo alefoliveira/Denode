@@ -51,7 +51,12 @@ if (isset($_GET['platArea'])){
 			if ($area == 2 && $resultUsu["TIPO_PERFUSU"] == 2) {
 		?>
 			<section id="area_empresa">
-				<span>NOME DA EMPRESA</span> <!-- ALTERAR PARA PEGAR NOME DO BD -->
+				<?php 
+					$sqlEmp= "SELECT `NOMEFANTASIA_CADEMPPLA` FROM `cadastro_empresa_plat` WHERE `NOMEFANTASIA_CADEMPPLA` =" . $resultUsu['ID_EMP'];
+					$queryEmp = mysqli_query($conexao, $sqlEmp);
+						while ($resultEmp = mysqli_fetch_array($queryEmp)){
+							echo '<span>' . $resultEmp['NOMEFANTASIA_CADEMPPLA'] . '</span>';
+						} ?>
 				<p>VOCÊ ESTÁ NA ÁREA DE ADMINISTRAÇÃO</p>
 			</section>
 		<?php } 
@@ -61,7 +66,7 @@ if (isset($_GET['platArea'])){
 				<a href="ergonomia.php?platArea=<?php if (isset($area)) { echo $area; } else { echo '1'; } ?>">Ergonomia</a>
 			</li>
 			<li id="notificacoes"  class="menu_notificacoes">
-				<img src="img/iconset.svg#svgView(viewBox(4, 115, 18, 23))" alt="Inbox">
+				<img src="img/iconset.svg#svgView(viewBox(4, 114, 18, 23))" alt="Inbox">
 				
 				<?php 
 
@@ -173,7 +178,7 @@ if (isset($_GET['platArea'])){
 			</li>
 			<li class="menu_ajuda">
 				<p class="label" >Ajuda</p>
-				<img src="img/iconset.svg#svgView(viewBox(7, 134, 11, 29))" alt="Agenda">
+				<img src="img/iconset.svg#svgView(viewBox(7, 138, 11, 29))" alt="Agenda">
 
 				<ul id="submenu_ajuda">
 					<span id="linha"> </span>
@@ -261,5 +266,5 @@ if (isset($_GET['platArea'])){
 
 
 <article id="popup_notificacao">
-Teste
+<p>Teste</p>
 </article>

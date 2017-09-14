@@ -41,7 +41,7 @@ require 'config.php';
 		<section id="container">
 
 			<aside = id="topo">
-				<img src="img/iconset.svg#svgView(viewBox(4, 117, 17, 16))" alt="Inbox">
+				<img src="img/iconset.svg#svgView(viewBox(4, 115, 17, 16))" alt="Inbox">
 				<h1>Inbox</h1>
 			</aside>
 
