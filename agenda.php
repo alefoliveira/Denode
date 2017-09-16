@@ -65,8 +65,9 @@
 						
 						if(!in_array($resultCroEmp['INICIO_CROEMPPLA'], $horariosSes)) {
 
-							$inicioSes = explode(":",$resultCroEmp['INICIO_CROEMPPLA']);
 					  		$horariosSes[$i] = $resultCroEmp['INICIO_CROEMPPLA']; 
+							$i++;
+
 					  	} 
 
 					  	$diasSes = explode(",",$resultCroEmp['DIAS_CROEMPPLA']);
@@ -75,24 +76,112 @@
 						if (in_array(3, $diasSes)){ $quartaSes [$i] = $resultCroEmp['TITULO_CROEMPPLA']; }
 						if (in_array(4, $diasSes)){ $quintaSes [$i] = $resultCroEmp['TITULO_CROEMPPLA']; }
 						if (in_array(5, $diasSes)){ $sextaSes [$i] = $resultCroEmp['TITULO_CROEMPPLA']; }
+
+							$totalHorarios = count($horariosSes);
+
+
+						/*if (in_array(1, $diasSes)) {
+							if ($countSes < $totalHorarios) {
+							}
+						}*/
 				  	} ?>
-							<!-- ?>
-									<section class="horarios">
+					<!--section class="horarios">
+				  		 
+					  	 for ($countSes = 0; $countSes < $totalHorarios; $countSes++) {
+
+				  			$inicioSes = explode(":",$horariosSes[$countSes]);
 								  
-						  		echo $inicioSes[0] . ':' . $inicioSes[1];
-						  		?>
-									</section>
-								< 
-									  		}
-								$contSes = 0;
-
-						  	$i++;
-							?>
-							<section class="titulos">
-								 echo $resultCroEmp['TITULO_CROEMPPLA'] ;?>
-							</section> -->  
+						  	echo '<p>' . $inicioSes[0] . ':' . $inicioSes[1] . '</p>';
 
 
+						}  ?>
+					</section>
+
+					<section id="calendario">
+						<aside>
+							<p class="titulo">Hora</p>
+							<p class="horario">07:00</p>
+							<p class="horario">08:00</p>
+							<p class="horario">09:00</p>
+						</aside>
+						<aside>
+							<p class="titulo">Seg</p>
+							<p class="item_sessao">CCCC</p>
+						</aside>
+						<aside>
+							<p class="titulo">Ter</p>
+							<p class="item_sessao">BBBBBB</p>
+							<p class="item_sessao">AAAAA</p>
+							<p class="item_sessao">AAABBB</p>
+							<p class="item_sessao">CCCCCC</p>
+						</aside>
+						<aside>
+							<p class="titulo">Qua</p>
+							<p class="item_sessao">AAAAA</p>
+							<p class="item_sessao">AAABBB</p>
+							<p class="item_sessao">CCCCCCC</p>
+						</aside>
+						<aside>
+							<p class="titulo">Qui</p>
+							<p class="item_sessao">DDDDD</p>
+							<p class="item_sessao">AAAAA</p>
+							<p class="item_sessao">AAABBB</p>
+							<p class="item_sessao">CCCCC</p>
+						</aside>
+						<aside>
+							<p class="titulo">Sex</p>
+							<p class="item_sessao">BBBBB</p>
+							<p class="item_sessao">CCCCC</p>
+						</aside>
+					</section-->
+
+
+
+
+					<section id="calendario">
+						<aside>
+							<p class="titulo">Hora</p>
+							<p class="titulo">Seg</p>
+							<p class="titulo">Ter</p>
+							<p class="titulo">Qua</p>
+							<p class="titulo">Qui</p>
+							<p class="titulo">Sex</p>
+						</aside>
+
+						<!-- FAZER ESSE ESQUEMA E DEIXAR OS DIAS QUE NAO TIVEREM SESSAO VAZIOS MAS COM O P CRIADO!! -->
+						<aside>
+							<p class="horario">07:00</p>
+							<p class="segunda"></p>
+							<p class="terca"></p>
+							<p class="quarta"></p>
+							<p class="quinta"></p>
+							<p class="sexta">BBBBBB</p>
+						</aside>
+						<aside>
+							<p class="horario">08:00</p>
+							<p class="item_sessao">AAAAA</p>
+							<p class="item_sessao">AAABBB</p>
+							<p class="item_sessao">CCCCCC</p>
+						</aside>
+						<aside>
+							<p class="horario">09:00</p>
+							<p class="item_sessao">AAAAA</p>
+							<p class="item_sessao">AAABBB</p>
+							<p class="item_sessao">CCCCCCC</p>
+						</aside>
+						<aside>
+							<p class="item_sessao">DDDDD</p>
+							<p class="item_sessao">AAAAA</p>
+							<p class="item_sessao">AAABBB</p>
+							<p class="item_sessao">CCCCC</p>
+						</aside>
+						<aside>
+							<p class="item_sessao">BBBBB</p>
+							<p class="item_sessao">CCCCC</p>
+						</aside>
+					</section>
+
+						  	  
 			</aside>
 
 		</section>
