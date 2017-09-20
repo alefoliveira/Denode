@@ -1,5 +1,6 @@
 <?php
 	require 'config.php';
+  include 'apoio/Bcrypt.php';
 
 	session_start();//INICIO SESSAO
 	$nome = $_SESSION['NOME_PERFUSU'];
@@ -11,60 +12,34 @@
 	$queryUsu =	mysqli_query($conexao, $sqlUsu);
 	$resultUsu = mysqli_fetch_array($queryUsu);
 ?>
-<?php
+
+
+<?php 
+if(isset($_POST['redefinir'])){
+  $senha = htmlspecialchars($_POST['novaSenha']);
+  $hash = Bcrypt::hash($senha);
+  $senha = $hash;
+
+  $sql = "UPDATE `perfil_usuario` SET `SENHA_PERFUSU` = '$senha' WHERE `perfil_usuario`.`ID_PERFUSU` = '$idUsu';";
+
+  $retval = mysqli_query($conexao, $sql);          
+    if(! $retval ) {
+        die('Could not enter data: ' . mysql_error());
+      } 
+
+    }
+?>
+
+<script type="text/javascript">
+  $("#novaSenha").disabled = true;
+</script>
  
-	$origsenha = '';
-
-	$result = mysqli_query( $conexao, "SELECT  SENHA_PERFUSU FROM perfil_usuario WHERE ID_PERFUSU = '$idUsu'");
-
-     while($row = mysqli_fetch_array($result, MYSQL_BOTH)) 
-          {
-         
-		    	$origsenha =  $row['SENHA_PERFUSU'];
-        
-			
-			}
-
-
-     if(isset($_POST['submit'])){
-
-          	if(! get_magic_quotes_gpc() ) {
-               
-              $Tipo = 2;
-               $NOVASENHA = addslashes (@$_POST['senha']);
-            }else {
-              
-             
-               $Tipo = 2;
-               $NOVASENHA = $_POST['senha'];
-            }
-           
-          
- 
-			$origsenha = $NOVASENHA;
-
-
-            $sql = "UPDATE `perfil_usuario` SET `SENHA_PERFUSU` = '$NOVASENHA' ";
-
-           $retval = mysqli_query( $conexao, $sql);
-           echo "Cadastro atualizado com sucesso";
-            
-            if(! $retval ) {
-               die('Could not enter data: ' . mysql_error());
-            } 
-
-            }
-
-            @mysql_close($conexao);
-          
-
-	?>
 
   <?php
 if(isset($_POST['deletarusuario'])){
   $user_id = isset($_POST['ID_PERFUSU']) ? $_POST['ID_PERFUSU'] : false;
   if($user_id) {
-  $query = mysqli_query( $conexao, "DELETE FROM perfil_usuario where ID_PERFUSU= $user_id LIMIT 1")or die(mysqli_error($conexao));
+  $query = mysqli_query( $conexao, "DELETE FROM perfil_usuario  WHERE `perfil_usuario`.`ID_PERFUSU` = '$idUsu';")or die(mysqli_error($conexao));
 
   } else {
     echo "No user name found!";
@@ -116,45 +91,24 @@ if(isset($_POST['deletarusuario'])){
     <label class="modal__close" for="modal-1"></label>
   <h1  >Redefinir Senha <hr style="width:150px;"/></h1>
 
-    
-  <form method = "post" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                 <table  border = "0" cellspacing = "1"  
-                     cellpadding = "2"  id="tabela">
-                  
-                    <tr>  
-                      <br>
-<br>
-                        <center> <td> <input  class="inputpopup" name = "senha" type = "password" 
-                           id = "senha" placeholder=" Nova Senha" value="<?php echo $origsenha; ?>"></td>
-                  </tr>
+    <form name="novasenha" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+ 
+    <input name = "novaSenha"  placeholder=" Nova Senha" class="inputpopup" type = "password" id ="novaSenha" key="nova_senha">
+     <input name = "novaSenha"  placeholder=" Confirme Senha" class="inputpopup" type = "password" id ="novaSenha" key="confirma_novasenha">
+      <input name = "senha" type = "password"  id = "senha" class="inputpopup"  placeholder="Senha do Administrador"  value=""></td>
+     <input name = "redefinir"  value="Redefinir" type = "submit" class="botaopopup" id = "submit"  id ="redefinir"  onclick="enable_novasenha()" key="redefinir_senha">
+   
+ 
+   </form>
 
-                     <tr>
-                      
-                        <td><input name = "senha" type = "password" 
-                           id = "senha"  class="inputpopup"  placeholder="Confirme a Senha" value="<?php echo $origsenha; ?>"></td>
-                     </tr>
 
-                      <tr>
-                     
-                        <td><input name = "senha" type = "password" 
-                           id = "senha" class="inputpopup"  placeholder="Senha do Administrador"  value="<?php echo $origsenha; ?>"></td>
-                     </tr>
-                  
-                     <tr>
-                        <td width = "100"> </td>
-                        <td> </td>
-                     </tr>
-                  
-                     <tr>
-                        <td width = "100"> </td>
-                      
-                     </tr>  
-                  
-                  </table>
-              <input name = "submit" type = "submit"  class="botaopopup" id = "submit" 
-                              value = "Redefinir"> </input> </form>
               </div> </center>
 </div> 
+   <script type="text/javascript">
+      function enable_novasenha() {
+        $("#novaSenha").prop('disabled', false);
+      }
+    </script>
 
 
 	
