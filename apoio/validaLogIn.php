@@ -37,12 +37,13 @@ if($valorEmail && $valorSenha != '') {
 						//SESSION SETUP END
 
 						if($tipo == 1){
-							header("location:../usudash.php");	
+							header("location:../pontos.php");	
 						} else if($tipo == 2) {
-							header("location:../admindash.php");	
+							header("location:../pontos.php");	
 						} else {
 							echo "Something went wrong";
 						}
+
 
 						
 
