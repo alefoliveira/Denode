@@ -14,9 +14,10 @@ $("input").focus( function (){
         });
 
 var VALIDATION = {
-    //verifica as letras
-    letters_only: function(texto, empty_erro, type_erro){
+    
+    letters_only: function(texto, type_erro){
         texto./*keypress(function(key) {
+        
         if((key.charCode < 97 || key.charCode > 122) && (key.charCode < 65 || key.charCode > 90) && (key.charCode != 45)) return false; //botao pressionado
         }).*/blur( function () { //saiu da caixa
             var input = texto;
@@ -24,59 +25,86 @@ var VALIDATION = {
             var is_letter = re.test(input.val());
 
          if(input.val().length <= 1 || input.val() == ''){
-            ERROS.erro_empty(texto, empty_erro);
+            ERROS.erro_empty(texto, type_erro);
         } else if(is_letter) {
             ERROS.valid(texto); //yes
         } else {
-        ERROS.invalid_type(texto, type_erro); //no
-    }
+        ERROS.invalid_type(texto, type_erro, 'letter'); //no
+        }
 })},//FIM LETTERS ONLY
 
-    numbers_only: function(texto, empty_erro, type_erro, quant){
-        texto.keypress(function(key) {
-        if(texto.val().length >= quant) return false;
-        
-    }).blur( function () {
-    var input = texto;
-    var re = /^(?=.*\d)[0-9]{11}$/;
-    var is_number = re.test(input.val());
-    
-     if(input.val().length == 0 || input.val() == ''){
-            ERROS.erro_empty(texto, empty_erro);
+    numbers_only: function(texto, type_erro, quant){
+        texto.blur( function () { //saiu da caixa
+            var input = texto;
+            var re = /^[0-9]+$/;
+            var is_number = re.test(input.val());
+
+         if(input.val().length == 0 || input.val() == ''){
+            ERROS.erro_empty(texto, type_erro);
         } else if(is_number) {
-            ERROS.valid(texto); //yes
-            check_cpf_ajax(texto.val());//(key.charCode < 48 || key.charCode > 57 || texto.val().length >= quant) return false;
+            if(input.length = quant){
+                ERROS.valid(texto); //yes
+            } else {
+                ERROS.invalid_type(texto, type_erro, 'number'); //no
+            }
         } else {
-        ERROS.invalid_type(texto, type_erro);
-    }
+        ERROS.invalid_type(texto, type_erro, 'number'); //no
+        }
 })},  //FIM NUMBERS ONLY
 
-    email_only: function(texto, empty_erro, type_erro){
+    email_only: function(texto, type_erro){
         texto.blur( function () {
     var input = texto;
     var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     var is_email = re.test(input.val());
     
     if(input.val().length == 0 || input.val() == ''){
-            ERROS.erro_empty(texto, empty_erro);
+            ERROS.erro_empty(texto, type_erro);
         } else if(is_email) {
             ERROS.valid(texto); //yes
         } else {
-        ERROS.invalid_type(texto, type_erro);
+        ERROS.invalid_type(texto, type_erro, 'email');
     }
-})} //FIM EMAIL ONLY
+})}, //FIM EMAIL ONLY
+
+    letters_numbers: function(texto, type_erro){
+        texto.blur( function () { //saiu da caixa
+            var input = texto;
+            var re = /^[0-9A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÒÖÚÇÑ,'. ]+$/;
+            var is_letter = re.test(input.val());
+
+         if(input.val().length <= 1 || input.val() == ''){
+            ERROS.erro_empty(texto, type_erro);
+        } else if(is_letter) {
+            ERROS.valid(texto); //yes
+        } else {
+        ERROS.invalid_type(texto, type_erro, 'lnn'); //no
+    }
+})}
 
 };// FIM VALIDATION
 
 var ERROS = {
-    erro_empty: function(texto, empty_erro) {
+    erro_empty: function(texto, type_erro) {
         texto.css("border-color", "#ff3333"); //no
         //$empty_erro.text('')
-        empty_erro.fadeTo("slow", 1, function(){});
+        type_erro.text('Campo precisa ser preenchido');
+        type_erro.fadeTo("slow", 1, function(){});
     },
 
-    invalid_type: function(texto, type_erro){
+    invalid_type: function(texto, type_erro, type_value){
         texto.css("border-color", "#cd2626"); //no
+        if(type_value == 'letter'){
+            type_erro.text('Somente letras são permitidas');
+        } else if (type_value == 'number'){
+            type_erro.text('Somente números são permitidos');
+        } else if(type_value == 'email'){
+            type_erro.text('Por favor, insira um email válido. Ex: maria@silva.com');
+        } else if(type_value == 'address'){
+            type_erro.text('Por favor, insira um endereço válido. Ex: Avenida Paulista, 29');
+        } else if(type_value == 'lnn'){
+            type_erro.text('Por favor, insira um nome válido (permitido: letras, números, espaço, vírgula. Ex: Studio 54, New York)');
+        }
         type_erro.fadeTo("slow", 1, function(){});
     },
     valid: function(texto){
@@ -89,23 +117,34 @@ var ERROS = {
     }
 }
 
-VALIDATION.letters_only($('#nome'), $('#err3'), $('#err4'));
-VALIDATION.letters_only($('#sobrenome'), $('#err5'), $('#err6'));
-VALIDATION.letters_only($('#cargo'), $('#err13'), $('#err14'));
-VALIDATION.numbers_only($('#cpf'), $('#err1'), $('#err2'), 11);
-VALIDATION.email_only($('#email'), $('#err9'), $('#err10'));
+VALIDATION.letters_only($('#nome'), $('#err1'));
+VALIDATION.letters_only($('#sobrenome'), $('#err2'));
+VALIDATION.letters_only($('#cargo'), $('#err5'));
+VALIDATION.numbers_only($('#cpf'), $('#err4'), 11);
+VALIDATION.email_only($('#email'), $('#err6'));
 
 $("#senha").blur( function () {
     var input = $(this);
+    var re = /^[0-9A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÒÖÚÇÑ,'. ]+$/;
+    var is_password = re.test(input.val());
     
     if($(this).val().length == 0 || $(this).val() == ''){
         $(this).css("border-color", "#ff3333"); //no
-        $("#err11").fadeTo("slow", 1, function(){});
-        } else if(input.val().length > 7) { //falta checar pq essa porra nao funciona
+        $("#err7").text('Campo precisa ser preenchido');
+        $("#err7").fadeTo("slow", 1, function(){});
+
+    } else if(input.val().length > 7) {
+        if(is_password){
         ERROS.valid($(this)); //yes
+        } else {
+            $(this).css("border-color", "#ff3333"); //no
+            $("#err7").text('Por favor, insira uma senha válida. Ela deve conter pelo menos 8 caracteres que podem ser números, letras, vírgulas e pontos. ');
+            $("#err7").fadeTo("slow", 1, function(){});
+        }
     } else {
         $(this).css("border-color", "#ff3333"); //no
-        $("#err12").fadeTo("slow", 1, function(){});
+        $("#err7").text('Por favor, insira uma senha válida. ');
+        $("#err7").fadeTo("slow", 1, function(){});
     }
 });
 
@@ -118,18 +157,20 @@ $("#anonascimento").keypress(function(key) {
     
     if(input.val().length == 0 || input.val() == ''){
         $(this).css("border-color", "#ff3333"); //no - empty
-        $("#err7").fadeTo("slow", 1, function(){});
+         $("#err3").text('Campo precisa ser preenchido');
+        $("#err3").fadeTo("slow", 1, function(){});
         } 
     else if(is_number) { 
         if(1900 > input.val() || 2010 < input.val()) {
         $(this).css("border-color", "#ff3333"); //no - ano invalido
-        $("#err8").fadeTo("slow", 1, function(){});
+         $("#err3").text('Por favor, insira seu ano de nascimento.');
+        $("#err3").fadeTo("slow", 1, function(){});
     } else {
         ERROS.valid($(this)); //yes - ano valido
     }} 
     else {
         $(this).css("border-color", "#ff3333"); //idk what u typed
-        $("#err8").fadeTo("slow", 1, function(){});
+        $("#err3").fadeTo("slow", 1, function(){});
     }
 });
 
